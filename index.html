@@ -1,271 +1,191 @@
+# Azure - Ambient Music Space
+
 <!DOCTYPE html>
-
-<html lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width,initial-scale=1.0" name="viewport"/>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script>
-  tailwind.config = {
-    theme: {
-      extend: {
-        fontFamily: {
-          sans: ['Manrope', 'sans-serif'],
-        },
-        colors: {
-          primary: '#0091ff',
-          surface: '#f7f9fb',
-          'surface-dim': '#d8dadc',
-          'surface-bright': '#f7f9fb',
-          'surface-container-lowest': '#ffffff',
-          'surface-container-low': '#f2f4f6',
-          'surface-container': '#e9eaec',
-          'surface-container-high': '#e3e5e7',
-          'surface-container-highest': '#dddfe1',
-          on_surface: '#181c20',
-          on_surface_variant: '#41474d',
-          outline: '#72787e',
-          outline_variant: '#c1c7ce',
-        },
-        borderRadius: {
-          'lg': '0.5rem',
-          'xl': '0.75rem',
-          '2xl': '1rem',
-          '3xl': '1.5rem',
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Azure - Chill & Deep Work Space</title>
+    <!-- Tailwind CSS for high-quality responsive layouts -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Material Icons for crisp player controls -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        /* Custom smooth transition styles for tracking elements */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
         }
-      }
-    }
-  }
-</script>
-<style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body {
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      background: #f7f9fb;
-    }
-    
-    /* Screen transition styles */
-    .screen {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s ease-in-out;
-      overflow-y: auto;
-      background-color: #f7f9fb;
-    }
-    
-    .screen.active {
-      opacity: 1;
-      pointer-events: auto;
-    }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.6);
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
 
-    /* Hide scrollbar for a cleaner app look */
-    ::-webkit-scrollbar {
-      display: none;
-    }
-
-    input[type=range]::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      height: 10px;
-      width: 10px;
-      border-radius: 50%;
-      background: #0091ff;
-      cursor: pointer;
-      margin-top: -3px;
-    }
-    input[type=range]::-webkit-slider-runnable-track {
-      width: 100%;
-      height: 4px;
-      cursor: pointer;
-      background: #e9eaec;
-      border-radius: 2px;
-    }
-  </style>
+            background: rgba(56, 189, 248, 0.3);
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: rgba(56, 189, 248, 0.6);
+        }
+    </style>
 </head>
-<body class="text-on_surface font-sans">
-<!-- BACKGROUND ANIMATION (Persists across screens) -->
-<!-- WELCOME SCREEN -->
-<div class="screen active flex flex-col items-center justify-center min-h-screen p-6 relative" id="welcome-screen">
-<div class="flex-1 flex flex-col items-center justify-center w-full max-w-sm">
-<div class="w-32 h-32 rounded-full overflow-hidden mb-8 shadow-lg border-4 border-surface-container-lowest">
-<img alt="AK Logo" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/AP1WRLtLMOkuK7lDdxwG1wwe-jrS7SiVkaUFzqbs3KYlrntZLGK_W-vijSeB3vLgZShZJe0Lz9joz3Z2AMX9YMRlijbqXTUb5a6Dz5mblPhhclJv9bNQ7bAHErvXvDHi9Zfvh5AejRWaL0yw7jHnYSmZ5XJiEuBs8eDJt7Bqr-3FOqYVWS_e90-z0OBv02qzIhmEIxjxpPpBpln1_QbAy-S-jxmoIHV_-prwFuOP-UlWFnBgBg7sBmElPhQ-M5o"/>
-</div>
-<h1 class="text-3xl font-bold text-center text-on_surface mb-4">Welcome to Azure</h1>
-<p class="text-center text-on_surface_variant mb-12 px-4 text-sm leading-relaxed">
-        Immerse yourself in a calm, focused environment designed for deep work and relaxation.
-      </p>
-<button class="w-full py-4 bg-primary text-white rounded-3xl font-semibold text-lg tracking-wide shadow-md transition-transform active:scale-95 flex items-center justify-center gap-2" onclick="navigateTo('library-screen')">
-<span class="">ENTER SPACE</span>
-<span class="material-symbols-outlined text-lg">arrow_forward</span>
-</button>
-</div>
-<div class="mt-auto pt-8 pb-4 text-xs font-medium text-outline text-center">
-      Developed by AK AKASH
-    </div>
-</div>
-<!-- LIBRARY SCREEN -->
-<div class="screen flex flex-col h-full bg-surface" id="library-screen">
-<!-- Top Bar -->
-<header class="px-6 py-4 flex items-center justify-between sticky top-0 bg-surface/80 backdrop-blur-md z-10">
-<h1 class="text-2xl font-bold tracking-tight" id="library-title">Library</h1>
-<button class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface-container-low text-on_surface hover:bg-surface-container transition-colors" onclick="navigateTo('about-screen')"><span class="material-symbols-outlined text-sm">terminal</span><span class="text-xs font-bold uppercase tracking-wider">Dev</span></button>
-<div class="absolute inset-0 bg-surface px-6 py-4 flex items-center gap-3 transition-opacity opacity-0 pointer-events-none" id="search-bar-container">
-<span class="material-symbols-outlined text-outline">search</span>
-<input class="flex-1 bg-transparent border-none outline-none text-on_surface placeholder:text-outline text-lg" id="song-search-input" oninput="filterSongs(this.value)" placeholder="Search sounds..." type="text"/>
-<button class="w-8 h-8 flex items-center justify-center text-on_surface rounded-full hover:bg-surface-container transition-colors" onclick="toggleSearch(false)">
-<span class="material-symbols-outlined text-sm">close</span>
-</button>
-</div>
-</header>
-<!-- Main Content -->
-<main class="flex-1 overflow-y-auto px-6 pb-48 pt-2">
-<div class="mb-8" id="featured-section">
-<h2 class="text-sm font-semibold text-outline tracking-wider uppercase mb-4">Featured</h2>
-<div class="bg-primary/10 rounded-3xl p-6 relative overflow-hidden cursor-pointer" onclick="playSong(0)">
-<div class="relative z-10">
-<h3 class="text-xl font-bold text-primary mb-1">Deep Focus</h3>
-<p class="text-sm text-on_surface_variant mb-4">Binaural beats &amp; ambient rain</p>
-<button class="w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center shadow-md">
-<span class="material-symbols-outlined">play_arrow</span>
-</button>
-</div>
-<!-- Decorative element -->
-<div class="absolute -right-6 -bottom-6 w-32 h-32 bg-primary/20 rounded-full blur-2xl"></div>
-<button class="absolute top-4 right-4 w-10 h-10 flex items-center justify-center text-outline hover:text-primary z-20" onclick="event.stopPropagation(); toggleSave(0)">
-<span class="material-symbols-outlined" id="save-icon-0">favorite_border</span>
-</button>
-</div>
-</div>
-<div class="mb-6">
-<h2 class="text-sm font-semibold text-outline tracking-wider uppercase mb-4" id="list-title">Recent</h2>
-<div class="flex flex-col gap-3" id="song-list">
-<!-- Songs injected via JS -->
-</div>
-</div>
-</main>
-<!-- Bottom Fixed Area (Player + Nav) -->
-<div class="fixed bottom-0 left-0 w-full z-20">
-<!-- Player Bar -->
-<div class="mx-4 mb-4 bg-surface-container-lowest/90 backdrop-blur-xl border border-surface-container shadow-sm rounded-3xl p-3 flex flex-col gap-2">
-<div class="flex items-center gap-3">
-<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary shrink-0">
-<span class="material-symbols-outlined text-sm" id="player-icon">waves</span>
-</div>
-<div class="flex-1 overflow-hidden">
-<div class="font-medium text-sm truncate" id="player-title">Oceanic Drift</div>
-<div class="text-xs text-on_surface_variant truncate" id="player-artist">Relaxation</div>
-</div>
-<div class="flex items-center gap-1 shrink-0">
-<button class="w-8 h-8 flex items-center justify-center text-on_surface_variant hover:text-primary transition-colors" onclick="playPrev()">
-<span class="material-symbols-outlined text-sm">skip_previous</span>
-</button>
-<button class="w-10 h-10 flex items-center justify-center text-on_surface bg-surface-container-low rounded-full hover:bg-surface-container transition-colors" id="play-pause-btn" onclick="togglePlay()"><span class="material-symbols-outlined">play_arrow</span></button>
-<button class="w-8 h-8 flex items-center justify-center text-on_surface_variant hover:text-primary transition-colors" onclick="playNext()">
-<span class="material-symbols-outlined text-sm">skip_next</span>
-</button>
-</div>
-</div>
-<div class="flex items-center gap-2 px-1">
-<span class="text-[10px] text-on_surface_variant w-8 text-right" id="player-time-current">0:00</span>
-<input class="flex-1 h-1 bg-surface-container rounded-full appearance-none cursor-pointer" id="player-progress" max="100" min="0" onchange="seekAudio(this.value)" oninput="seekAudio(this.value)" type="range" value="0"/>
-<span class="text-[10px] text-on_surface_variant w-8" id="player-time-total">45:00</span>
-</div>
-</div>
-<!-- Bottom Navigation -->
-<nav class="bg-surface-container-lowest border-t border-surface-container px-6 py-3 pb-8 flex justify-between items-center">
-<button class="flex flex-col items-center gap-1 text-primary w-16 nav-btn" id="nav-home" onclick="showHome()">
-<div class="w-8 h-8 flex items-center justify-center rounded-full bg-primary/10">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
-</div>
-<span class="text-[10px] font-medium">Home</span>
-</button>
-<button class="flex flex-col items-center gap-1 text-outline w-16 hover:text-on_surface transition-colors nav-btn" id="nav-search" onclick="toggleSearch(true)">
-<div class="w-8 h-8 flex items-center justify-center rounded-full">
-<span class="material-symbols-outlined">search</span>
-</div>
-<span class="text-[10px] font-medium">Search</span>
-</button>
-<button class="flex flex-col items-center gap-1 text-outline w-16 hover:text-on_surface transition-colors nav-btn" id="nav-saved" onclick="toggleLibraryFilter()">
-<div class="w-8 h-8 flex items-center justify-center rounded-full">
-<span class="material-symbols-outlined">favorite</span>
-</div>
-<span class="text-[10px] font-medium">Saved</span>
-</button>
-</nav>
-</div>
-</div>
-<!-- ABOUT DEVELOPER SCREEN -->
-<div class="screen flex flex-col h-full bg-surface" id="about-screen">
-<!-- Top Bar -->
-<header class="px-4 py-4 flex items-center gap-4 sticky top-0 bg-surface/80 backdrop-blur-md z-10">
-<button class="w-10 h-10 flex items-center justify-center rounded-full text-on_surface hover:bg-surface-container-low transition-colors" onclick="navigateTo('library-screen')">
-<span class="material-symbols-outlined">arrow_back</span>
-</button>
-<h1 class="text-xl font-bold tracking-tight">About</h1>
-</header>
-<main class="flex-1 overflow-y-auto p-6 flex flex-col items-center">
-<div class="w-24 h-24 rounded-full overflow-hidden mb-6 shadow-md border-2 border-surface-container-lowest">
-<img alt="AK Logo" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida/AP1WRLtLMOkuK7lDdxwG1wwe-jrS7SiVkaUFzqbs3KYlrntZLGK_W-vijSeB3vLgZShZJe0Lz9joz3Z2AMX9YMRlijbqXTUb5a6Dz5mblPhhclJv9bNQ7bAHErvXvDHi9Zfvh5AejRWaL0yw7jHnYSmZ5XJiEuBs8eDJt7Bqr-3FOqYVWS_e90-z0OBv02qzIhmEIxjxpPpBpln1_QbAy-S-jxmoIHV_-prwFuOP-UlWFnBgBg7sBmElPhQ-M5o"/>
-</div>
-<h2 class="text-2xl font-bold text-on_surface mb-1">AK AKASH</h2>
-<p class="text-primary font-medium text-sm mb-6">Lead Developer &amp; Designer</p>
-<div class="bg-surface-container-lowest w-full rounded-3xl p-6 shadow-sm border border-surface-container mb-6 text-sm text-on_surface_variant leading-relaxed">
-<p class="mb-4">
-          Passionate about creating serene, functional digital spaces. The Azure Drift project was born from a desire to combine minimalist design with ambient focus tools.
-        </p>
-<p class="">
-          "Design is not just what it looks like and feels like. Design is how it works."
-        </p>
-</div>
-<div class="w-full">
-<h3 class="text-xs font-semibold text-outline tracking-wider uppercase mb-3 px-2">Links</h3>
-<div class="bg-surface-container-lowest w-full rounded-2xl shadow-sm border border-surface-container overflow-hidden">
-<a class="flex items-center justify-between p-4 border-b border-surface-container hover:bg-surface-container-low transition-colors" href="#">
-<div class="flex items-center gap-3 text-on_surface">
-<span class="material-symbols-outlined text-outline">language</span>
-<span class="text-sm font-medium">Portfolio</span>
-</div>
-<span class="material-symbols-outlined text-outline text-sm">open_in_new</span>
-</a>
-<a class="flex items-center justify-between p-4 hover:bg-surface-container-low transition-colors" href="#">
-<div class="flex items-center gap-3 text-on_surface">
-<span class="material-symbols-outlined text-outline">mail</span>
-<span class="text-sm font-medium">Contact</span>
-</div>
-<span class="material-symbols-outlined text-outline text-sm">chevron_right</span>
-</a>
-</div>
-</div>
-<div class="mt-auto pt-12 pb-24 text-xs text-outline font-medium">
-        Version 1.0.0
-      </div>
-</main>
-</div>
-<!-- Navigation and Player Script -->
-<script>
-    function navigateTo(screenId) {
-      const screens = document.querySelectorAll('.screen');
-      screens.forEach(screen => {
-        screen.classList.remove('active');
-      });
-      const targetScreen = document.getElementById(screenId);
-      if (targetScreen) {
-        setTimeout(() => {
-          targetScreen.classList.add('active');
-          targetScreen.scrollTop = 0;
-        }, 50);
-      }
-    }
+<body class="bg-slate-950 text-slate-100 font-sans min-h-screen flex flex-col md:flex-row overflow-x-hidden selection:bg-sky-500 selection:text-white">
 
-    // Audio Player State Mock
- const songs = [
+    <!-- Audio Node Element -->
+    <audio id="main-audio-player"></audio>
+
+    <!-- Sidebar Layout -->
+    <aside class="w-full md:w-64 bg-slate-900 border-b md:border-b-0 md:border-r border-slate-800 flex flex-col justify-between shrink-0 z-20">
+        <div>
+            <!-- App Logo/Header -->
+            <div class="p-6 flex items-center gap-3 border-b border-slate-800">
+                <span class="material-icons text-sky-400 text-3xl animate-pulse">waves</span>
+
+                <div>
+                    <h1 class="font-bold text-xl tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-indigo-400">AZURE</h1>
+                    <p class="text-xs text-slate-400 tracking-tight">by AK Akash</p>
+                </div>
+            </div>
+
+            <!-- Left Navigation Links -->
+            <nav class="p-4 space-y-1">
+                <button onclick="switchTab('library')" id="nav-library" class="w-full flex items-center gap-4 px-4 py-3 rounded-xl bg-slate-800 text-sky-400 font-medium transition duration-200">
+                    <span class="material-icons">library_music</span>
+                    <span>Music Library</span>
+                </button>
+                <button onclick="switchTab('about')" id="nav-about" class="w-full flex items-center gap-4 px-4 py-3 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 font-medium transition duration-200">
+                    <span class="material-icons">info</span>
+                    <span>About Space</span>
+                </button>
+            </nav>
+        </div>
+
+
+        <!-- Sticky Currently Playing Banner Mini Widget -->
+        <div id="mini-tracker" class="p-4 border-t border-slate-800 bg-slate-950/40 hidden md:block">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-sky-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-sky-500/10">
+                    <span class="material-icons text-white text-xl animate-spin" style="animation-duration: 6s;">album</span>
+                </div>
+                <div class="overflow-hidden flex-1">
+                    <p id="mini-title" class="text-xs font-semibold truncate text-slate-200">No Song Selected</p>
+                    <p id="mini-artist" class="text-[10px] text-slate-400 truncate">Select a track to play</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Workspace Area -->
+    <main class="flex-1 flex flex-col justify-between min-w-0 relative">
+        
+        <!-- Tab 1: Dynamic Song Library View -->
+        <section id="tab-library" class="p-6 md:p-8 flex-1 overflow-y-auto max-h-[calc(100vh-140px)] custom-scrollbar">
+
+            <div class="mb-8">
+                <h2 class="text-2xl font-bold tracking-tight text-white mb-2">Welcome to Azure</h2>
+                <p class="text-sm text-slate-400 max-w-xl">Immerse yourself in a calm, focused environment designed for deep work and seamless audio playback relaxation.</p>
+            </div>
+
+            <!-- Dynamic Search Component Grid -->
+            <div class="mb-6 max-w-md relative">
+                <span class="material-icons absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-lg">search</span>
+                <input type="text" id="search-bar" oninput="filterSongs()" placeholder="Search from your 15 downloaded tracks..." 
+                       class="w-full pl-11 pr-4 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-sm focus:outline-none focus:border-sky-500 transition placeholder:text-slate-500">
+            </div>
+
+            <!-- Explicit Playable Playlist Tracks Container Grid Layout -->
+            <div id="songs-grid-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- Javascript will map out cards here automatically -->
+            </div>
+        </section>
+
+        <!-- Tab 2: About Workspace Profile -->
+
+        <section id="tab-about" class="p-6 md:p-8 flex-1 hidden overflow-y-auto max-h-[calc(100vh-140px)] custom-scrollbar">
+            <div class="max-w-2xl bg-slate-900 border border-slate-800 rounded-2xl p-6 md:p-8 space-y-6">
+                <div class="flex items-center gap-4">
+                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-sky-400 to-indigo-500 flex items-center justify-center shadow-lg shadow-sky-500/20">
+                        <span class="material-icons text-white text-3xl">terminal</span>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-white">AK AKASH</h3>
+                        <p class="text-xs text-sky-400 tracking-wider font-medium">Lead Developer & Designer</p>
+                    </div>
+                </div>
+
+                <p class="text-slate-300 leading-relaxed text-sm">
+                    Passionate about creating serene, functional digital spaces. The Azure Drift project was born from a desire to combine minimalist web interfaces with custom personal audio playlists.
+                </p>
+
+                <blockquote class="border-l-2 border-sky-500 pl-4 py-1 italic text-slate-400 text-sm">
+                    "Design is not just what it looks like and feels like. Design is how it works."
+                </blockquote>
+
+
+                <div class="pt-4 border-t border-slate-800 flex flex-wrap gap-4 items-center justify-between text-xs text-slate-400">
+                    <div class="flex gap-4">
+                        <span class="flex items-center gap-1"><span class="material-icons text-base text-sky-400">language</span> Portfolio Available</span>
+                        <span class="flex items-center gap-1"><span class="material-icons text-base text-indigo-400">mail</span> Contact Ready</span>
+                    </div>
+                    <span class="bg-slate-800 px-3 py-1 rounded-full text-slate-300 font-mono">v1.0.0</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Controller Bar Layout Block Container -->
+        <footer class="bg-slate-900 border-t border-slate-800 px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-4 z-10 shrink-0">
+            <!-- Left Side Song metadata indicator state info container -->
+            <div class="flex items-center gap-3 w-full sm:w-1/4 min-w-0">
+                <div id="footer-art" class="w-11 h-11 rounded-lg bg-gradient-to-br from-slate-800 to-slate-700 flex items-center justify-center shrink-0">
+                    <span class="material-icons text-slate-400">music_note</span>
+                </div>
+                <div class="overflow-hidden">
+                    <h4 id="footer-title" class="text-sm font-semibold text-slate-100 truncate">No Song Playing</h4>
+
+                    <p id="footer-artist" class="text-xs text-slate-400 truncate">Select a track</p>
+                </div>
+            </div>
+
+            <!-- Middle Audio Interactive Slider Tracking controls -->
+            <div class="flex flex-col items-center gap-1.5 w-full sm:w-2/4">
+                <!-- Action Playback Button Elements Row Panel layout -->
+                <div class="flex items-center gap-4">
+                    <button onclick="playPrevious()" class="text-slate-400 hover:text-white transition duration-150 transform active:scale-90">
+                        <span class="material-icons text-2xl">skip_previous</span>
+                    </button>
+                    <button onclick="togglePlayback()" id="master-play-btn" class="w-10 h-10 rounded-full bg-sky-500 text-slate-950 flex items-center justify-center hover:bg-sky-400 transition duration-150 transform active:scale-95 shadow-md shadow-sky-500/20">
+                        <span class="material-icons text-2xl font-bold" id="master-play-icon">play_arrow</span>
+                    </button>
+                    <button onclick="playNext()" class="text-slate-400 hover:text-white transition duration-150 transform active:scale-90">
+                        <span class="material-icons text-2xl">skip_next</span>
+                    </button>
+                </div>
+
+
+                <!-- Custom Scrubber Slider Logic elements row panel -->
+                <div class="w-full flex items-center gap-3 text-[11px] text-slate-400 font-mono">
+                    <span id="time-current">0:00</span>
+                    <input type="range" id="seek-scrubber" min="0" max="100" value="0" oninput="seekToPosition()"
+                           class="flex-1 h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-sky-400 focus:outline-none">
+                    <span id="time-duration">0:00</span>
+                </div>
+            </div>
+
+            <!-- Right Volume and Favorite Controls row container space layout -->
+            <div class="flex items-center justify-end gap-3 w-full sm:w-1/4 text-slate-400">
+                <button onclick="toggleMute()" class="hover:text-white transition" id="mute-btn">
+                    <span class="material-icons text-xl" id="mute-icon">volume_up</span>
+                </button>
+                <input type="range" id="volume-slider" min="0" max="100" value="80" oninput="changeVolume()"
+                       class="w-20 h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-sky-400">
+            </div>
+        </footer>
+    </main>
+
+
+    <!-- App JavaScript Logic Engines -->
+    <script>
+        // Mapped tracks point directly to your verified local storage locations without typos
+        const songs = [
             { id: 0, title: "Dandelions", artist: "Ruth B.", src: "music/dandelions.mp3" },
             { id: 1, title: "Faded", artist: "Alan Walker", src: "music/faded.mp3" },
             { id: 2, title: "Heat Waves", artist: "Glass Animals", src: "music/heat-waves.mp3" },
@@ -281,219 +201,270 @@
             { id: 12, title: "Shape Of You", artist: "Ed Sheeran", src: "music/shape-of-you.mp3" },
             { id: 13, title: "Trapped In My Mind", artist: "Adam Oh", src: "music/trapped-in-my-mind.mp3" },
             { id: 14, title: "Unstoppable", artist: "Sia", src: "music/unstoppable.mp3" }
+
         ];
 
+        // Track States & DOM Node Selectors
+        let currentIndex = -1;
+        let isPlaying = false;
+        let prevVolume = 0.8;
 
-    let currentSongIndex = 1;
-    let isPlaying = false;
-    let currentTime = 0;
-    let playerInterval;
-    let showingSaved = false;
-    let searchQuery = '';
+        const audioPlayer = document.getElementById("main-audio-player");
+        const songsGrid = document.getElementById("songs-grid-container");
+        const masterPlayIcon = document.getElementById("master-play-icon");
+        const masterPlayBtn = document.getElementById("master-play-btn");
+        const seekScrubber = document.getElementById("seek-scrubber");
+        const timeCurrent = document.getElementById("time-current");
+        const timeDuration = document.getElementById("time-duration");
+        const volumeSlider = document.getElementById("volume-slider");
+        const muteIcon = document.getElementById("mute-icon");
 
-    function renderSongList() {
-      const songListEl = document.getElementById('song-list');
-      let listHtml = '';
-      
-      const filteredSongs = songs.filter((song, index) => {
-        if (index === 0) return false; // Skip featured song in list
-        
-        const matchesSearch = song.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                              song.artist.toLowerCase().includes(searchQuery.toLowerCase());
-        
-        const matchesSaved = showingSaved ? song.saved : true;
-        
-        return matchesSearch && matchesSaved;
-      });
+        const footerTitle = document.getElementById("footer-title");
+        const footerArtist = document.getElementById("footer-artist");
 
-      if (filteredSongs.length === 0) {
-        songListEl.innerHTML = '<div class="text-center text-outline py-8">No sounds found.</div>';
-        return;
-      }
+        const footerArt = document.getElementById("footer-art");
+        const miniTitle = document.getElementById("mini-title");
+        const miniArtist = document.getElementById("mini-artist");
 
-      for (const song of filteredSongs) {
-        const savedIcon = song.saved ? 'favorite' : 'favorite_border';
-        const savedFill = song.saved ? 'font-variation-settings: "FILL" 1;' : '';
-        const savedColor = song.saved ? 'text-primary' : 'text-outline';
-        
-        listHtml += `
-          <div class="flex items-center gap-4 p-3 rounded-2xl hover:bg-surface-container-low transition-colors cursor-pointer" onclick="playSong(${song.id})">
-            <div class="w-12 h-12 rounded-xl bg-surface-container-highest flex items-center justify-center text-primary">
-              <span class="material-symbols-outlined">${song.icon}</span>
-            </div>
-            <div class="flex-1">
-              <h4 class="font-medium text-base">${song.title}</h4>
-              <p class="text-xs text-on_surface_variant">${formatTime(song.duration)} • ${song.artist}</p>
-            </div>
-            <button class="w-10 h-10 flex items-center justify-center hover:bg-surface-container rounded-full transition-colors ${savedColor}" onclick="event.stopPropagation(); toggleSave(${song.id})">
-              <span class="material-symbols-outlined text-lg" style="${savedFill}">${savedIcon}</span>
-            </button>
-          </div>
-        `;
-      }
-      songListEl.innerHTML = listHtml;
-    }
+        // Initialization: Load Track DOM Elements Cards
+        window.addEventListener("DOMContentLoaded", () => {
+            renderSongs(songs);
+            audioPlayer.volume = volumeSlider.value / 100;
+            
+            // Audio Event Loop Links
+            audioPlayer.addEventListener("timeupdate", handleTimeUpdate);
+            audioPlayer.addEventListener("loadedmetadata", handleLoadedMetadata);
+            audioPlayer.addEventListener("ended", () => playNext());
+        });
 
-    function toggleSave(id) {
-      songs[id].saved = !songs[id].saved;
-      if (id === 0) {
-        // Update featured icon specifically
-        const icon = document.getElementById('save-icon-0');
-        icon.innerText = songs[0].saved ? 'favorite' : 'favorite_border';
-        icon.style.fontVariationSettings = songs[0].saved ? '"FILL" 1' : '"FILL" 0';
-      }
-      renderSongList();
-    }
+        // HTML Layout Grid Render Engine
+        function renderSongs(songsList) {
+            songsGrid.innerHTML = "";
+            if (songsList.length === 0) {
 
-    function toggleSearch(show) {
-      const searchContainer = document.getElementById('search-bar-container');
-      const searchInput = document.getElementById('song-search-input');
-      if (show) {
-        searchContainer.classList.remove('opacity-0', 'pointer-events-none');
-        searchContainer.classList.add('opacity-100', 'pointer-events-auto');
-        searchInput.focus();
-        updateNavState('nav-search');
-      } else {
-        searchContainer.classList.add('opacity-0', 'pointer-events-none');
-        searchContainer.classList.remove('opacity-100', 'pointer-events-auto');
-        searchInput.value = '';
-        searchQuery = '';
-        renderSongList();
-        updateNavState(showingSaved ? 'nav-saved' : 'nav-home');
-      }
-    }
+                songsGrid.innerHTML = `<div class="col-span-full py-12 text-center text-slate-500 text-sm">No songs match your search query.</div>`;
+                return;
+            }
 
-    function filterSongs(query) {
-      searchQuery = query;
-      renderSongList();
-    }
+            songsList.forEach(song => {
+                const card = document.createElement("div");
+                const isCurrentCard = song.id === currentIndex;
+                
+                card.className = `p-4 rounded-xl border transition duration-200 group flex items-center justify-between cursor-pointer ${
+                    isCurrentCard 
+                    ? "bg-sky-950/40 border-sky-500/50 shadow-md shadow-sky-500/5" 
+                    : "bg-slate-900/60 border-slate-800 hover:border-slate-700 hover:bg-slate-900"
+                }`;
+                card.setAttribute("onclick", `selectAndPlaySong(${song.id})`);
 
-    function toggleLibraryFilter() {
-      showingSaved = true;
-      document.getElementById('library-title').innerText = 'Saved Sounds';
-      document.getElementById('featured-section').style.display = 'none';
-      document.getElementById('list-title').style.display = 'none';
-      updateNavState('nav-saved');
-      renderSongList();
-    }
+                card.innerHTML = `
+                    <div class="flex items-center gap-3 overflow-hidden min-w-0">
+                        <div class="w-10 h-10 rounded-lg flex items-center justify-center shrink-0 transition ${
+                            isCurrentCard ? "bg-sky-500 text-slate-950" : "bg-slate-800 text-slate-400 group-hover:bg-sky-500 group-hover:text-slate-950"
 
-    function showHome() {
-      showingSaved = false;
-      document.getElementById('library-title').innerText = 'Library';
-      document.getElementById('featured-section').style.display = 'block';
-      document.getElementById('list-title').style.display = 'block';
-      toggleSearch(false);
-      updateNavState('nav-home');
-      renderSongList();
-      navigateTo('library-screen');
-    }
-
-    function updateNavState(activeId) {
-      const btns = document.querySelectorAll('.nav-btn');
-      btns.forEach(btn => {
-        btn.classList.remove('text-primary');
-        btn.classList.add('text-outline');
-        const iconContainer = btn.querySelector('div');
-        iconContainer.classList.remove('bg-primary/10');
-        const icon = btn.querySelector('.material-symbols-outlined');
-        icon.style.fontVariationSettings = '"FILL" 0';
-      });
-
-      const activeBtn = document.getElementById(activeId);
-      if (activeBtn) {
-        activeBtn.classList.remove('text-outline');
-        activeBtn.classList.add('text-primary');
-        const iconContainer = activeBtn.querySelector('div');
-        iconContainer.classList.add('bg-primary/10');
-        const icon = activeBtn.querySelector('.material-symbols-outlined');
-        icon.style.fontVariationSettings = '"FILL" 1';
-      }
-    }
-
-    function formatTime(seconds) {
-      const m = Math.floor(seconds / 60);
-      const s = Math.floor(seconds % 60);
-      return `${m}:${s < 10 ? '0' : ''}${s}`;
-    }
-
-    function updatePlayerUI() {
-      const song = songs[currentSongIndex];
-      document.getElementById('player-title').innerText = song.title;
-      document.getElementById('player-artist').innerText = song.artist;
-      document.getElementById('player-icon').innerText = song.icon;
-      document.getElementById('player-time-total').innerText = formatTime(song.duration);
-      document.getElementById('player-time-current').innerText = formatTime(currentTime);
-      
-      const progressPercent = (currentTime / song.duration) * 100 || 0;
-      document.getElementById('player-progress').value = progressPercent;
-      
-      const playBtn = document.getElementById('play-pause-btn');
-      if (isPlaying) {
-        playBtn.innerHTML = '<span class="material-symbols-outlined">pause</span>';
-        playBtn.classList.add('bg-primary', 'text-white');
-        playBtn.classList.remove('bg-surface-container-low', 'text-on_surface');
-      } else {
-        playBtn.innerHTML = '<span class="material-symbols-outlined">play_arrow</span>';
-        playBtn.classList.remove('bg-primary', 'text-white');
-        playBtn.classList.add('bg-surface-container-low', 'text-on_surface');
-      }
-    }
-
-    function playSong(index) {
-      currentSongIndex = index;
-      currentTime = 0;
-      isPlaying = true;
-      startTimer();
-      updatePlayerUI();
-    }
-
-    function togglePlay() {
-      isPlaying = !isPlaying;
-      if (isPlaying) {
-        startTimer();
-      } else {
-        clearInterval(playerInterval);
-      }
-      updatePlayerUI();
-    }
-
-    function playNext() {
-      currentSongIndex = (currentSongIndex + 1) % songs.length;
-      currentTime = 0;
-      updatePlayerUI();
-      if (isPlaying) startTimer();
-    }
-
-    function playPrev() {
-      currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length;
-      currentTime = 0;
-      updatePlayerUI();
-      if (isPlaying) startTimer();
-    }
-
-    function seekAudio(value) {
-      const song = songs[currentSongIndex];
-      currentTime = (value / 100) * song.duration;
-      updatePlayerUI();
-    }
-
-    function startTimer() {
-      clearInterval(playerInterval);
-      playerInterval = setInterval(() => {
-        const song = songs[currentSongIndex];
-        currentTime += 1; // Simulate 1 second elapsed
-        if (currentTime >= song.duration) {
-          // Autoplay next
-          playNext();
-        } else {
-          updatePlayerUI();
+                        }">
+                            <span class="material-icons text-xl">${isCurrentCard && isPlaying ? "pause" : "play_arrow"}</span>
+                        </div>
+                        <div class="overflow-hidden">
+                            <h5 class="text-sm font-semibold truncate ${isCurrentCard ? "text-sky-400" : "text-slate-200"}">${song.title}</h5>
+                            <p class="text-xs text-slate-400 truncate">${song.artist}</p>
+                        </div>
+                    </div>
+                    <button onclick="event.stopPropagation(); toggleFavorite(this)" class="text-slate-500 hover:text-rose-500 transition pl-2 shrink-0">
+                        <span class="material-icons text-lg">favorite_border</span>
+                    </button>
+                `;
+                songsGrid.appendChild(card);
+            });
         }
-      }, 1000); // 1 second intervals for mock
-    }
 
-    // Initialize UI
-    renderSongList();
-    updatePlayerUI();
+        // Search Filters Input Logic
+        function filterSongs() {
+            const query = document.getElementById("search-bar").value.toLowerCase().trim();
 
-  </script>
-</body></html>
+            const filtered = songs.filter(s => 
+                s.title.toLowerCase().includes(query) || 
+                s.artist.toLowerCase().includes(query)
+            );
+            renderSongs(filtered);
+        }
+
+        // Active Track Engine Actions
+        function selectAndPlaySong(id) {
+            if (currentIndex === id) {
+                togglePlayback();
+                return;
+            }
+
+            currentIndex = id;
+            const song = songs[currentIndex];
+
+            // Re-bind source path to the hidden audio layout tag node
+            audioPlayer.src = song.src;
+
+            isPlaying = true;
+            
+            // Sync user control widgets tracking blocks text slots
+            footerTitle.textContent = song.title;
+            footerArtist.textContent = song.artist;
+            miniTitle.textContent = song.title;
+            miniArtist.textContent = song.artist;
+
+            footerArt.className = "w-11 h-11 rounded-lg bg-gradient-to-tr from-sky-400 to-indigo-500 flex items-center justify-center text-white shrink-0 shadow-md shadow-sky-500/20";
+            footerArt.innerHTML = `<span class="material-icons animate-spin" style="animation-duration: 4s;">album</span>`;
+
+            audioPlayer.play().catch(err => {
+                console.log("Audio play deferred or file path not loaded locally yet:", err);
+            });
+
+            updatePlaybackUIState();
+            renderSongs(songs);
+        }
+
+
+        // Play/Pause Master Switch Router logic
+        function togglePlayback() {
+            if (currentIndex === -1) {
+                // If nothing is playing yet, load the first item in queue
+                selectAndPlaySong(0);
+                return;
+            }
+
+            if (isPlaying) {
+                audioPlayer.pause();
+                isPlaying = false;
+            } else {
+                audioPlayer.play().catch(() => {});
+                isPlaying = true;
+            }
+
+            updatePlaybackUIState();
+            renderSongs(songs);
+        }
+
+
+        function updatePlaybackUIState() {
+            if (isPlaying) {
+                masterPlayIcon.textContent = "pause";
+                masterPlayBtn.classList.remove("bg-sky-500", "hover:bg-sky-400");
+                masterPlayBtn.classList.add("bg-indigo-500", "hover:bg-indigo-400", "text-white");
+                if (document.getElementById("footer-art").querySelector("span")) {
+                    document.getElementById("footer-art").querySelector("span").classList.add("animate-spin");
+                }
+            } else {
+                masterPlayIcon.textContent = "play_arrow";
+                masterPlayBtn.classList.remove("bg-indigo-500", "hover:bg-indigo-400", "text-white");
+                masterPlayBtn.classList.add("bg-sky-500", "hover:bg-sky-400", "text-slate-950");
+                if (document.getElementById("footer-art").querySelector("span")) {
+                    document.getElementById("footer-art").querySelector("span").classList.remove("animate-spin");
+                }
+            }
+        }
+
+        // Sequential Playback Navigation Methods
+
+        function playNext() {
+            if (songs.length === 0) return;
+            let nextIndex = currentIndex + 1;
+            if (nextIndex >= songs.length) nextIndex = 0;
+            selectAndPlaySong(nextIndex);
+        }
+
+        function playPrevious() {
+            if (songs.length === 0) return;
+            let prevIndex = currentIndex - 1;
+            if (prevIndex < 0) prevIndex = songs.length - 1;
+            selectAndPlaySong(prevIndex);
+        }
+
+        // Custom Media Player Time Tracking Format Utilities
+        function handleTimeUpdate() {
+            if (!isNaN(audioPlayer.duration)) {
+                const currentProgress = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+                seekScrubber.value = currentProgress;
+
+                timeCurrent.textContent = formatMediaTime(audioPlayer.currentTime);
+            }
+        }
+
+        function handleLoadedMetadata() {
+            timeDuration.textContent = formatMediaTime(audioPlayer.duration);
+        }
+
+        function seekToPosition() {
+            if (audioPlayer.duration) {
+                const newTime = (seekScrubber.value / 100) * audioPlayer.duration;
+                audioPlayer.currentTime = newTime;
+            }
+        }
+
+        function formatMediaTime(secs) {
+            const minutes = Math.floor(secs / 60);
+            const seconds = Math.floor(secs % 60);
+            return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+
+        }
+
+        // Audio Volume / Mute Engine Elements
+        function changeVolume() {
+            const vol = volumeSlider.value / 100;
+            audioPlayer.volume = vol;
+            if (vol === 0) {
+                muteIcon.textContent = "volume_off";
+            } else if (vol < 0.5) {
+                muteIcon.textContent = "volume_down";
+            } else {
+                muteIcon.textContent = "volume_up";
+            }
+        }
+
+        function toggleMute() {
+            if (audioPlayer.volume > 0) {
+                prevVolume = audioPlayer.volume;
+                volumeSlider.value = 0;
+
+                audioPlayer.volume = 0;
+                muteIcon.textContent = "volume_off";
+            } else {
+                audioPlayer.volume = prevVolume;
+                volumeSlider.value = prevVolume * 100;
+                muteIcon.textContent = prevVolume >= 0.5 ? "volume_up" : "volume_down";
+            }
+        }
+
+        // Independent Local Favorite Vector Action
+        function toggleFavorite(btn) {
+            const icon = btn.querySelector(".material-icons");
+            if (icon.textContent === "favorite_border") {
+                icon.textContent = "favorite";
+                btn.classList.remove("text-slate-500");
+                btn.classList.add("text-rose-500");
+            } else {
+                icon.textContent = "favorite_border";
+                btn.classList.remove("text-rose-500");
+
+                btn.classList.add("text-slate-500");
+            }
+        }
+
+        // Tab Navigator Router Logic
+        function switchTab(tabId) {
+            document.getElementById("tab-library").classList.add("hidden");
+            document.getElementById("tab-about").classList.add("hidden");
+            document.getElementById("nav-library").className = "w-full flex items-center gap-4 px-4 py-3 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 font-medium transition duration-200";
+            document.getElementById("nav-about").className = "w-full flex items-center gap-4 px-4 py-3 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 font-medium transition duration-200";
+
+            if (tabId === 'library') {
+                document.getElementById("tab-library").classList.remove("hidden");
+                document.getElementById("nav-library").className = "w-full flex items-center gap-4 px-4 py-3 rounded-xl bg-slate-800 text-sky-400 font-medium transition duration-200";
+            } else {
+                document.getElementById("tab-about").classList.remove("hidden");
+                document.getElementById("nav-about").className = "w-full flex items-center gap-4 px-4 py-3 rounded-xl bg-slate-800 text-sky-400 font-medium transition duration-200";
+            }
+        }
+
+    </script>
+</body>
+</html>
+
+
