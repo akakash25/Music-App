@@ -26,12 +26,40 @@
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
             background: rgba(56, 189, 248, 0.6);
         }
+        /* Mood Theme Transitions */
+        .mood-bg-transition {
+            transition: background 1.2s ease-in-out, border-color 0.6s ease;
+        }
     </style>
 </head>
-<body class="bg-slate-950 text-slate-100 font-sans min-h-screen flex flex-col md:flex-row overflow-x-hidden selection:bg-sky-500 selection:text-white">
+<body id="app-body" class="bg-slate-950 text-slate-100 font-sans min-h-screen flex flex-col md:flex-row overflow-x-hidden selection:bg-sky-500 selection:text-white mood-bg-transition">
 
     <!-- Audio Node Element -->
     <audio id="main-audio-player"></audio>
+
+    <!-- Global Introduction Gate Overlay View -->
+    <div id="intro-gate" class="fixed inset-0 bg-slate-950 z-50 flex flex-col items-center justify-center p-6 text-center select-none">
+
+        <div class="max-w-md space-y-6 animate-fade-in">
+            <div class="w-20 h-20 mx-auto rounded-3xl bg-gradient-to-tr from-sky-400 to-indigo-500 flex items-center justify-center shadow-xl shadow-sky-500/10">
+                <span class="material-icons text-white text-4xl animate-pulse">waves</span>
+            </div>
+            <div class="space-y-2">
+                <h1 class="text-4xl font-black tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-blue-400 to-indigo-400">AZURE</h1>
+                <p class="text-sm text-slate-400 font-medium tracking-wide uppercase">Personal Audio Experience Space</p>
+            </div>
+            <p class="text-sm text-slate-400 leading-relaxed px-4">
+                Welcome to Azure. A personalized workspace designed to streamline your music flow, minimize stress, and boost your focusing state.
+            </p>
+            <div class="pt-4">
+                <button onclick="dismissIntroGate()" class="px-8 py-3.5 bg-gradient-to-r from-sky-500 to-indigo-600 hover:from-sky-400 hover:to-indigo-500 text-slate-950 font-bold rounded-xl shadow-lg shadow-sky-500/10 hover:shadow-sky-500/20 active:scale-95 transition duration-150 text-sm tracking-wide">
+                    Enter Workspace
+                </button>
+            </div>
+            <p class="text-[10px] text-slate-600 font-mono">Created by AK Akash &bull; v1.1.0</p>
+        </div>
+    </div>
+
 
     <!-- Sidebar Layout -->
     <aside class="w-full md:w-64 bg-slate-900 border-b md:border-b-0 md:border-r border-slate-800 flex flex-col justify-between shrink-0 z-20">
@@ -39,7 +67,6 @@
             <!-- App Logo/Header -->
             <div class="p-6 flex items-center gap-3 border-b border-slate-800">
                 <span class="material-icons text-sky-400 text-3xl animate-pulse">waves</span>
-
                 <div>
                     <h1 class="font-bold text-xl tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-indigo-400">AZURE</h1>
                     <p class="text-xs text-slate-400 tracking-tight">by AK Akash</p>
@@ -52,6 +79,11 @@
                     <span class="material-icons">library_music</span>
                     <span>Music Library</span>
                 </button>
+                <button onclick="switchTab('favorites')" id="nav-favorites" class="w-full flex items-center gap-4 px-4 py-3 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 font-medium transition duration-200">
+
+                    <span class="material-icons">favorite</span>
+                    <span>Favorites Space</span>
+                </button>
                 <button onclick="switchTab('about')" id="nav-about" class="w-full flex items-center gap-4 px-4 py-3 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 font-medium transition duration-200">
                     <span class="material-icons">info</span>
                     <span>About Space</span>
@@ -59,16 +91,16 @@
             </nav>
         </div>
 
-
         <!-- Sticky Currently Playing Banner Mini Widget -->
         <div id="mini-tracker" class="p-4 border-t border-slate-800 bg-slate-950/40 hidden md:block">
             <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-sky-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-sky-500/10">
-                    <span class="material-icons text-white text-xl animate-spin" style="animation-duration: 6s;">album</span>
+                <div id="mini-art-frame" class="w-10 h-10 rounded-lg bg-gradient-to-br from-slate-800 to-slate-700 flex items-center justify-center shadow-lg transition-all duration-500">
+                    <span id="mini-art-icon" class="material-icons text-slate-400 text-xl">album</span>
                 </div>
                 <div class="overflow-hidden flex-1">
                     <p id="mini-title" class="text-xs font-semibold truncate text-slate-200">No Song Selected</p>
                     <p id="mini-artist" class="text-[10px] text-slate-400 truncate">Select a track to play</p>
+
                 </div>
             </div>
         </div>
@@ -79,7 +111,6 @@
         
         <!-- Tab 1: Dynamic Song Library View -->
         <section id="tab-library" class="p-6 md:p-8 flex-1 overflow-y-auto max-h-[calc(100vh-140px)] custom-scrollbar">
-
             <div class="mb-8">
                 <h2 class="text-2xl font-bold tracking-tight text-white mb-2">Welcome to Azure</h2>
                 <p class="text-sm text-slate-400 max-w-xl">Immerse yourself in a calm, focused environment designed for deep work and seamless audio playback relaxation.</p>
@@ -89,6 +120,7 @@
             <div class="mb-6 max-w-md relative">
                 <span class="material-icons absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-lg">search</span>
                 <input type="text" id="search-bar" oninput="filterSongs()" placeholder="Search from your 15 downloaded tracks..." 
+
                        class="w-full pl-11 pr-4 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-sm focus:outline-none focus:border-sky-500 transition placeholder:text-slate-500">
             </div>
 
@@ -98,8 +130,20 @@
             </div>
         </section>
 
-        <!-- Tab 2: About Workspace Profile -->
+        <!-- Tab 2: Favorites Filtered View -->
+        <section id="tab-favorites" class="p-6 md:p-8 flex-1 hidden overflow-y-auto max-h-[calc(100vh-140px)] custom-scrollbar">
+            <div class="mb-8">
+                <h2 class="text-2xl font-bold tracking-tight text-white mb-2">Your Favorites Space</h2>
+                <p class="text-sm text-slate-400 max-w-xl">A curated deck showcasing only the tracks you have explicitly hearted for easier access.</p>
+            </div>
+            
+            <div id="favorites-grid-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- Empty notification or layout rows handled cleanly by rendering script logic -->
+            </div>
 
+        </section>
+
+        <!-- Tab 3: About Workspace Profile -->
         <section id="tab-about" class="p-6 md:p-8 flex-1 hidden overflow-y-auto max-h-[calc(100vh-140px)] custom-scrollbar">
             <div class="max-w-2xl bg-slate-900 border border-slate-800 rounded-2xl p-6 md:p-8 space-y-6">
                 <div class="flex items-center gap-4">
@@ -116,31 +160,35 @@
                     Passionate about creating serene, functional digital spaces. The Azure Drift project was born from a desire to combine minimalist web interfaces with custom personal audio playlists.
                 </p>
 
+
                 <blockquote class="border-l-2 border-sky-500 pl-4 py-1 italic text-slate-400 text-sm">
                     "Design is not just what it looks like and feels like. Design is how it works."
                 </blockquote>
 
-
                 <div class="pt-4 border-t border-slate-800 flex flex-wrap gap-4 items-center justify-between text-xs text-slate-400">
                     <div class="flex gap-4">
-                        <span class="flex items-center gap-1"><span class="material-icons text-base text-sky-400">language</span> Portfolio Available</span>
-                        <span class="flex items-center gap-1"><span class="material-icons text-base text-indigo-400">mail</span> Contact Ready</span>
+                        <a href="https://github.com/akakash2597-bit/My-Portfolio" target="_blank" rel="noopener noreferrer" class="flex items-center gap-1 text-sky-400 hover:text-sky-300 hover:underline transition">
+                            <span class="material-icons text-base">language</span> Portfolio Available
+                        </a>
+                        <a href="mailto:akakash2597@gmail.com" class="flex items-center gap-1 text-indigo-400 hover:text-indigo-300 hover:underline transition">
+                            <span class="material-icons text-base">mail</span> Contact Ready
+                        </a>
                     </div>
-                    <span class="bg-slate-800 px-3 py-1 rounded-full text-slate-300 font-mono">v1.0.0</span>
+                    <span class="bg-slate-800 px-3 py-1 rounded-full text-slate-300 font-mono">v1.1.0</span>
                 </div>
             </div>
         </section>
 
         <!-- Bottom Controller Bar Layout Block Container -->
+
         <footer class="bg-slate-900 border-t border-slate-800 px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-4 z-10 shrink-0">
             <!-- Left Side Song metadata indicator state info container -->
             <div class="flex items-center gap-3 w-full sm:w-1/4 min-w-0">
-                <div id="footer-art" class="w-11 h-11 rounded-lg bg-gradient-to-br from-slate-800 to-slate-700 flex items-center justify-center shrink-0">
-                    <span class="material-icons text-slate-400">music_note</span>
+                <div id="footer-art" class="w-11 h-11 rounded-lg bg-gradient-to-br from-slate-800 to-slate-700 flex items-center justify-center shrink-0 transition-all duration-500">
+                    <span id="footer-art-icon" class="material-icons text-slate-400">music_note</span>
                 </div>
                 <div class="overflow-hidden">
                     <h4 id="footer-title" class="text-sm font-semibold text-slate-100 truncate">No Song Playing</h4>
-
                     <p id="footer-artist" class="text-xs text-slate-400 truncate">Select a track</p>
                 </div>
             </div>
@@ -149,6 +197,12 @@
             <div class="flex flex-col items-center gap-1.5 w-full sm:w-2/4">
                 <!-- Action Playback Button Elements Row Panel layout -->
                 <div class="flex items-center gap-4">
+                    <!-- Shuffle Controls Button -->
+                    <button onclick="toggleShuffle()" id="shuffle-btn" class="text-slate-500 hover:text-slate-300 transition duration-150 transform active:scale-90" title="Shuffle Playlist">
+                        <span class="material-icons text-xl">shuffle</span>
+
+                    </button>
+                    
                     <button onclick="playPrevious()" class="text-slate-400 hover:text-white transition duration-150 transform active:scale-90">
                         <span class="material-icons text-2xl">skip_previous</span>
                     </button>
@@ -158,10 +212,15 @@
                     <button onclick="playNext()" class="text-slate-400 hover:text-white transition duration-150 transform active:scale-90">
                         <span class="material-icons text-2xl">skip_next</span>
                     </button>
+
+                    <!-- Repeat Controls Button -->
+                    <button onclick="toggleRepeat()" id="repeat-btn" class="text-slate-500 hover:text-slate-300 transition duration-150 transform active:scale-90" title="Repeat Track">
+                        <span class="material-icons text-xl">repeat</span>
+                    </button>
                 </div>
 
-
                 <!-- Custom Scrubber Slider Logic elements row panel -->
+
                 <div class="w-full flex items-center gap-3 text-[11px] text-slate-400 font-mono">
                     <span id="time-current">0:00</span>
                     <input type="range" id="seek-scrubber" min="0" max="100" value="0" oninput="seekToPosition()"
@@ -170,78 +229,121 @@
                 </div>
             </div>
 
-            <!-- Right Volume and Favorite Controls row container space layout -->
-            <div class="flex items-center justify-end gap-3 w-full sm:w-1/4 text-slate-400">
-                <button onclick="toggleMute()" class="hover:text-white transition" id="mute-btn">
-                    <span class="material-icons text-xl" id="mute-icon">volume_up</span>
-                </button>
-                <input type="range" id="volume-slider" min="0" max="100" value="80" oninput="changeVolume()"
-                       class="w-20 h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-sky-400">
+            <!-- Right Volume and Sleep Timer Controls row container space layout -->
+            <div class="flex items-center justify-end gap-4 w-full sm:w-1/4 text-slate-400">
+                <!-- Sleep Timer Selection Action Panel -->
+                <div class="relative inline-block text-left">
+                    <button onclick="toggleTimerDropdown()" id="timer-menu-btn" class="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-slate-950/40 hover:bg-slate-800 border border-slate-800 text-slate-400 hover:text-slate-200 transition text-xs font-medium" title="Configure Sleep Timer">
+                        <span class="material-icons text-sm" id="timer-status-icon">alarm</span>
+                        <span id="timer-display-label">Off</span>
+                    </button>
+                    <div id="timer-dropdown" class="hidden absolute bottom-full right-0 mb-2 w-32 bg-slate-900 border border-slate-800 rounded-xl shadow-2xl p-1 z-30 font-sans text-xs">
+                        <button onclick="setSleepTimer(0)" class="w-full text-left px-3 py-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-slate-200">Turn Off</button>
+                        <button onclick="setSleepTimer(5)" class="w-full text-left px-3 py-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-slate-200">5 Minutes</button>
+
+                        <button onclick="setSleepTimer(15)" class="w-full text-left px-3 py-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-slate-200">15 Minutes</button>
+                        <button onclick="setSleepTimer(30)" class="w-full text-left px-3 py-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-slate-200">30 Minutes</button>
+                        <button onclick="setSleepTimer(60)" class="w-full text-left px-3 py-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-slate-200">60 Minutes</button>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-2">
+                    <button onclick="toggleMute()" class="hover:text-white transition" id="mute-btn">
+                        <span class="material-icons text-xl" id="mute-icon">volume_up</span>
+                    </button>
+                    <input type="range" id="volume-slider" min="0" max="100" value="80" oninput="changeVolume()"
+                           class="w-20 h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-sky-400">
+                </div>
             </div>
         </footer>
     </main>
 
-
     <!-- App JavaScript Logic Engines -->
     <script>
-        // Mapped tracks point directly to your verified local storage locations without typos
-        const songs = [
-            { id: 0, title: "Dandelions", artist: "Ruth B.", src: "music/dandelions.mp3" },
-            { id: 1, title: "Faded", artist: "Alan Walker", src: "music/faded.mp3" },
-            { id: 2, title: "Heat Waves", artist: "Glass Animals", src: "music/heat-waves.mp3" },
-            { id: 3, title: "Hymn For The Weekend", artist: "Coldplay & Beyoncé", src: "music/hymn-for-the-weekend.mp3" },
-            { id: 4, title: "I Wanna Be Yours", artist: "Arctic Monkeys", src: "music/i-wanna-be-yours.mp3" },
-            { id: 5, title: "Infinity", artist: "Jaymes Young", src: "music/infinity.mp3" },
-            { id: 6, title: "Let Me Down Slowly", artist: "Alec Benjamin", src: "music/let-me-down-slowly.mp3" },
-            { id: 7, title: "Love Me Like You Do", artist: "Ellie Goulding", src: "music/love-me-like-you-do.mp3" },
-            { id: 8, title: "Love Nwantiti", artist: "CKay", src: "music/love-nwantiti.mp3" },
-            { id: 9, title: "Memories", artist: "Maroon 5", src: "music/memories.mp3" },
-            { id: 10, title: "Mood", artist: "24kGoldn feat. iann dior", src: "music/mood.mp3" },
-            { id: 11, title: "Perfect", artist: "Ed Sheeran", src: "music/perfect.mp3" },
-            { id: 12, title: "Shape Of You", artist: "Ed Sheeran", src: "music/shape-of-you.mp3" },
-            { id: 13, title: "Trapped In My Mind", artist: "Adam Oh", src: "music/trapped-in-my-mind.mp3" },
-            { id: 14, title: "Unstoppable", artist: "Sia", src: "music/unstoppable.mp3" }
 
+        // Mapped tracks pointing to your local storage directory locations
+        const songs = [
+            { id: 0, title: "Dandelions", artist: "Ruth B.", src: "music/dandelions.mp3", saved: false, mood: "linear-gradient(to right, #0f172a, #2e1065)" },
+            { id: 1, title: "Faded", artist: "Alan Walker", src: "music/faded.mp3", saved: false, mood: "linear-gradient(to right, #070a13, #1e1b4b)" },
+            { id: 2, title: "Heat Waves", artist: "Glass Animals", src: "music/heat-waves.mp3", saved: false, mood: "linear-gradient(to right, #1c0d02, #0f172a)" },
+            { id: 3, title: "Hymn For The Weekend", artist: "Coldplay & Beyoncé", src: "music/hymn-for-the-weekend.mp3", saved: false, mood: "linear-gradient(to right, #022c22, #0f172a)" },
+            { id: 4, title: "I Wanna Be Yours", artist: "Arctic Monkeys", src: "music/i-wanna-be-yours.mp3", saved: false, mood: "linear-gradient(to right, #311005, #090d16)" },
+            { id: 5, title: "Infinity", artist: "Jaymes Young", src: "music/infinity.mp3", saved: false, mood: "linear-gradient(to right, #0c1a30, #16062b)" },
+            { id: 6, title: "Let Me Down Slowly", artist: "Alec Benjamin", src: "music/let-me-down-slowly.mp3", saved: false, mood: "linear-gradient(to right, #172554, #030712)" },
+            { id: 7, title: "Love Me Like You Do", artist: "Ellie Goulding", src: "music/love-me-like-you-do.mp3", saved: false, mood: "linear-gradient(to right, #4c0519, #0f172a)" },
+            { id: 8, title: "Love Nwantiti", artist: "CKay", src: "music/love-nwantiti.mp3", saved: false, mood: "linear-gradient(to right, #2d063b, #0f172a)" },
+            { id: 9, title: "Memories", artist: "Maroon 5", src: "music/memories.mp3", saved: false, mood: "linear-gradient(to right, #062f4f, #0f172a)" },
+            { id: 10, title: "Mood", artist: "24kGoldn feat. iann dior", src: "music/mood.mp3", saved: false, mood: "linear-gradient(to right, #1e1b4b, #311042)" },
+            { id: 11, title: "Perfect", artist: "Ed Sheeran", src: "music/perfect.mp3", saved: false, mood: "linear-gradient(to right, #0f172a, #14532d)" },
+            { id: 12, title: "Shape Of You", artist: "Ed Sheeran", src: "music/shape-of-you.mp3", saved: false, mood: "linear-gradient(to right, #115e59, #0f172a)" },
+            { id: 13, title: "Trapped In My Mind", artist: "Adam Oh", src: "music/trapped-in-my-mind.mp3", saved: false, mood: "linear-gradient(to right, #1e293b, #0f172a)" },
+            { id: 14, title: "Unstoppable", artist: "Sia", src: "music/unstoppable.mp3", saved: false, mood: "linear-gradient(to right, #0f172a, #701a75)" }
         ];
 
-        // Track States & DOM Node Selectors
+
+        // Track States & Core Variable Structs
         let currentIndex = -1;
         let isPlaying = false;
         let prevVolume = 0.8;
+        
+        let isShuffle = false;
+        let isRepeat = false;
+        let sleepTimerId = null;
+        let sleepTimeRemaining = 0; // seconds tracking value node
 
         const audioPlayer = document.getElementById("main-audio-player");
         const songsGrid = document.getElementById("songs-grid-container");
+        const favoritesGrid = document.getElementById("favorites-grid-container");
+        
         const masterPlayIcon = document.getElementById("master-play-icon");
         const masterPlayBtn = document.getElementById("master-play-btn");
         const seekScrubber = document.getElementById("seek-scrubber");
         const timeCurrent = document.getElementById("time-current");
         const timeDuration = document.getElementById("time-duration");
+
         const volumeSlider = document.getElementById("volume-slider");
         const muteIcon = document.getElementById("mute-icon");
 
         const footerTitle = document.getElementById("footer-title");
         const footerArtist = document.getElementById("footer-artist");
-
         const footerArt = document.getElementById("footer-art");
+        const footerArtIcon = document.getElementById("footer-art-icon");
         const miniTitle = document.getElementById("mini-title");
         const miniArtist = document.getElementById("mini-artist");
+        const miniArtFrame = document.getElementById("mini-art-frame");
+        const miniArtIcon = document.getElementById("mini-art-icon");
 
-        // Initialization: Load Track DOM Elements Cards
+        // Initialization Pipeline hooks
         window.addEventListener("DOMContentLoaded", () => {
             renderSongs(songs);
             audioPlayer.volume = volumeSlider.value / 100;
             
-            // Audio Event Loop Links
+            // Audio Event Loop link anchors
             audioPlayer.addEventListener("timeupdate", handleTimeUpdate);
+
             audioPlayer.addEventListener("loadedmetadata", handleLoadedMetadata);
-            audioPlayer.addEventListener("ended", () => playNext());
+            audioPlayer.addEventListener("ended", handleTrackPlaybackCompletion);
+            
+            // Document click auto-binder wrapper to safely toggle the timer frame away when targeting body spaces
+            document.addEventListener("click", (e) => {
+                if (!e.target.closest('#timer-menu-btn') && !e.target.closest('#timer-dropdown')) {
+                    document.getElementById("timer-dropdown").classList.add("hidden");
+                }
+            });
         });
 
+        // Gate Control Engine Manager
+        function dismissIntroGate() {
+            const gate = document.getElementById("intro-gate");
+            gate.classList.add("transition", "duration-500", "opacity-0", "pointer-events-none");
+            setTimeout(() => gate.remove(), 500);
+        }
+
         // HTML Layout Grid Render Engine
+
         function renderSongs(songsList) {
             songsGrid.innerHTML = "";
             if (songsList.length === 0) {
-
                 songsGrid.innerHTML = `<div class="col-span-full py-12 text-center text-slate-500 text-sm">No songs match your search query.</div>`;
                 return;
             }
@@ -258,10 +360,10 @@
                 card.setAttribute("onclick", `selectAndPlaySong(${song.id})`);
 
                 card.innerHTML = `
+
                     <div class="flex items-center gap-3 overflow-hidden min-w-0">
                         <div class="w-10 h-10 rounded-lg flex items-center justify-center shrink-0 transition ${
                             isCurrentCard ? "bg-sky-500 text-slate-950" : "bg-slate-800 text-slate-400 group-hover:bg-sky-500 group-hover:text-slate-950"
-
                         }">
                             <span class="material-icons text-xl">${isCurrentCard && isPlaying ? "pause" : "play_arrow"}</span>
                         </div>
@@ -270,18 +372,66 @@
                             <p class="text-xs text-slate-400 truncate">${song.artist}</p>
                         </div>
                     </div>
-                    <button onclick="event.stopPropagation(); toggleFavorite(this)" class="text-slate-500 hover:text-rose-500 transition pl-2 shrink-0">
-                        <span class="material-icons text-lg">favorite_border</span>
+                    <button onclick="event.stopPropagation(); toggleFavorite(${song.id}, this)" class="transition pl-2 shrink-0 ${song.saved ? 'text-rose-500' : 'text-slate-500 hover:text-rose-500'}">
+                        <span class="material-icons text-lg">${song.saved ? 'favorite' : 'favorite_border'}</span>
                     </button>
                 `;
                 songsGrid.appendChild(card);
             });
         }
 
+
+        // Favorites Space Engine Layout Mapper
+        function renderFavoritesSpace() {
+            favoritesGrid.innerHTML = "";
+            const favoriteSongs = songs.filter(s => s.saved);
+            
+            if (favoriteSongs.length === 0) {
+                favoritesGrid.innerHTML = `
+                    <div class="col-span-full py-16 text-center border border-dashed border-slate-800 rounded-2xl p-6 bg-slate-900/20">
+                        <span class="material-icons text-slate-600 text-4xl mb-2">favorite_border</span>
+                        <p class="text-slate-400 text-sm font-medium">Your Favorites tab is empty</p>
+                        <p class="text-xs text-slate-500 max-w-xs mx-auto mt-1">Go back to the Music Library and tap the heart icons to curate this private workspace stack.</p>
+                    </div>`;
+                return;
+            }
+
+            favoriteSongs.forEach(song => {
+                const card = document.createElement("div");
+                const isCurrentCard = song.id === currentIndex;
+                
+
+                card.className = `p-4 rounded-xl border transition duration-200 group flex items-center justify-between cursor-pointer ${
+                    isCurrentCard 
+                    ? "bg-sky-950/40 border-sky-500/50 shadow-md shadow-sky-500/5" 
+                    : "bg-slate-900/60 border-slate-800 hover:border-slate-700 hover:bg-slate-900"
+                }`;
+                card.setAttribute("onclick", `selectAndPlaySong(${song.id})`);
+
+                card.innerHTML = `
+                    <div class="flex items-center gap-3 overflow-hidden min-w-0">
+                        <div class="w-10 h-10 rounded-lg flex items-center justify-center shrink-0 transition ${
+                            isCurrentCard ? "bg-sky-500 text-slate-950" : "bg-slate-800 text-slate-400 group-hover:bg-sky-500 group-hover:text-slate-950"
+                        }">
+                            <span class="material-icons text-xl">${isCurrentCard && isPlaying ? "pause" : "play_arrow"}</span>
+                        </div>
+                        <div class="overflow-hidden">
+                            <h5 class="text-sm font-semibold truncate ${isCurrentCard ? "text-sky-400" : "text-slate-200"}">${song.title}</h5>
+                            <p class="text-xs text-slate-400 truncate">${song.artist}</p>
+                        </div>
+                    </div>
+
+                    <button onclick="event.stopPropagation(); toggleFavorite(${song.id}, this)" class="text-rose-500 pl-2 shrink-0">
+                        <span class="material-icons text-lg">favorite</span>
+                    </button>
+                `;
+                favoritesGrid.appendChild(card);
+            });
+        }
+
         // Search Filters Input Logic
         function filterSongs() {
             const query = document.getElementById("search-bar").value.toLowerCase().trim();
-
             const filtered = songs.filter(s => 
                 s.title.toLowerCase().includes(query) || 
                 s.artist.toLowerCase().includes(query)
@@ -289,7 +439,8 @@
             renderSongs(filtered);
         }
 
-        // Active Track Engine Actions
+        // Active Track Engine Actions & Theme Shifts
+
         function selectAndPlaySong(id) {
             if (currentIndex === id) {
                 togglePlayback();
@@ -299,19 +450,29 @@
             currentIndex = id;
             const song = songs[currentIndex];
 
-            // Re-bind source path to the hidden audio layout tag node
+            // Re-bind source path to the hidden audio player node
             audioPlayer.src = song.src;
-
             isPlaying = true;
             
-            // Sync user control widgets tracking blocks text slots
+            // Apply Dynamic Mood Background Themes
+            document.getElementById("app-body").style.background = song.mood || "linear-gradient(to right, #0f172a, #0f172a)";
+            
+            // Sync tracking metadata content display elements
             footerTitle.textContent = song.title;
             footerArtist.textContent = song.artist;
+
             miniTitle.textContent = song.title;
             miniArtist.textContent = song.artist;
 
-            footerArt.className = "w-11 h-11 rounded-lg bg-gradient-to-tr from-sky-400 to-indigo-500 flex items-center justify-center text-white shrink-0 shadow-md shadow-sky-500/20";
-            footerArt.innerHTML = `<span class="material-icons animate-spin" style="animation-duration: 4s;">album</span>`;
+            // Trigger structural dynamic rotating album aesthetics
+            footerArt.className = "w-11 h-11 rounded-lg bg-gradient-to-tr from-sky-400 to-indigo-500 flex items-center justify-center text-white shrink-0 shadow-lg shadow-sky-500/20";
+            footerArtIcon.textContent = "album";
+            footerArtIcon.classList.add("animate-spin");
+            footerArtIcon.style.animationDuration = "4s";
+
+            miniArtFrame.className = "w-10 h-10 rounded-lg bg-gradient-to-br from-sky-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-sky-500/20 text-white shrink-0";
+            miniArtIcon.classList.add("animate-spin");
+            miniArtIcon.style.animationDuration = "6s";
 
             audioPlayer.play().catch(err => {
                 console.log("Audio play deferred or file path not loaded locally yet:", err);
@@ -319,13 +480,13 @@
 
             updatePlaybackUIState();
             renderSongs(songs);
-        }
 
+            renderFavoritesSpace();
+        }
 
         // Play/Pause Master Switch Router logic
         function togglePlayback() {
             if (currentIndex === -1) {
-                // If nothing is playing yet, load the first item in queue
                 selectAndPlaySong(0);
                 return;
             }
@@ -339,42 +500,95 @@
             }
 
             updatePlaybackUIState();
-            renderSongs(songs);
-        }
 
+            renderSongs(songs);
+            renderFavoritesSpace();
+        }
 
         function updatePlaybackUIState() {
             if (isPlaying) {
                 masterPlayIcon.textContent = "pause";
                 masterPlayBtn.classList.remove("bg-sky-500", "hover:bg-sky-400");
                 masterPlayBtn.classList.add("bg-indigo-500", "hover:bg-indigo-400", "text-white");
-                if (document.getElementById("footer-art").querySelector("span")) {
-                    document.getElementById("footer-art").querySelector("span").classList.add("animate-spin");
-                }
+                footerArtIcon.classList.add("animate-spin");
+                miniArtIcon.classList.add("animate-spin");
             } else {
                 masterPlayIcon.textContent = "play_arrow";
                 masterPlayBtn.classList.remove("bg-indigo-500", "hover:bg-indigo-400", "text-white");
                 masterPlayBtn.classList.add("bg-sky-500", "hover:bg-sky-400", "text-slate-950");
-                if (document.getElementById("footer-art").querySelector("span")) {
-                    document.getElementById("footer-art").querySelector("span").classList.remove("animate-spin");
-                }
+                footerArtIcon.classList.remove("animate-spin");
+                miniArtIcon.classList.remove("animate-spin");
             }
         }
 
-        // Sequential Playback Navigation Methods
+
+        // Feature 1 & 2: Playback Track End Handlers with Shuffle/Repeat support
+        function handleTrackPlaybackCompletion() {
+            if (isRepeat) {
+                audioPlayer.currentTime = 0;
+                audioPlayer.play().catch(() => {});
+            } else {
+                playNext();
+            }
+        }
 
         function playNext() {
             if (songs.length === 0) return;
-            let nextIndex = currentIndex + 1;
-            if (nextIndex >= songs.length) nextIndex = 0;
-            selectAndPlaySong(nextIndex);
+            
+            if (isShuffle) {
+                let randomIndex;
+                do {
+                    randomIndex = Math.floor(Math.random() * songs.length);
+                } while (randomIndex === currentIndex && songs.length > 1);
+                selectAndPlaySong(randomIndex);
+
+            } else {
+                let nextIndex = currentIndex + 1;
+                if (nextIndex >= songs.length) nextIndex = 0;
+                selectAndPlaySong(nextIndex);
+            }
         }
 
         function playPrevious() {
             if (songs.length === 0) return;
-            let prevIndex = currentIndex - 1;
-            if (prevIndex < 0) prevIndex = songs.length - 1;
-            selectAndPlaySong(prevIndex);
+            
+            if (isShuffle) {
+                let randomIndex;
+                do {
+                    randomIndex = Math.floor(Math.random() * songs.length);
+                } while (randomIndex === currentIndex && songs.length > 1);
+                selectAndPlaySong(randomIndex);
+            } else {
+                let prevIndex = currentIndex - 1;
+                if (prevIndex < 0) prevIndex = songs.length - 1;
+
+                selectAndPlaySong(prevIndex);
+            }
+        }
+
+        // Toggle Feature Handlers for Shuffle & Repeat Buttons
+        function toggleShuffle() {
+            isShuffle = !isShuffle;
+            const btn = document.getElementById("shuffle-btn");
+            if (isShuffle) {
+                btn.className = "text-sky-400 hover:text-sky-300 transition duration-150 transform active:scale-90";
+            } else {
+                btn.className = "text-slate-500 hover:text-slate-300 transition duration-150 transform active:scale-90";
+            }
+        }
+
+        if (typeof isShuffle === 'undefined') { isShuffle = false; }
+        if (typeof isRepeat === 'undefined') { isRepeat = false; }
+
+        function toggleRepeat() {
+
+            isRepeat = !isRepeat;
+            const btn = document.getElementById("repeat-btn");
+            if (isRepeat) {
+                btn.className = "text-sky-400 hover:text-sky-300 transition duration-150 transform active:scale-90";
+            } else {
+                btn.className = "text-slate-500 hover:text-slate-300 transition duration-150 transform active:scale-90";
+            }
         }
 
         // Custom Media Player Time Tracking Format Utilities
@@ -382,12 +596,12 @@
             if (!isNaN(audioPlayer.duration)) {
                 const currentProgress = (audioPlayer.currentTime / audioPlayer.duration) * 100;
                 seekScrubber.value = currentProgress;
-
                 timeCurrent.textContent = formatMediaTime(audioPlayer.currentTime);
             }
         }
 
         function handleLoadedMetadata() {
+
             timeDuration.textContent = formatMediaTime(audioPlayer.duration);
         }
 
@@ -402,12 +616,12 @@
             const minutes = Math.floor(secs / 60);
             const seconds = Math.floor(secs % 60);
             return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
-
         }
 
-        // Audio Volume / Mute Engine Elements
+        // Audio Volume System
         function changeVolume() {
             const vol = volumeSlider.value / 100;
+
             audioPlayer.volume = vol;
             if (vol === 0) {
                 muteIcon.textContent = "volume_off";
@@ -422,49 +636,94 @@
             if (audioPlayer.volume > 0) {
                 prevVolume = audioPlayer.volume;
                 volumeSlider.value = 0;
-
                 audioPlayer.volume = 0;
                 muteIcon.textContent = "volume_off";
             } else {
                 audioPlayer.volume = prevVolume;
                 volumeSlider.value = prevVolume * 100;
+
                 muteIcon.textContent = prevVolume >= 0.5 ? "volume_up" : "volume_down";
             }
         }
 
-        // Independent Local Favorite Vector Action
-        function toggleFavorite(btn) {
-            const icon = btn.querySelector(".material-icons");
-            if (icon.textContent === "favorite_border") {
-                icon.textContent = "favorite";
-                btn.classList.remove("text-slate-500");
-                btn.classList.add("text-rose-500");
-            } else {
-                icon.textContent = "favorite_border";
-                btn.classList.remove("text-rose-500");
-
-                btn.classList.add("text-slate-500");
+        // Feature 3: Independent Local Favorite Vector Actions
+        function toggleFavorite(id, btn) {
+            const track = songs.find(s => s.id === id);
+            if (track) {
+                track.saved = !track.saved;
+                renderSongs(songs);
+                renderFavoritesSpace();
             }
         }
 
-        // Tab Navigator Router Logic
+        // Feature 4: Sleep Timer Engine Module Architecture
+        function toggleTimerDropdown() {
+            document.getElementById("timer-dropdown").classList.toggle("hidden");
+        }
+
+
+        function setSleepTimer(minutes) {
+            document.getElementById("timer-dropdown").classList.add("hidden");
+            clearInterval(sleepTimerId);
+            
+            const label = document.getElementById("timer-display-label");
+            const icon = document.getElementById("timer-status-icon");
+
+            if (minutes === 0) {
+                label.textContent = "Off";
+                label.className = "";
+                icon.className = "material-icons text-sm";
+                return;
+            }
+
+            sleepTimeRemaining = minutes * 60;
+            label.textContent = `${minutes}m`;
+            label.className = "text-sky-400 font-bold";
+            icon.className = "material-icons text-sm text-sky-400 animate-pulse";
+
+
+            sleepTimerId = setInterval(() => {
+                sleepTimeRemaining--;
+                if (sleepTimeRemaining <= 0) {
+                    clearInterval(sleepTimerId);
+                    if (isPlaying) togglePlayback();
+                    label.textContent = "Off";
+                    label.className = "";
+                    icon.className = "material-icons text-sm";
+                } else {
+                    const displayMins = Math.ceil(sleepTimeRemaining / 60);
+                    label.textContent = `${displayMins}m`;
+                }
+            }, 1000);
+        }
+
+        // Tab Navigator Router Logic Layout Configuration Switches
         function switchTab(tabId) {
             document.getElementById("tab-library").classList.add("hidden");
+            document.getElementById("tab-favorites").classList.add("hidden");
+
             document.getElementById("tab-about").classList.add("hidden");
+            
             document.getElementById("nav-library").className = "w-full flex items-center gap-4 px-4 py-3 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 font-medium transition duration-200";
+            document.getElementById("nav-favorites").className = "w-full flex items-center gap-4 px-4 py-3 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 font-medium transition duration-200";
             document.getElementById("nav-about").className = "w-full flex items-center gap-4 px-4 py-3 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 font-medium transition duration-200";
 
             if (tabId === 'library') {
                 document.getElementById("tab-library").classList.remove("hidden");
                 document.getElementById("nav-library").className = "w-full flex items-center gap-4 px-4 py-3 rounded-xl bg-slate-800 text-sky-400 font-medium transition duration-200";
+            } else if (tabId === 'favorites') {
+                document.getElementById("tab-favorites").classList.remove("hidden");
+                document.getElementById("nav-favorites").className = "w-full flex items-center gap-4 px-4 py-3 rounded-xl bg-slate-800 text-sky-400 font-medium transition duration-200";
+                renderFavoritesSpace();
             } else {
                 document.getElementById("tab-about").classList.remove("hidden");
                 document.getElementById("nav-about").className = "w-full flex items-center gap-4 px-4 py-3 rounded-xl bg-slate-800 text-sky-400 font-medium transition duration-200";
             }
         }
-
     </script>
 </body>
 </html>
+
+
 
 
