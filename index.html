@@ -1,3 +1,5 @@
+# Azure Music App Complete Original Multi Screen Layout
+
 <!-- #AK AKASH MUSIC APP -->
 <!DOCTYPE html>
 <html lang="en">
@@ -17,6 +19,7 @@
         .custom-scrollbar::-webkit-scrollbar-track {
             background: rgba(15, 23, 42, 0.6);
         }
+
         .custom-scrollbar::-webkit-scrollbar-thumb {
             background: rgba(56, 189, 248, 0.3);
             border-radius: 4px;
@@ -33,9 +36,10 @@
 <body class="bg-slate-950 text-slate-100 font-sans antialiased selection:bg-sky-500/30 selection:text-sky-200">
 
     <!-- Standalone Audio Element Wrapper -->
-    <audio id="azure-core-player" preload="auto"></audio>
+    <audio id="azure-core-player" preload="auto" crossorigin="anonymous"></audio>
 
     <!-- ================= SCREEN 1: WELCOME INTRO GATEWAY ================= -->
+
     <div id="screen-welcome" class="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-slate-950 via-slate-900 to-sky-950/50 p-6 text-center">
         <div class="space-y-6 max-w-md bg-slate-900/40 p-8 rounded-3xl border border-slate-800/60 backdrop-blur-md shadow-2xl">
             <div class="flex justify-center">
@@ -55,6 +59,7 @@
                 Created by AK Akash &bull; v1.1.0
             </div>
         </div>
+
     </div>
 
     <!-- ================= MAIN WORKSPACE CONTAINER SCREEN ================= -->
@@ -74,6 +79,7 @@
                     <span class="material-icons text-base">library_music</span>
                     <span>Music Library</span>
                 </button>
+
                 <button id="nav-favorites-space" class="flex items-center space-x-1.5 text-sm font-medium text-slate-400 hover:text-slate-200 transition">
                     <span class="material-icons text-base">favorite</span>
                     <span>Favorites Space</span>
@@ -93,6 +99,7 @@
         <!-- MIDDLE DECK: Split View Dashboard Core -->
         <main class="flex-1 w-full max-w-7xl mx-auto px-4 py-6 grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
             
+
             <!-- LEFT CONTROL PANEL: Dynamic Space Switcher (5 Columns) -->
             <section class="lg:col-span-5 flex flex-col space-y-4 bg-slate-900/40 p-4 rounded-2xl border border-slate-800/50 backdrop-blur-sm max-h-[70vh] overflow-hidden">
                 
@@ -112,6 +119,7 @@
 
             <!-- RIGHT CONTROL PANEL: Now Playing Media Center Dashboard (7 Columns) -->
             <section class="lg:col-span-7 flex flex-col justify-between space-y-6 bg-gradient-to-b from-slate-900/60 to-slate-900/20 p-6 rounded-3xl border border-slate-800/60 relative overflow-hidden group">
+
                 
                 <!-- Decorative Blurred Accent -->
                 <div class="absolute -top-24 -right-24 w-48 h-48 bg-sky-500/10 rounded-full blur-3xl transition-all duration-700"></div>
@@ -130,7 +138,8 @@
                         </div>
                     </div>
 
-                    <!-- ABOUT SPACE VIEWPORT (Hidden initially, shown dynamically inside workspace frame) -->
+                    <!-- ABOUT SPACE VIEWPORT -->
+
                     <div id="about-space-deck" class="hidden max-w-md text-left space-y-5 p-2 animate-fadeIn">
                         <div class="flex items-center space-x-3">
                             <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-sky-500 to-indigo-500 flex items-center justify-center shadow-md">
@@ -150,15 +159,16 @@
                             "Design is not just what it looks like and feels like. Design is how it works."
                         </blockquote>
 
+
                         <div class="flex flex-wrap gap-3 pt-1 text-xs">
-                            <div class="flex items-center space-x-1.5 bg-slate-900 border border-slate-800/80 px-3 py-1.5 rounded-lg text-slate-300">
+                            <a href="https://akakash2597-bit.github.io/My-Portfolio/" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-1.5 bg-slate-900 border border-slate-800/80 px-3 py-1.5 rounded-lg text-slate-300 hover:border-sky-500 hover:text-sky-400 transition-all">
                                 <span class="material-icons text-sm text-sky-400">language</span>
                                 <span>Portfolio Available</span>
-                            </div>
-                            <div class="flex items-center space-x-1.5 bg-slate-900 border border-slate-800/80 px-3 py-1.5 rounded-lg text-slate-300">
+                            </a>
+                            <a href="akakash2597@gmail.com" class="flex items-center space-x-1.5 bg-slate-900 border border-slate-800/80 px-3 py-1.5 rounded-lg text-slate-300 hover:border-indigo-500 hover:text-indigo-400 transition-all">
                                 <span class="material-icons text-sm text-indigo-400">mail</span>
                                 <span>Contact Ready</span>
-                            </div>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -169,6 +179,7 @@
                         <span id="timestamp-current" class="text-xs font-mono text-slate-400 w-10">0:00</span>
                         <input id="timeline-slider" type="range" min="0" max="100" value="0" class="flex-1 h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-sky-400 hover:accent-sky-300 transition-all">
                         <span id="timestamp-total" class="text-xs font-mono text-slate-400 w-10 text-right">0:00</span>
+
                     </div>
 
                     <!-- Core Playback Deck Mechanical Controllers -->
@@ -188,6 +199,7 @@
                         <button id="ctrl-repeat" class="text-slate-500 hover:text-sky-400 transition" title="Repeat Track">
                             <span class="material-icons text-xl">repeat</span>
                         </button>
+
                     </div>
                 </div>
 
@@ -207,6 +219,7 @@
                         <div class="flex items-center space-x-1.5 text-slate-400">
                             <span class="material-icons text-sm animate-pulse text-indigo-400">alarm</span>
                             <span id="sleep-timer-label">Sleep: Off</span>
+
                         </div>
                         <select id="sleep-timer-selector" class="bg-slate-900 border border-slate-800 text-slate-300 rounded px-1.5 py-0.5 focus:outline-none focus:border-sky-500 text-xs cursor-pointer">
                             <option value="0">Turn Off</option>
@@ -226,9 +239,11 @@
         </footer>
     </div>
 
+
     <!-- AUDIO CORE CONTROLLER LOGIC INJECTION ENGINE -->
     <script>
-        // Live GitHub Pages Base Stream Endpoint Path (Option A Integration)
+        // Open-source CORS proxy endpoint wrapper to safely unblock direct stream headers
+        const CORS_PROXY = "https://allorigins.win";
         const GITHUB_AUDIO_BASE = "https://github.io";
 
         // Standardized Track Manifest Registry Array mapping to remote links
@@ -244,6 +259,7 @@
             { id: "love-nwantiti", title: "Love Nwantiti", artist: "CKay", file: "love-nwantiti.mp3" },
             { id: "memories", title: "Memories", artist: "Maroon 5", file: "memories.mp3" },
             { id: "mood", title: "Mood", artist: "24kGoldn", file: "mood.mp3" },
+
             { id: "perfect", title: "Perfect", artist: "Ed Sheeran", file: "perfect.mp3" },
             { id: "shape-of-you", title: "Shape Of You", artist: "Ed Sheeran", file: "shape-of-you.mp3" },
             { id: "trapped-mind", title: "Trapped In My Mind", artist: "Kid Cudi", file: "trapped-in-my-mind.mp3" },
@@ -251,7 +267,7 @@
         ];
 
         // Screen Navigation State and Variables
-        let activeTab = 'library'; // 'library' or 'favorites'
+        let activeTab = 'library'; 
         let favoritesRegistry = JSON.parse(localStorage.getItem('azure_favorites')) || [];
         let currentTrackIndex = -1;
         let isPlaying = false;
@@ -263,6 +279,7 @@
         const audioInstance = document.getElementById('azure-core-player');
         const listViewport = document.getElementById('track-list-viewport');
         const playPauseBtn = document.getElementById('ctrl-play-pause');
+
         const playPauseIcon = document.getElementById('play-pause-icon');
         const timelineSlider = document.getElementById('timeline-slider');
         const volumeSlider = document.getElementById('volume-slider');
@@ -281,7 +298,8 @@
         const playerMetaDeck = document.getElementById('audio-player-meta-deck');
         const aboutSpaceDeck = document.getElementById('about-space-deck');
 
-        // Navigation Navigation Targets
+        // Navigation Targets
+
         const navLibrary = document.getElementById('nav-music-library');
         const navFavorites = document.getElementById('nav-favorites-space');
         const navAbout = document.getElementById('nav-about-space');
@@ -296,19 +314,17 @@
 
         // Router / Navigation Architecture Switcher Logic
         function initNavigationLogic() {
-            // Welcome Button Interface Action
             document.getElementById('btn-enter-workspace').addEventListener('click', () => {
                 screenWelcome.classList.add('hidden');
                 screenWorkspace.classList.remove('hidden');
             });
 
-            // Return to Gateway view when logo heading clicked
+
             document.getElementById('header-logo-home').addEventListener('click', () => {
                 screenWorkspace.classList.add('hidden');
                 screenWelcome.classList.remove('hidden');
             });
 
-            // Top Menu Switchers
             navLibrary.addEventListener('click', () => {
                 activeTab = 'library';
                 updateNavStyles(navLibrary, [navFavorites, navAbout]);
@@ -323,6 +339,7 @@
                 activeTab = 'favorites';
                 updateNavStyles(navFavorites, [navLibrary, navAbout]);
                 panelSpaceTitle.innerHTML = `<span class="material-icons text-base text-rose-400">favorite</span><span>Your Favorites Space</span>`;
+
                 
                 aboutSpaceDeck.classList.add('hidden');
                 playerMetaDeck.classList.remove('hidden');
@@ -342,6 +359,7 @@
             activeNode.className = "flex items-center space-x-1.5 text-sm font-medium text-sky-400 transition";
             inactiveNodes.forEach(node => {
                 node.className = "flex items-center space-x-1.5 text-sm font-medium text-slate-400 hover:text-slate-200 transition";
+
             });
         }
 
@@ -360,6 +378,7 @@
                     </div>`;
                 return;
             }
+
 
             targetTracks.forEach((track) => {
                 const globalIndex = trackManifest.findIndex(t => t.id === track.id);
@@ -380,6 +399,7 @@
                     <div class="flex items-center space-x-3 overflow-hidden">
                         <div class="w-9 h-9 rounded-lg bg-slate-900 flex items-center justify-center text-slate-400 group-hover:bg-slate-800 group-hover:text-sky-400 transition-all">
                             <span class="material-icons text-lg">${isCurrent && isPlaying ? 'volume_up' : 'music_note'}</span>
+
                         </div>
                         <div class="overflow-hidden">
                             <h4 class="text-xs font-semibold truncate ${isCurrent ? 'text-sky-400' : 'text-slate-200'}">${track.title}</h4>
@@ -399,11 +419,11 @@
             });
         }
 
+
         // Context Mounting Logic Module
         function mountTrack(index) {
             if (index < 0 || index >= trackManifest.length) return;
             
-            // Switch view back to player frame automatically if hidden by About frame
             if (playerMetaDeck.classList.contains('hidden')) {
                 if (activeTab === 'library') navLibrary.click(); else navFavorites.click();
             }
@@ -411,13 +431,15 @@
             currentTrackIndex = index;
             const targetTrack = trackManifest[currentTrackIndex];
 
-            // Assign Option A dynamic endpoint web paths safely
-            audioInstance.src = GITHUB_AUDIO_BASE + targetTrack.file;
+            // Wrap the source path with a CORS-Proxy URL to clear stream restrictions
+            const rawSourceUrl = GITHUB_AUDIO_BASE + targetTrack.file;
+            audioInstance.src = CORS_PROXY + encodeURIComponent(rawSourceUrl);
             
             currentTrackTitle.textContent = targetTrack.title;
             currentTrackArtist.textContent = targetTrack.artist;
             
             artworkShell.className = "w-48 h-48 rounded-2xl bg-gradient-to-br from-sky-950/80 to-slate-950 border border-sky-500/30 flex items-center justify-center shadow-2xl relative overflow-hidden transition-all duration-500 scale-105 animate-pulse";
+
             artworkIcon.className = "material-icons text-7xl text-sky-400";
 
             renderTracklist();
@@ -437,6 +459,7 @@
                     artworkShell.classList.remove('animate-pulse');
                 })
                 .catch(err => console.log("Audio pipeline instantiation blocked: ", err));
+
         }
 
         function executePause() {
@@ -457,6 +480,7 @@
             }
         }
 
+
         function processPrevTrack() {
             let prevIndex = currentTrackIndex - 1;
             if (prevIndex < 0) prevIndex = trackManifest.length - 1;
@@ -476,6 +500,7 @@
                 const progressPct = (audioInstance.currentTime / audioInstance.duration) * 100;
                 timelineSlider.value = progressPct;
                 timestampCurrent.textContent = formatDuration(audioInstance.currentTime);
+
             });
 
             audioInstance.addEventListener('loadedmetadata', () => {
@@ -496,6 +521,7 @@
                 }
             });
 
+
             const shuffleBtn = document.getElementById('ctrl-shuffle');
             shuffleBtn.addEventListener('click', () => {
                 isShuffleActive = !isShuffleActive;
@@ -515,6 +541,7 @@
             document.getElementById('ctrl-mute').addEventListener('click', () => {
                 if (audioInstance.volume > 0) {
                     syncVolumeState(0);
+
                     volumeSlider.value = 0;
                 } else {
                     syncVolumeState(0.8);
@@ -534,6 +561,7 @@
                 }
 
                 sleepLabel.textContent = `Sleep: ${durationMinutes}m active`;
+
                 sleepTimerReference = setTimeout(() => {
                     executePause();
                     sleepSelector.value = "0";
@@ -553,10 +581,12 @@
                 volumeIcon.className = "material-icons text-sm text-slate-400";
             } else {
                 volumeIcon.textContent = 'volume_up';
+
                 volumeIcon.className = "material-icons text-sm text-sky-400";
             }
         }
 
+        // Favorites Handling Logic
         function toggleFavoriteState(id) {
             if (favoritesRegistry.includes(id)) {
                 favoritesRegistry = favoritesRegistry.filter(favId => favId !== id);
@@ -567,9 +597,11 @@
             renderTracklist();
         }
 
+        // Timer Utility
         function formatDuration(secondsIn) {
             if (isNaN(secondsIn)) return "0:00";
             const computedMins = Math.floor(secondsIn / 60);
+
             const computedSecs = Math.floor(secondsIn % 60);
             return `${computedMins}:${computedSecs < 10 ? '0' : ''}${computedSecs}`;
         }
