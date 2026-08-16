@@ -242,10 +242,10 @@
 
     <!-- AUDIO CORE CONTROLLER LOGIC INJECTION ENGINE -->
     <script>
-        // Adjusted to reflect the exact case-sensitive path of your live GitHub repository link
-        const GITHUB_AUDIO_BASE = "https://github.io";
+        // Clean relative directory strategy mapping files inside your directory workspace
+        const LOCAL_AUDIO_BASE = "music/";
 
-        // Standardized Track Manifest Registry Array mapping to remote links
+        // Standardized Track Manifest Registry Array mapping to local assets
         const trackManifest = [
             { id: "dandelions", title: "Dandelions", artist: "Ruth B.", file: "dandelions.mp3" },
             { id: "faded", title: "Faded", artist: "Alan Walker", file: "faded.mp3" },
@@ -430,8 +430,8 @@
             currentTrackIndex = index;
             const targetTrack = trackManifest[currentTrackIndex];
 
-            // Direct relative-domain asset delivery since files are local to your Pages deployment
-            audioInstance.src = GITHUB_AUDIO_BASE + targetTrack.file;
+            // Direct workspace asset delivery using reliable relative paths
+            audioInstance.src = LOCAL_AUDIO_BASE + targetTrack.file;
             
             currentTrackTitle.textContent = targetTrack.title;
             currentTrackArtist.textContent = targetTrack.artist;
