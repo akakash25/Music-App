@@ -1,606 +1,627 @@
-# Azure Music App Complete Original Multi Screen Layout
+# Mobile Responsive Azure Music App
 
-<!-- #AK AKASH MUSIC APP -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Azure - Chill & Deep work Space</title>
-    <!-- Tailwind CSS for high-quality responsive layouts -->
+    <title>Azure - Chill & Deep Work Space</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Material Icons for crisp player controls -->
+    <!-- Material Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
-        /* Custom smooth transition styles for tracking elements */
-        .custom-scrollbar::-webkit-scrollbar {
+        /* Custom scrollbar adjustments for premium dashboard look */
+        ::-webkit-scrollbar {
             width: 6px;
+            height: 6px;
         }
-        .custom-scrollbar::-webkit-scrollbar-track {
-            background: rgba(15, 23, 42, 0.6);
+        ::-webkit-scrollbar-track {
+            background: #020617;
         }
 
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: rgba(56, 189, 248, 0.3);
-            border-radius: 4px;
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 3px;
         }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: rgba(56, 189, 248, 0.6);
+        ::-webkit-scrollbar-thumb:hover {
+            background: #334155;
         }
-        /* Mood Theme Transitions */
-        .mood-bg-transition {
-            transition: background 1.2s ease-in-out, border-color 0.6s ease;
+        /* Fluid range input normalization */
+        input[type="range"]::-webkit-slider-thumb {
+            background: #38bdf8;
+            cursor: pointer;
         }
     </style>
 </head>
-<body class="bg-slate-950 text-slate-100 font-sans antialiased selection:bg-sky-500/30 selection:text-sky-200">
+<body class="bg-slate-950 text-slate-100 font-sans antialiased selection:bg-sky-500/30 selection:text-sky-200 min-h-screen flex flex-col overflow-x-hidden">
 
-    <!-- Standalone Audio Element Wrapper -->
-    <audio id="azure-core-player" preload="auto"></audio>
+    <!-- 1. HERO / LANDING DASHBOARD INTERFACE SCREEN -->
+    <div id="landing-screen" class="fixed inset-0 bg-slate-950 z-50 flex flex-col items-center justify-center p-6 text-center transition-opacity duration-500">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(14,165,233,0.1),transparent_60%)] pointer-events-none"></div>
 
-    <!-- ================= SCREEN 1: WELCOME INTRO GATEWAY ================= -->
-
-    <div id="screen-welcome" class="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-slate-950 via-slate-900 to-sky-950/50 p-6 text-center">
-        <div class="space-y-6 max-w-md bg-slate-900/40 p-8 rounded-3xl border border-slate-800/60 backdrop-blur-md shadow-2xl">
-            <div class="flex justify-center">
-                <span class="material-icons text-sky-400 text-6xl animate-pulse">waves</span>
+        <div class="space-y-4 max-w-md relative z-10">
+            <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-sky-500/10 border border-sky-500/20 text-sky-400 mb-2">
+                <span class="material-icons text-3xl animate-pulse">waves</span>
             </div>
-            <div class="space-y-2">
-                <h1 class="text-4xl font-extrabold tracking-widest bg-clip-text text-transparent bg-gradient-to-r from-sky-400 to-indigo-300">AZURE</h1>
-                <p class="text-xs uppercase font-mono tracking-widest text-sky-400/80">Personal Audio Experience Space</p>
-            </div>
-            <p class="text-sm text-slate-400 leading-relaxed">
+            <h1 class="text-5xl font-black tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-indigo-400">AZURE</h1>
+            <p class="text-xs uppercase tracking-widest font-mono text-slate-500">Personal Audio Experience Space</p>
+            <p class="text-slate-400 text-sm leading-relaxed pt-2">
                 Welcome to Azure. A personalized workspace designed to streamline your music flow, minimize stress, and boost your focusing state.
             </p>
-            <button id="btn-enter-workspace" class="w-full py-3.5 bg-gradient-to-r from-sky-500 to-indigo-500 hover:from-sky-400 hover:to-indigo-400 text-slate-950 font-bold rounded-xl tracking-wider shadow-lg shadow-sky-500/10 active:scale-[0.98] transition-all cursor-pointer">
+            <button onclick="enterWorkspace()" class="w-full mt-6 px-6 py-3.5 bg-gradient-to-r from-sky-600 to-sky-500 hover:from-sky-500 hover:to-sky-400 text-white font-medium rounded-xl shadow-lg shadow-sky-500/20 transition-all hover:scale-[1.02] active:scale-[0.98]">
                 Enter Workspace
             </button>
-            <div class="text-[10px] font-mono text-slate-600 pt-2">
+            <div class="text-[10px] font-mono text-slate-600 pt-8">
                 Created by AK Akash &bull; v1.1.0
             </div>
         </div>
-
     </div>
 
-    <!-- ================= MAIN WORKSPACE CONTAINER SCREEN ================= -->
-    <div id="screen-workspace" class="hidden min-h-screen flex flex-col justify-between mood-bg-transition bg-gradient-to-br from-slate-950 via-slate-900 to-sky-950/40">
+    <!-- MAIN BRANDING HEADER: Simplified on mobile to stop horizontal crushing -->
+
+    <header class="border-b border-slate-900 bg-slate-950/80 backdrop-blur-md sticky top-0 z-30 px-4 py-4">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <span class="material-icons text-sky-400 text-2xl">waves</span>
+                <span class="font-bold tracking-widest text-lg text-slate-100">AZURE</span>
+                <span class="text-[10px] font-mono bg-slate-900 border border-slate-800 text-sky-400/80 px-2 py-0.5 rounded-md ml-1">v1.1.0</span>
+            </div>
+            <div class="text-xs text-slate-500 font-mono tracking-wider">by AK Akash</div>
+        </div>
+    </header>
+
+    <!-- FIXED SEGMENTED NAVIGATION TABS FOR MOBILE: Separated from the brand header to maximize width -->
+    <div class="md:hidden bg-slate-900/40 backdrop-blur-md border-b border-slate-900/80 sticky top-[61px] z-30 p-1.5 flex gap-1">
+        <button id="tab-btn-library" onclick="switchMobileTab('library')" class="flex-1 py-2.5 rounded-xl flex items-center justify-center gap-2 text-xs font-semibold tracking-wide transition-all text-sky-400 bg-sky-500/10 border border-sky-500/20">
+            <span class="material-icons text-base">library_music</span>
+            <span>Library</span>
+        </button>
+        <button id="tab-btn-favorites" onclick="switchMobileTab('favorites')" class="flex-1 py-2.5 rounded-xl flex items-center justify-center gap-2 text-xs font-semibold tracking-wide transition-all text-slate-400 hover:text-slate-200">
+            <span class="material-icons text-base">favorite</span>
+
+            <span>Favorites</span>
+        </button>
+        <button id="tab-btn-about" onclick="switchMobileTab('about')" class="flex-1 py-2.5 rounded-xl flex items-center justify-center gap-2 text-xs font-semibold tracking-wide transition-all text-slate-400 hover:text-slate-200">
+            <span class="material-icons text-base">info</span>
+            <span>About</span>
+        </button>
+    </div>
+
+    <!-- RESPONSIVE CONTENT COLUMN DISPLAY CONTEXT -->
+    <main class="flex-1 max-w-7xl w-full mx-auto p-4 flex flex-col md:flex-row gap-4 pb-44 md:pb-28">
         
-        <!-- TOP DECK: Global Header Status Bar -->
-        <header class="w-full max-w-7xl mx-auto px-6 py-4 flex items-center justify-between border-b border-slate-800/60 backdrop-blur-md sticky top-0 z-50">
-            <div class="flex items-center space-x-3 cursor-pointer" id="header-logo-home">
-                <span class="material-icons text-sky-400 animate-pulse text-2xl">waves</span>
-                <h1 class="text-xl font-bold tracking-wider bg-clip-text text-transparent bg-gradient-to-r from-sky-400 to-indigo-300">AZURE</h1>
-                <span class="text-[10px] text-slate-500 font-mono pl-1">by AK Akash</span>
+        <!-- COLUMN 1: TRACK LIST / LIBRARY VIEW -->
+        <section id="panel-library" class="flex-1 bg-slate-900/20 border border-slate-900/60 rounded-2xl p-4 flex flex-col group transition-all duration-300">
+            <div class="flex items-center justify-between mb-4 border-b border-slate-900 pb-2">
+                <h3 class="font-bold text-xs tracking-widest uppercase text-slate-400 flex items-center gap-2">
+                    <span class="material-icons text-sky-400 text-lg">library_music</span> Music Library
+                </h3>
+                <span id="track-count" class="text-xs font-mono text-slate-500 bg-slate-950 px-2 py-0.5 rounded-md border border-slate-900">14 Tracks</span>
+            </div>
+
+            
+            <!-- Dynamic Scrollable Tracklist Box Wrapper -->
+            <div id="tracklist-container" class="space-y-2 max-h-[52vh] md:max-h-[65vh] overflow-y-auto pr-1">
+                <!-- Rows loaded inside runtime execution loop -->
+            </div>
+        </section>
+
+        <!-- COLUMN 2: FAVORITES DRAWER OR DISPLAY SPACE -->
+        <section id="panel-favorites" class="hidden md:flex w-full md:w-80 bg-slate-900/20 border border-slate-900/60 rounded-2xl p-4 flex-col transition-all duration-300">
+            <div class="flex items-center justify-between mb-4 border-b border-slate-900 pb-2">
+                <h3 class="font-bold text-xs tracking-widest uppercase text-slate-400 flex items-center gap-2">
+                    <span class="material-icons text-rose-400 text-lg">favorite</span> Favorites Space
+                </h3>
+            </div>
+            <div id="favorites-container" class="space-y-2 max-h-[52vh] md:max-h-[65vh] overflow-y-auto">
+                <div id="no-favorites-placeholder" class="text-xs text-slate-500 text-center py-12 font-mono leading-relaxed">
+                    No starred songs yet.<br><span class="text-slate-600">Tap the heart icon on any song.</span>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- COLUMN 3: CREDITS & ABOUT TERMINAL PANEL CONTAINER -->
+        <section id="panel-about" class="hidden md:flex w-full md:w-72 bg-slate-900/20 border border-slate-900/60 rounded-2xl p-4 flex-col justify-between transition-all duration-300">
+            <div class="space-y-4">
+                <div class="flex items-center gap-1.5 text-xs text-slate-500 font-mono uppercase tracking-wider">
+                    <span class="material-icons text-slate-600 text-xs">terminal</span> Terminal
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold tracking-wide text-slate-200">AK AKASH</h3>
+                    <p class="text-[11px] font-mono text-sky-400 uppercase tracking-widest mt-0.5">Lead Developer & Designer</p>
+                </div>
+                <p class="text-xs text-slate-400 leading-relaxed font-sans">
+                    Passionate about creating serene, functional digital spaces. The Azure Drift project was born from a desire to combine minimalist web interfaces with custom personal audio playlists.
+                </p>
+                <div class="p-3 bg-slate-950/60 border border-slate-900 rounded-xl">
+                    <p class="text-xs italic text-slate-400 leading-relaxed">
+                        "Design is not just what it looks like and feels like. Design is how it works."
+                    </p>
+
+                </div>
             </div>
             
-            <!-- Global Navigation Tabs -->
-            <nav class="flex items-center space-x-6">
-                <button id="nav-music-library" class="flex items-center space-x-1.5 text-sm font-medium text-sky-400 transition">
-                    <span class="material-icons text-base">library_music</span>
-                    <span>Music Library</span>
-                </button>
-
-                <button id="nav-favorites-space" class="flex items-center space-x-1.5 text-sm font-medium text-slate-400 hover:text-slate-200 transition">
-                    <span class="material-icons text-base">favorite</span>
-                    <span>Favorites Space</span>
-                </button>
-                <button id="nav-about-space" class="flex items-center space-x-1.5 text-sm font-medium text-slate-400 hover:text-slate-200 transition">
-                    <span class="material-icons text-base">info</span>
-                    <span>About Space</span>
-                </button>
-            </nav>
-
-            <div class="hidden md:flex items-center space-x-2 text-xs tracking-widest text-slate-400 font-mono bg-slate-900/80 px-3 py-1.5 rounded-full border border-slate-800/40">
-                <span>V1.1.0</span>
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block ml-1"></span>
+            <div class="space-y-2 mt-6 pt-4 border-t border-slate-900 text-[11px] text-slate-500 font-mono">
+                <div class="flex items-center gap-2">
+                    <span class="material-icons text-xs text-emerald-400">language</span>
+                    <span>Portfolio Available</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="material-icons text-xs text-sky-400">mail</span>
+                    <span>Contact Ready</span>
+                </div>
             </div>
-        </header>
+        </section>
 
-        <!-- MIDDLE DECK: Split View Dashboard Core -->
-        <main class="flex-1 w-full max-w-7xl mx-auto px-4 py-6 grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+    </main>
+
+    <!-- 3. NATIVE DESKTOP & MOBILE FIXED BASE AUDIO CONTROLLER PLAYER LAYER -->
+    <footer class="fixed bottom-0 left-0 right-0 bg-slate-950/95 backdrop-blur-lg border-t border-slate-900 z-40 px-4 py-4 safe-bottom">
+
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 items-center gap-4">
             
+            <!-- Metadata Segment Bar Area -->
+            <div class="flex items-center justify-between md:justify-start gap-3 w-full min-w-0">
+                <div class="flex items-center gap-3 min-w-0">
+                    <div class="w-11 h-11 bg-slate-900 border border-slate-800 rounded-xl flex items-center justify-center text-slate-400 shrink-0">
+                        <span id="player-album-art" class="material-icons text-xl">album</span>
+                    </div>
+                    <div class="min-w-0">
+                        <h4 id="current-title" class="text-sm font-semibold truncate text-slate-200 w-44 sm:w-auto">No Song Selected</h4>
+                        <p id="current-subtitle" class="text-xs text-slate-500 truncate">Select a track to play</p>
+                    </div>
+                </div>
+                <button id="player-fav-toggle" onclick="toggleCurrentSongFavorite()" class="text-slate-600 hover:text-rose-400 p-2 md:hidden">
+                    <span id="player-fav-icon" class="material-icons text-xl">favorite_border</span>
+                </button>
+            </div>
 
-            <!-- LEFT CONTROL PANEL: Dynamic Space Switcher (5 Columns) -->
-            <section class="lg:col-span-5 flex flex-col space-y-4 bg-slate-900/40 p-4 rounded-2xl border border-slate-800/50 backdrop-blur-sm max-h-[70vh] overflow-hidden">
+            <!-- Central Tracking Mechanics & Core Grid Button Play Row -->
+
+            <div class="flex flex-col items-center gap-2 w-full">
+                <!-- Command Controls Interface Array Row -->
+                <div class="flex items-center gap-6">
+                    <button onclick="toggleShuffle()" id="btn-shuffle" class="text-slate-500 hover:text-sky-400 transition-colors p-1" title="Shuffle">
+                        <span class="material-icons text-lg">shuffle</span>
+                    </button>
+                    <button onclick="playPrev()" class="text-slate-400 hover:text-white transition-colors p-1" title="Previous">
+                        <span class="material-icons text-xl">skip_previous</span>
+                    </button>
+                    <button onclick="togglePlay()" id="btn-main-play" class="w-11 h-11 bg-sky-500 text-slate-950 rounded-full flex items-center justify-center hover:scale-105 active:scale-95 transition-all shadow-lg shadow-sky-500/20" title="Play/Pause">
+                        <span id="icon-main-play" class="material-icons text-2xl">play_arrow</span>
+                    </button>
+                    <button onclick="playNext()" class="text-slate-400 hover:text-white transition-colors p-1" title="Next">
+                        <span class="material-icons text-xl">skip_next</span>
+                    </button>
+                    <button onclick="toggleRepeat()" id="btn-repeat" class="text-slate-500 hover:text-sky-400 transition-colors p-1" title="Repeat">
+                        <span class="material-icons text-lg">repeat</span>
+                    </button>
+                </div>
+
                 
-                <!-- Dynamic Header Label based on active view -->
-                <div class="border-b border-slate-800/60 pb-3">
-                    <h3 id="panel-space-title" class="text-sm font-semibold tracking-wider text-slate-400 uppercase font-mono flex items-center space-x-2">
-                        <span class="material-icons text-base text-sky-400">library_music</span>
-                        <span>Music Library</span>
-                    </h3>
+                <!-- Fluid Multi-device Responsive Slider Progress Input Tracking Component -->
+                <div class="w-full flex items-center gap-3 text-[11px] font-mono text-slate-500">
+                    <span id="time-current">0:00</span>
+                    <input type="range" id="progress-slider" oninput="seekAudio(this.value)" value="0" min="0" max="100" class="w-full h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-sky-400 transition-all hover:h-1.5">
+                    <span id="time-total">0:00</span>
+                </div>
+            </div>
+
+            <!-- Volume Elements & Sleep Timer Dropdowns Area Grid Section -->
+            <div class="hidden md:flex items-center justify-end gap-4 text-slate-400 w-full">
+                <!-- Volume Slider -->
+                <div class="flex items-center gap-2 bg-slate-900/40 border border-slate-900 px-3 py-1.5 rounded-xl">
+                    <span id="volume-icon" class="material-icons text-base text-slate-500">volume_up</span>
+                    <input type="range" id="volume-slider" oninput="changeVolume(this.value)" min="0" max="100" value="80" class="w-16 h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-sky-400">
                 </div>
 
-                <!-- Scrollable Viewport Content Framework -->
-                <div id="track-list-viewport" class="flex-1 overflow-y-auto custom-scrollbar space-y-2 pr-1">
-                    <!-- Dynamic Web Objects Populated via JS Engine -->
-                </div>
-            </section>
+                <!-- Sleep Timer Component Trigger Group Wrap -->
+                <div class="relative">
 
-            <!-- RIGHT CONTROL PANEL: Now Playing Media Center Dashboard (7 Columns) -->
-            <section class="lg:col-span-7 flex flex-col justify-between space-y-6 bg-gradient-to-b from-slate-900/60 to-slate-900/20 p-6 rounded-3xl border border-slate-800/60 relative overflow-hidden group">
-
-                
-                <!-- Decorative Blurred Accent -->
-                <div class="absolute -top-24 -right-24 w-48 h-48 bg-sky-500/10 rounded-full blur-3xl transition-all duration-700"></div>
-
-                <!-- Central Metadata Layout Module -->
-                <div id="workspace-dynamic-view" class="flex-1 flex flex-col justify-center items-center text-center py-6">
+                    <button onclick="toggleSleepDropdown()" id="btn-sleep-menu" class="text-xs bg-slate-900 hover:bg-slate-800 border border-slate-800 px-3 py-1.5 rounded-xl text-slate-300 flex items-center gap-1.5 transition-colors">
+                        <span class="material-icons text-xs text-sky-400">alarm</span> 
+                        <span id="lbl-sleep-state">Sleep: Off</span>
+                    </button>
                     
-                    <!-- DEFAULT ARCHITECTURE: Player Deck Display -->
-                    <div id="audio-player-meta-deck" class="flex flex-col items-center space-y-4 my-auto">
-                        <div id="album-artwork-shell" class="w-48 h-48 rounded-2xl bg-gradient-to-br from-slate-800 to-slate-950 border border-slate-700/40 flex items-center justify-center shadow-2xl relative overflow-hidden transition-all duration-500">
-                            <span id="artwork-icon" class="material-icons text-7xl text-slate-700 transition-all">album</span>
-                        </div>
-                        <div class="space-y-1">
-                            <h2 id="current-track-title" class="text-2xl font-bold tracking-tight text-slate-100">No Song Selected</h2>
-                            <p id="current-track-artist" class="text-sm font-medium text-slate-400">Select a track to play</p>
-                        </div>
-                    </div>
-
-                    <!-- ABOUT SPACE VIEWPORT -->
-
-                    <div id="about-space-deck" class="hidden max-w-md text-left space-y-5 p-2 animate-fadeIn">
-                        <div class="flex items-center space-x-3">
-                            <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-sky-500 to-indigo-500 flex items-center justify-center shadow-md">
-                                <span class="material-icons text-slate-950 text-2xl">terminal</span>
-                            </div>
-                            <div>
-                                <h3 class="text-lg font-bold tracking-wide text-slate-100">AK AKASH</h3>
-                                <p class="text-xs font-mono text-sky-400">Lead Developer & Designer</p>
-                            </div>
-                        </div>
-                        
-                        <p class="text-sm text-slate-400 leading-relaxed">
-                            Passionate about creating serene, functional digital spaces. The Azure Drift project was born from a desire to combine minimalist web interfaces with custom personal audio playlists.
-                        </p>
-                        
-                        <blockquote class="border-l-2 border-indigo-500 pl-3 text-xs italic text-slate-500 font-mono">
-                            "Design is not just what it looks like and feels like. Design is how it works."
-                        </blockquote>
-
-
-                        <div class="flex flex-wrap gap-3 pt-1 text-xs">
-                            <a href="https://github.io" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-1.5 bg-slate-900 border border-slate-800/80 px-3 py-1.5 rounded-lg text-slate-300 hover:border-sky-500 hover:text-sky-400 transition-all">
-                                <span class="material-icons text-sm text-sky-400">language</span>
-                                <span>Portfolio Available</span>
-                            </a>
-                            <a href="mailto:akakash2597@gmail.com" class="flex items-center space-x-1.5 bg-slate-900 border border-slate-800/80 px-3 py-1.5 rounded-lg text-slate-300 hover:border-indigo-500 hover:text-indigo-400 transition-all">
-                                <span class="material-icons text-sm text-indigo-400">mail</span>
-                                <span>Contact Ready</span>
-                            </a>
-                        </div>
+                    <!-- Absoluted Dropdown Modal Window Card -->
+                    <div id="sleep-dropdown" class="hidden absolute bottom-full right-0 mb-2 w-40 bg-slate-900 border border-slate-800 rounded-xl shadow-xl p-1 z-50 text-xs">
+                        <button onclick="setSleepTimer(0)" class="w-full text-left px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors">Turn Off</button>
+                        <button onclick="setSleepTimer(5)" class="w-full text-left px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors">5 Minutes</button>
+                        <button onclick="setSleepTimer(15)" class="w-full text-left px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors">15 Minutes</button>
+                        <button onclick="setSleepTimer(30)" class="w-full text-left px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors">30 Minutes</button>
+                        <button onclick="setSleepTimer(60)" class="w-full text-left px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors">60 Minutes</button>
                     </div>
                 </div>
+            </div>
 
-                <!-- Slider Scrub Deck Control Systems -->
-                <div class="space-y-2 bg-slate-950/40 p-4 rounded-2xl border border-slate-900/60">
-                    <div class="flex items-center space-x-3">
-                        <span id="timestamp-current" class="text-xs font-mono text-slate-400 w-10">0:00</span>
-                        <input id="timeline-slider" type="range" min="0" max="100" value="0" class="flex-1 h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-sky-400 hover:accent-sky-300 transition-all">
-                        <span id="timestamp-total" class="text-xs font-mono text-slate-400 w-10 text-right">0:00</span>
-
-                    </div>
-
-                    <!-- Core Playback Deck Mechanical Controllers -->
-                    <div class="flex items-center justify-center space-x-6 pt-3">
-                        <button id="ctrl-shuffle" class="text-slate-500 hover:text-sky-400 transition" title="Shuffle Tracks">
-                            <span class="material-icons text-xl">shuffle</span>
-                        </button>
-                        <button id="ctrl-prev" class="text-slate-400 hover:text-slate-100 transition" title="Previous Track">
-                            <span class="material-icons text-3xl">skip_previous</span>
-                        </button>
-                        <button id="ctrl-play-pause" class="w-14 h-14 rounded-full bg-slate-100 text-slate-950 flex items-center justify-center shadow-lg hover:scale-105 transition-all cursor-pointer" title="Play">
-                            <span id="play-pause-icon" class="material-icons text-3xl ml-0.5">play_arrow</span>
-                        </button>
-                        <button id="ctrl-next" class="text-slate-400 hover:text-slate-100 transition" title="Next Track">
-                            <span class="material-icons text-3xl">skip_next</span>
-                        </button>
-                        <button id="ctrl-repeat" class="text-slate-500 hover:text-sky-400 transition" title="Repeat Track">
-                            <span class="material-icons text-xl">repeat</span>
-                        </button>
-
-                    </div>
-                </div>
-
-                <!-- Bottom Deck: Perimeter Config Subsystems (Volume & Sleep Engine) -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-center border-t border-slate-800/40 pt-4">
-                    
-                    <!-- Volume Architecture Deck -->
-                    <div class="flex items-center space-x-2 bg-slate-950/30 px-3 py-2 rounded-xl border border-slate-900/50">
-                        <button id="ctrl-mute" class="text-slate-400 hover:text-slate-200 transition">
-                            <span id="volume-icon" class="material-icons text-sm">volume_up</span>
-                        </button>
-                        <input id="volume-slider" type="range" min="0" max="100" value="80" class="w-full h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-sky-400">
-                    </div>
-
-                    <!-- Sleep Engine Module -->
-                    <div class="flex items-center justify-between bg-slate-950/30 px-3 py-1.5 rounded-xl border border-slate-900/50 text-xs">
-                        <div class="flex items-center space-x-1.5 text-slate-400">
-                            <span class="material-icons text-sm animate-pulse text-indigo-400">alarm</span>
-                            <span id="sleep-timer-label">Sleep: Off</span>
-
-                        </div>
-                        <select id="sleep-timer-selector" class="bg-slate-900 border border-slate-800 text-slate-300 rounded px-1.5 py-0.5 focus:outline-none focus:border-sky-500 text-xs cursor-pointer">
-                            <option value="0">Turn Off</option>
-                            <option value="5">5 Minutes</option>
-                            <option value="15">15 Minutes</option>
-                            <option value="30">30 Minutes</option>
-                            <option value="60">60 Minutes</option>
-                        </select>
-                    </div>
-                </div>
-            </section>
-        </main>
-
-        <!-- FOOTER BLOCK -->
-        <footer class="w-full max-w-7xl mx-auto px-6 py-3 text-center border-t border-slate-900 text-[11px] font-mono tracking-widest text-slate-600">
-            CREATED BY AK AKASH &bull; OPTIMIZED APK DISTRIBUTION STREAM
-        </footer>
-    </div>
+        </div>
+    </footer>
 
 
-    <!-- AUDIO CORE CONTROLLER LOGIC INJECTION ENGINE -->
+    <!-- RUNTIME LOGIC / TRACK SCHEMATICS JAVASCRIPT EXECUTABLE WINDOW OBJECT -->
     <script>
-        // Clean relative directory strategy mapping files inside your directory workspace
-        const LOCAL_AUDIO_BASE = "music/";
-
-        // Standardized Track Manifest Registry Array mapping to local assets
-        const trackManifest = [
-            { id: "dandelions", title: "Dandelions", artist: "Ruth B.", file: "dandelions.mp3" },
-            { id: "faded", title: "Faded", artist: "Alan Walker", file: "faded.mp3" },
-            { id: "heat-waves", title: "Heat Waves", artist: "Glass Animals", file: "heat-waves.mp3" },
-            { id: "hymn", title: "Hymn For The Weekend", artist: "Coldplay", file: "hymn-for-the-weekend.mp3" },
-            { id: "be-yours", title: "I Wanna Be Yours", artist: "Arctic Monkeys", file: "i-wanna-be-yours.mp3" },
-            { id: "infinity", title: "Infinity", artist: "Jaymes Young", file: "infinity.mp3" },
-            { id: "let-me-down", title: "Let Me Down Slowly", artist: "Alec Benjamin", file: "let-me-down-slowly.mp3" },
-            { id: "love-me", title: "Love Me Like You Do", artist: "Ellie Goulding", file: "love-me-like-you-do.mp3" },
-            { id: "love-nwantiti", title: "Love Nwantiti", artist: "CKay", file: "love-nwantiti.mp3" },
-            { id: "memories", title: "Memories", artist: "Maroon 5", file: "memories.mp3" },
-            { id: "mood", title: "Mood", artist: "24kGoldn", file: "mood.mp3" },
-            { id: "perfect", title: "Perfect", artist: "Ed Sheeran", file: "perfect.mp3" },
-
-            { id: "shape-of-you", title: "Shape Of You", artist: "Ed Sheeran", file: "shape-of-you.mp3" },
-            { id: "trapped-mind", title: "Trapped In My Mind", artist: "Kid Cudi", file: "trapped-in-my-mind.mp3" },
-            { id: "unstoppable", title: "Unstoppable", artist: "Sia", file: "unstoppable.mp3" }
+        // Project File System Structural Static Array Allocation matches uploaded layout picture items exactly
+        const songsRegistry = [
+            { id: 1, title: 'Dandelions', filename: 'dandelions.mp3', duration: '3:53' },
+            { id: 2, title: 'Faded', filename: 'faded.mp3', duration: '3:32' },
+            { id: 3, title: 'Heat Waves', filename: 'heat-waves.mp3', duration: '3:55' },
+            { id: 4, title: 'Hymn For The Weekend', filename: 'hymn-for-the-weekend.mp3', duration: '4:18' },
+            { id: 5, title: 'I Wanna Be Yours', filename: 'i-wanna-be-yours.mp3', duration: '3:03' },
+            { id: 6, title: 'Infinity', filename: 'infinity.mp3', duration: '4:00' },
+            { id: 7, title: 'Let Me Down Slowly', filename: 'let-me-down-slowly.mp3', duration: '2:49' },
+            { id: 8, title: 'Love Me Like You Do', filename: 'love-me-like-you-do.mp3', duration: '4:12' },
+            { id: 9, title: 'Memories', filename: 'memories.mp3', duration: '3:09' },
+            { id: 10, title: 'Mood', filename: 'mood.mp3', duration: '2:20' },
+            { id: 11, title: 'Perfect', filename: 'perfect.mp3', duration: '4:23' },
+            { id: 12, title: 'Shape Of You', filename: 'shape-of-you.mp3', duration: '3:53' },
+            { id: 13, title: 'Trapped In My Mind', filename: 'trapped-in-my-mind.mp3', duration: '3:15' },
+            { id: 14, title: 'Unstoppable', filename: 'unstoppable.mp3', duration: '3:37' }
         ];
 
-        // Screen Navigation State and Variables
-        let activeTab = 'library'; 
+
+        // State Machine Variables Array Initialization Allocation
         let favoritesRegistry = JSON.parse(localStorage.getItem('azure_favorites')) || [];
-        let currentTrackIndex = -1;
+        let currentSongIndex = -1;
         let isPlaying = false;
-        let isShuffleActive = false;
-        let isRepeatActive = false;
-        let sleepTimerReference = null;
+        let isShuffle = false;
+        let isRepeat = false;
+        let sleepTimerId = null;
+        let sleepTimeRemaining = 0;
 
-        // Core DOM Element Selectors
-        const audioInstance = document.getElementById('azure-core-player');
-        const listViewport = document.getElementById('track-list-viewport');
-        const playPauseBtn = document.getElementById('ctrl-play-pause');
-        const playPauseIcon = document.getElementById('play-pause-icon');
+        let progressInterval = null;
+        let elapsedCounter = 0;
+        let currentTotalSeconds = 0;
 
-        const timelineSlider = document.getElementById('timeline-slider');
-        const volumeSlider = document.getElementById('volume-slider');
-        const volumeIcon = document.getElementById('volume-icon');
-        const currentTrackTitle = document.getElementById('current-track-title');
-        const currentTrackArtist = document.getElementById('current-track-artist');
-        const timestampCurrent = document.getElementById('timestamp-current');
-        const timestampTotal = document.getElementById('timestamp-total');
-        const artworkShell = document.getElementById('album-artwork-shell');
-        const artworkIcon = document.getElementById('artwork-icon');
-
-        // Layout Containers for Space Switching
-        const screenWelcome = document.getElementById('screen-welcome');
-        const screenWorkspace = document.getElementById('screen-workspace');
-        const panelSpaceTitle = document.getElementById('panel-space-title');
-        const playerMetaDeck = document.getElementById('audio-player-meta-deck');
-        const aboutSpaceDeck = document.getElementById('about-space-deck');
-
-        // Navigation Targets
-        const navLibrary = document.getElementById('nav-music-library');
-
-        const navFavorites = document.getElementById('nav-favorites-space');
-        const navAbout = document.getElementById('nav-about-space');
-
-        // Initializer Execution Chain Setup
         window.addEventListener('DOMContentLoaded', () => {
-            initNavigationLogic();
-            initControlListeners();
-            syncVolumeState(volumeSlider.value / 100);
             renderTracklist();
+            renderFavorites();
         });
 
-        // Router / Navigation Architecture Switcher Logic
-        function initNavigationLogic() {
-            document.getElementById('btn-enter-workspace').addEventListener('click', () => {
-                screenWelcome.classList.add('hidden');
-                screenWorkspace.classList.remove('hidden');
-            });
+        function enterWorkspace() {
 
-            document.getElementById('header-logo-home').addEventListener('click', () => {
-
-                screenWorkspace.classList.add('hidden');
-                screenWelcome.classList.remove('hidden');
-            });
-
-            navLibrary.addEventListener('click', () => {
-                activeTab = 'library';
-                updateNavStyles(navLibrary, [navFavorites, navAbout]);
-                panelSpaceTitle.innerHTML = `<span class="material-icons text-base text-sky-400">library_music</span><span>Music Library</span>`;
-                
-                aboutSpaceDeck.classList.add('hidden');
-                playerMetaDeck.classList.remove('hidden');
-                renderTracklist();
-            });
-
-            navFavorites.addEventListener('click', () => {
-                activeTab = 'favorites';
-                updateNavStyles(navFavorites, [navLibrary, navAbout]);
-                panelSpaceTitle.innerHTML = `<span class="material-icons text-base text-rose-400">favorite</span><span>Your Favorites Space</span>`;
-                
-
-                aboutSpaceDeck.classList.add('hidden');
-                playerMetaDeck.classList.remove('hidden');
-                renderTracklist();
-            });
-
-            navAbout.addEventListener('click', () => {
-                updateNavStyles(navAbout, [navLibrary, navFavorites]);
-                panelSpaceTitle.innerHTML = `<span class="material-icons text-base text-indigo-400">info</span><span>About Space</span>`;
-                
-                playerMetaDeck.classList.add('hidden');
-                aboutSpaceDeck.classList.remove('hidden');
-            });
+            const landing = document.getElementById('landing-screen');
+            landing.classList.add('opacity-0');
+            setTimeout(() => {
+                landing.classList.add('hidden');
+            }, 500);
         }
 
-        function updateNavStyles(activeNode, inactiveNodes) {
-            activeNode.className = "flex items-center space-x-1.5 text-sm font-medium text-sky-400 transition";
-            inactiveNodes.forEach(node => {
-                node.className = "flex items-center space-x-1.5 text-sm font-medium text-slate-400 hover:text-slate-200 transition";
+        // Fixed Mobile View Switch Tab Mechanism 
+        function switchMobileTab(targetTab) {
+            const libraryPanel = document.getElementById('panel-library');
+            const favoritesPanel = document.getElementById('panel-favorites');
+            const aboutPanel = document.getElementById('panel-about');
+
+            const btnLibrary = document.getElementById('tab-btn-library');
+            const btnFavorites = document.getElementById('tab-btn-favorites');
+            const btnAbout = document.getElementById('tab-btn-about');
+
+            // Hide everything first
+            libraryPanel.classList.add('hidden');
+
+            favoritesPanel.classList.add('hidden');
+            favoritesPanel.classList.remove('flex', 'w-full');
+            aboutPanel.classList.add('hidden');
+            aboutPanel.classList.remove('flex', 'w-full');
+
+            // Reset standard button styling state properties
+            [btnLibrary, btnFavorites, btnAbout].forEach(btn => {
+                btn.className = "flex-1 py-2.5 rounded-xl flex items-center justify-center gap-2 text-xs font-semibold tracking-wide transition-all text-slate-400 hover:text-slate-200";
             });
 
-        }
+            // Target view assignment toggles
+            if (targetTab === 'library') {
+                libraryPanel.classList.remove('hidden');
+                btnLibrary.className = "flex-1 py-2.5 rounded-xl flex items-center justify-center gap-2 text-xs font-semibold tracking-wide transition-all text-sky-400 bg-sky-500/10 border border-sky-500/20";
+            } else if (targetTab === 'favorites') {
+                favoritesPanel.classList.remove('hidden');
+                favoritesPanel.classList.add('flex', 'w-full');
+                btnFavorites.className = "flex-1 py-2.5 rounded-xl flex items-center justify-center gap-2 text-xs font-semibold tracking-wide transition-all text-sky-400 bg-sky-500/10 border border-sky-500/20";
+            } else if (targetTab === 'about') {
 
-        // Dynamic Component View Rendering Module
-        function renderTracklist() {
-            listViewport.innerHTML = '';
-            const targetTracks = activeTab === 'library' 
-                ? trackManifest 
-                : trackManifest.filter(t => favoritesRegistry.includes(t.id));
-
-            if (targetTracks.length === 0) {
-                listViewport.innerHTML = `
-                    <div class="text-center py-12 text-slate-500 text-xs font-mono tracking-wider">
-                        <span class="material-icons text-3xl mb-2 block opacity-40">layers_clear</span>
-                        No entries found in this view
-                    </div>`;
-                return;
+                aboutPanel.classList.remove('hidden');
+                aboutPanel.classList.add('flex', 'w-full');
+                btnAbout.className = "flex-1 py-2.5 rounded-xl flex items-center justify-center gap-2 text-xs font-semibold tracking-wide transition-all text-sky-400 bg-sky-500/10 border border-sky-500/20";
             }
+        }
 
-            targetTracks.forEach((track) => {
+        function renderTracklist() {
+            const container = document.getElementById('tracklist-container');
+            container.innerHTML = '';
 
-                const globalIndex = trackManifest.findIndex(t => t.id === track.id);
-                const isCurrent = globalIndex === currentTrackIndex;
-                const isFav = favoritesRegistry.includes(track.id);
+            songsRegistry.forEach((song, idx) => {
+                const isFav = favoritesRegistry.includes(song.id);
+                const isCurrent = idx === currentSongIndex;
 
-                const itemRow = document.createElement('div');
-                itemRow.className = `flex items-center justify-between p-3 rounded-xl transition duration-200 group cursor-pointer ${
-                    isCurrent ? 'bg-sky-500/10 border border-sky-500/20' : 'bg-slate-950/40 hover:bg-slate-900/60 border border-transparent'
+                const trackRow = document.createElement('div');
+                trackRow.className = `flex items-center justify-between p-3.5 rounded-xl border transition-all cursor-pointer ${
+                    isCurrent 
+                    ? 'bg-sky-500/10 border-sky-500/30 text-sky-400' 
+                    : 'bg-slate-900/40 border-slate-900/60 hover:bg-slate-900/80 hover:border-slate-800 text-slate-300'
+
                 }`;
-                
-                itemRow.addEventListener('click', (e) => {
-                    if (e.target.closest('.fav-toggle-btn')) return;
-                    mountTrack(globalIndex);
-                });
+                trackRow.setAttribute('onclick', `selectTrack(${idx}); event.stopPropagation();`);
 
-                itemRow.innerHTML = `
-                    <div class="flex items-center space-x-3 overflow-hidden">
-                        <div class="w-9 h-9 rounded-lg bg-slate-900 flex items-center justify-center text-slate-400 group-hover:bg-slate-800 group-hover:text-sky-400 transition-all">
-                            <span class="material-icons text-lg">${isCurrent && isPlaying ? 'volume_up' : 'music_note'}</span>
-                        </div>
-
-                        <div class="overflow-hidden">
-                            <h4 class="text-xs font-semibold truncate ${isCurrent ? 'text-sky-400' : 'text-slate-200'}">${track.title}</h4>
-                            <p class="text-[10px] text-slate-500 font-medium truncate">${track.artist}</p>
+                trackRow.innerHTML = `
+                    <div class="flex items-center gap-3 min-w-0 flex-1">
+                        <span class="material-icons text-slate-500 text-sm shrink-0">${isCurrent && isPlaying ? 'volume_up' : 'music_note'}</span>
+                        <div class="min-w-0 flex-1">
+                            <p class="text-xs font-semibold truncate ${isCurrent ? 'text-sky-400' : 'text-slate-200'}">${song.title}</p>
+                            <p class="text-[10px] text-slate-500 font-mono mt-0.5 truncate">${song.filename}</p>
                         </div>
                     </div>
-                    <button class="fav-toggle-btn text-slate-600 hover:text-rose-400 p-1 transition" data-id="${track.id}">
-                        <span class="material-icons text-lg">${isFav ? 'favorite' : 'favorite_border'}</span>
-                    </button>
+                    <div class="flex items-center gap-3 ml-2 shrink-0">
+                        <span class="text-[11px] font-mono text-slate-500 hidden sm:inline">${song.duration}</span>
+                        <button onclick="toggleFavoriteState(${song.id}); event.stopPropagation();" class="p-1 text-slate-500 hover:text-rose-400 transition-colors">
+                            <span class="material-icons text-base">${isFav ? 'favorite' : 'favorite_border'}</span>
+                        </button>
+                    </div>
                 `;
+                container.appendChild(trackRow);
 
-                itemRow.querySelector('.fav-toggle-btn').addEventListener('click', () => {
-                    toggleFavoriteState(track.id);
-                });
-
-                listViewport.appendChild(itemRow);
             });
+            document.getElementById('track-count').innerText = `${songsRegistry.length} Tracks`;
         }
 
-        // Context Mounting Logic Module
+        function renderFavorites() {
+            const container = document.getElementById('favorites-container');
+            const placeholder = document.getElementById('no-favorites-placeholder');
+            const favSongs = songsRegistry.filter(s => favoritesRegistry.includes(s.id));
 
-        function mountTrack(index) {
-            if (index < 0 || index >= trackManifest.length) return;
-            
-            if (playerMetaDeck.classList.contains('hidden')) {
-                if (activeTab === 'library') navLibrary.click(); else navFavorites.click();
-            }
+            container.innerHTML = '';
+            container.appendChild(placeholder);
 
-            currentTrackIndex = index;
-            const targetTrack = trackManifest[currentTrackIndex];
-
-            // Direct workspace asset delivery using reliable relative paths
-            audioInstance.src = LOCAL_AUDIO_BASE + targetTrack.file;
-            
-            currentTrackTitle.textContent = targetTrack.title;
-            currentTrackArtist.textContent = targetTrack.artist;
-            
-            artworkShell.className = "w-48 h-48 rounded-2xl bg-gradient-to-br from-sky-950/80 to-slate-950 border border-sky-500/30 flex items-center justify-center shadow-2xl relative overflow-hidden transition-all duration-500 scale-105 animate-pulse";
-            artworkIcon.className = "material-icons text-7xl text-sky-400";
-
-
-            renderTracklist();
-            executePlay();
-        }
-
-        // Mechanics Playback Infrastructure Controllers
-        function executePlay() {
-            if (currentTrackIndex === -1 && trackManifest.length > 0) {
-                mountTrack(0);
+            if (favSongs.length === 0) {
+                placeholder.classList.remove('hidden');
                 return;
             }
-            audioInstance.play()
-                .then(() => {
-                    isPlaying = true;
-                    playPauseIcon.textContent = 'pause';
-                    artworkShell.classList.remove('animate-pulse');
-                })
-                .catch(err => console.log("Audio pipeline instantiation blocked: ", err));
-        }
+            placeholder.classList.add('hidden');
 
+            favSongs.forEach(song => {
 
-        function executePause() {
-            audioInstance.pause();
-            isPlaying = false;
-            playPauseIcon.textContent = 'play_arrow';
-            artworkShell.classList.remove('animate-pulse');
-        }
+                const origIndex = songsRegistry.findIndex(s => s.id === song.id);
+                const favRow = document.createElement('div');
+                favRow.className = "flex items-center justify-between p-3 bg-slate-900/40 border border-slate-900/60 rounded-xl hover:border-slate-800 transition-all cursor-pointer text-xs";
+                favRow.setAttribute('onclick', `selectTrack(${origIndex})`);
 
-        function processNextTrack() {
-            if (isShuffleActive) {
-                const randIndex = Math.floor(Math.random() * trackManifest.length);
-                mountTrack(randIndex);
-            } else {
-                let nextIndex = currentTrackIndex + 1;
-                if (nextIndex >= trackManifest.length) nextIndex = 0;
-                mountTrack(nextIndex);
-            }
-        }
-
-        function processPrevTrack() {
-
-            let prevIndex = currentTrackIndex - 1;
-            if (prevIndex < 0) prevIndex = trackManifest.length - 1;
-            mountTrack(prevIndex);
-        }
-
-        // System Control Infrastructure Interface Listeners
-        function initControlListeners() {
-            playPauseBtn.addEventListener('click', () => {
-                if (isPlaying) executePause(); else executePlay();
-            });
-            document.getElementById('ctrl-next').addEventListener('click', processNextTrack);
-            document.getElementById('ctrl-prev').addEventListener('click', processPrevTrack);
-
-            audioInstance.addEventListener('timeupdate', () => {
-                if (!audioInstance.duration) return;
-                const progressPct = (audioInstance.currentTime / audioInstance.duration) * 100;
-                timelineSlider.value = progressPct;
-                timestampCurrent.textContent = formatDuration(audioInstance.currentTime);
-            });
-
-
-            audioInstance.addEventListener('loadedmetadata', () => {
-                timestampTotal.textContent = formatDuration(audioInstance.duration);
-            });
-
-            timelineSlider.addEventListener('input', () => {
-                if (!audioInstance.duration) return;
-                audioInstance.currentTime = (timelineSlider.value / 100) * audioInstance.duration;
-            });
-
-            audioInstance.addEventListener('ended', () => {
-                if (isRepeatActive) {
-                    audioInstance.currentTime = 0;
-                    executePlay();
-                } else {
-                    processNextTrack();
-                }
-            });
-
-            const shuffleBtn = document.getElementById('ctrl-shuffle');
-
-            shuffleBtn.addEventListener('click', () => {
-                isShuffleActive = !isShuffleActive;
-                shuffleBtn.className = isShuffleActive ? "text-sky-400 transition scale-110" : "text-slate-500 hover:text-sky-400 transition";
-            });
-
-            const repeatBtn = document.getElementById('ctrl-repeat');
-            repeatBtn.addEventListener('click', () => {
-                isRepeatActive = !isRepeatActive;
-                repeatBtn.className = isRepeatActive ? "text-sky-400 transition scale-110" : "text-slate-500 hover:text-sky-400 transition";
-            });
-
-            volumeSlider.addEventListener('input', () => {
-                syncVolumeState(volumeSlider.value / 100);
-            });
-
-            document.getElementById('ctrl-mute').addEventListener('click', () => {
-                if (audioInstance.volume > 0) {
-                    syncVolumeState(0);
-                    volumeSlider.value = 0;
-
-                } else {
-                    syncVolumeState(0.8);
-                    volumeSlider.value = 80;
-                }
-            });
-
-            const sleepSelector = document.getElementById('sleep-timer-selector');
-            const sleepLabel = document.getElementById('sleep-timer-label');
-            sleepSelector.addEventListener('change', () => {
-                const durationMinutes = parseInt(sleepSelector.value);
-                if (sleepTimerReference) clearTimeout(sleepTimerReference);
-
-                if (durationMinutes === 0) {
-                    sleepLabel.textContent = "Sleep: Off";
-                    return;
-                }
-
-                sleepLabel.textContent = `Sleep: ${durationMinutes}m active`;
-                sleepTimerReference = setTimeout(() => {
-
-                    executePause();
-                    sleepSelector.value = "0";
-                    sleepLabel.textContent = "Sleep: Off";
-                }, durationMinutes * 60 * 1000);
+                favRow.innerHTML = `
+                    <div class="min-w-0 flex-1 pr-2">
+                        <p class="font-semibold text-slate-300 truncate">${song.title}</p>
+                        <p class="text-[10px] text-slate-500 font-mono truncate">${song.duration}</p>
+                    </div>
+                    <button onclick="toggleFavoriteState(${song.id}); event.stopPropagation();" class="text-rose-400 hover:text-slate-600 p-1 transition-colors shrink-0">
+                        <span class="material-icons text-base">favorite</span>
+                    </button>
+                `;
+                container.appendChild(favRow);
             });
         }
 
-        // Auxiliary Utilities components
-        function syncVolumeState(volumeTarget) {
-            audioInstance.volume = volumeTarget;
-            if (volumeTarget === 0) {
-                volumeIcon.textContent = 'volume_off';
-                volumeIcon.className = "material-icons text-sm text-rose-400";
-            } else if (volumeTarget < 0.4) {
-                volumeIcon.textContent = 'volume_down';
-                volumeIcon.className = "material-icons text-sm text-slate-400";
-            } else {
-                volumeIcon.textContent = 'volume_up';
-                volumeIcon.className = "material-icons text-sm text-sky-400";
-
-            }
-        }
-
-        // Favorites Handling Logic
         function toggleFavoriteState(id) {
+
             if (favoritesRegistry.includes(id)) {
                 favoritesRegistry = favoritesRegistry.filter(favId => favId !== id);
             } else {
                 favoritesRegistry.push(id);
             }
             localStorage.setItem('azure_favorites', JSON.stringify(favoritesRegistry));
+            
+            renderTracklist();
+            renderFavorites();
+            updatePlayerFavIcon();
+        }
+
+        function toggleCurrentSongFavorite() {
+            if (currentSongIndex === -1) return;
+            const currentSong = songsRegistry[currentSongIndex];
+            toggleFavoriteState(currentSong.id);
+        }
+
+        function updatePlayerFavIcon() {
+
+            const favIcon = document.getElementById('player-fav-icon');
+            const favBtn = document.getElementById('player-fav-toggle');
+            if (currentSongIndex === -1) {
+                favIcon.innerText = 'favorite_border';
+                favBtn.className = 'text-slate-700 hidden';
+                return;
+            }
+            favBtn.classList.remove('hidden');
+            const song = songsRegistry[currentSongIndex];
+            if (favoritesRegistry.includes(song.id)) {
+                favIcon.innerText = 'favorite';
+                favIcon.className = 'material-icons text-xl text-rose-400';
+            } else {
+                favIcon.innerText = 'favorite_border';
+                favIcon.className = 'material-icons text-xl text-slate-500 hover:text-rose-400';
+            }
+        }
+
+        function selectTrack(idx) {
+
+            if (idx < 0 || idx >= songsRegistry.length) return;
+            currentSongIndex = idx;
+            
+            const song = songsRegistry[currentSongIndex];
+            document.getElementById('current-title').innerText = song.title;
+            document.getElementById('current-subtitle').innerText = `Playing local media stream`;
+            document.getElementById('player-album-art').innerText = 'album';
+            document.getElementById('player-album-art').classList.add('text-sky-400', 'animate-spin');
+            
+            const parts = song.duration.split(':');
+            currentTotalSeconds = parseInt(parts[0], 10) * 60 + parseInt(parts[1], 10);
+            document.getElementById('time-total').innerText = song.duration;
+
+            elapsedCounter = 0;
+            document.getElementById('progress-slider').value = 0;
+            document.getElementById('time-current').innerText = '0:00';
+
+            isPlaying = true;
+            document.getElementById('icon-main-play').innerText = 'pause';
+
+            
+            clearInterval(progressInterval);
+            startPlaybackSimulation();
+
+            renderTracklist();
+            updatePlayerFavIcon();
+        }
+
+        function togglePlay() {
+            if (currentSongIndex === -1) {
+                selectTrack(0);
+                return;
+            }
+            isPlaying = !isPlaying;
+            const mainPlayIcon = document.getElementById('icon-main-play');
+            const art = document.getElementById('player-album-art');
+
+            if (isPlaying) {
+                mainPlayIcon.innerText = 'pause';
+
+                art.classList.add('animate-spin');
+                startPlaybackSimulation();
+            } else {
+                mainPlayIcon.innerText = 'play_arrow';
+                art.classList.remove('animate-spin');
+                clearInterval(progressInterval);
+            }
             renderTracklist();
         }
 
-        // Timer Utility
-        function formatDuration(secondsIn) {
-            if (isNaN(secondsIn)) return "0:00";
-            const computedMins = Math.floor(secondsIn / 60);
-            const computedSecs = Math.floor(secondsIn % 60);
+        function startPlaybackSimulation() {
+            progressInterval = setInterval(() => {
+                if (!isPlaying) return;
+                elapsedCounter++;
+                
+                if (elapsedCounter >= currentTotalSeconds) {
+                    clearInterval(progressInterval);
+                    if (isRepeat) {
+                        selectTrack(currentSongIndex);
 
+                    } else {
+                        playNext();
+                    }
+                    return;
+                }
+
+                document.getElementById('time-current').innerText = formatDuration(elapsedCounter);
+                const pct = (elapsedCounter / currentTotalSeconds) * 100;
+                document.getElementById('progress-slider').value = pct;
+            }, 1000);
+        }
+
+        function seekAudio(pctValue) {
+            if (currentSongIndex === -1) return;
+            elapsedCounter = Math.floor((pctValue / 100) * currentTotalSeconds);
+            document.getElementById('time-current').innerText = formatDuration(elapsedCounter);
+        }
+
+        function playNext() {
+
+            if (songsRegistry.length === 0) return;
+            if (isShuffle) {
+                const rand = Math.floor(Math.random() * songsRegistry.length);
+                selectTrack(rand);
+            } else {
+                let nextIdx = currentSongIndex + 1;
+                if (nextIdx >= songsRegistry.length) nextIdx = 0;
+                selectTrack(nextIdx);
+            }
+        }
+
+        function playPrev() {
+            if (songsRegistry.length === 0) return;
+            let prevIdx = currentSongIndex - 1;
+            if (prevIdx < 0) prevIdx = songsRegistry.length - 1;
+            selectTrack(prevIdx);
+        }
+
+        function toggleShuffle() {
+
+            isShuffle = !isShuffle;
+            const btn = document.getElementById('btn-shuffle');
+            if (isShuffle) {
+                btn.className = "text-sky-400 hover:text-sky-300 transition-colors p-1";
+            } else {
+                btn.className = "text-slate-500 hover:text-sky-400 transition-colors p-1";
+            }
+        }
+
+        function toggleRepeat() {
+            isRepeat = !isRepeat;
+            const btn = document.getElementById('btn-repeat');
+            if (isRepeat) {
+                btn.className = "text-sky-400 hover:text-sky-300 transition-colors p-1";
+            } else {
+                btn.className = "text-slate-500 hover:text-sky-400 transition-colors p-1";
+            }
+        }
+
+
+        function changeVolume(val) {
+            const icon = document.getElementById('volume-icon');
+            if (parseInt(val, 10) === 0) {
+                icon.innerText = 'volume_off';
+                icon.className = 'material-icons text-base text-slate-600';
+            } else if (val < 50) {
+                icon.innerText = 'volume_down';
+                icon.className = 'material-icons text-base text-slate-400';
+            } else {
+                icon.innerText = 'volume_up';
+                icon.className = 'material-icons text-base text-sky-400';
+            }
+        }
+
+        function toggleSleepDropdown() {
+            const dropdown = document.getElementById('sleep-dropdown');
+            dropdown.classList.toggle('hidden');
+        }
+
+
+        window.addEventListener('click', (e) => {
+            const menuBtn = document.getElementById('btn-sleep-menu');
+            const dropdown = document.getElementById('sleep-dropdown');
+            if (menuBtn && !menuBtn.contains(e.target) && dropdown && !dropdown.contains(e.target)) {
+                dropdown.classList.add('hidden');
+            }
+        });
+
+        function setSleepTimer(minutes) {
+            const label = document.getElementById('lbl-sleep-state');
+            document.getElementById('sleep-dropdown').classList.add('hidden');
+            
+            clearInterval(sleepTimerId);
+            if (minutes === 0) {
+                label.innerText = "Sleep: Off";
+                return;
+            }
+
+            sleepTimeRemaining = minutes * 60;
+
+            label.innerText = `Sleep: ${minutes}m`;
+
+            sleepTimerId = setInterval(() => {
+                sleepTimeRemaining--;
+                if (sleepTimeRemaining <= 0) {
+                    clearInterval(sleepTimerId);
+                    isPlaying = true;
+                    togglePlay();
+                    label.innerText = "Sleep: Off";
+                } else {
+                    const minsLeft = Math.ceil(sleepTimeRemaining / 60);
+                    label.innerText = `Sleep: ${minsLeft}m`;
+                }
+            }, 1000);
+        }
+
+        function formatDuration(secondsIn) {
+            if (isNaN(secondsIn) || secondsIn < 0) return "0:00";
+            const computedMins = Math.floor(secondsIn / 60);
+
+            const computedSecs = Math.floor(secondsIn % 60);
             return `${computedMins}:${computedSecs < 10 ? '0' : ''}${computedSecs}`;
         }
     </script>
