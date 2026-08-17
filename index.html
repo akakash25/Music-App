@@ -1,5 +1,3 @@
-# Mobile Responsive Azure Music App
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,7 +17,6 @@
         ::-webkit-scrollbar-track {
             background: #020617;
         }
-
         ::-webkit-scrollbar-thumb {
             background: #1e293b;
             border-radius: 3px;
@@ -39,7 +36,6 @@
     <!-- 1. HERO / LANDING DASHBOARD INTERFACE SCREEN -->
     <div id="landing-screen" class="fixed inset-0 bg-slate-950 z-50 flex flex-col items-center justify-center p-6 text-center transition-opacity duration-500">
         <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(14,165,233,0.1),transparent_60%)] pointer-events-none"></div>
-
         <div class="space-y-4 max-w-md relative z-10">
             <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-sky-500/10 border border-sky-500/20 text-sky-400 mb-2">
                 <span class="material-icons text-3xl animate-pulse">waves</span>
@@ -58,72 +54,63 @@
         </div>
     </div>
 
-    <!-- MAIN BRANDING HEADER: Simplified on mobile to stop horizontal crushing -->
-
-    <header class="border-b border-slate-900 bg-slate-950/80 backdrop-blur-md sticky top-0 z-30 px-4 py-4">
+    <!-- MAIN CORE APP CONTAINER -->
+    <header class="border-b border-slate-900 bg-slate-950/80 backdrop-blur-md sticky top-0 z-30 px-4 py-3">
         <div class="max-w-7xl mx-auto flex items-center justify-between">
             <div class="flex items-center gap-2">
-                <span class="material-icons text-sky-400 text-2xl">waves</span>
-                <span class="font-bold tracking-widest text-lg text-slate-100">AZURE</span>
-                <span class="text-[10px] font-mono bg-slate-900 border border-slate-800 text-sky-400/80 px-2 py-0.5 rounded-md ml-1">v1.1.0</span>
+                <span class="material-icons text-sky-400 text-xl">waves</span>
+                <span class="font-bold tracking-wider text-base">AZURE</span>
+                <span class="text-[10px] font-mono bg-slate-900 border border-slate-800 text-slate-400 px-1.5 py-0.5 rounded ml-2">v1.1.0</span>
             </div>
-            <div class="text-xs text-slate-500 font-mono tracking-wider">by AK Akash</div>
+            <div class="text-xs text-slate-500 font-mono hidden sm:block">by AK Akash</div>
         </div>
     </header>
 
-    <!-- FIXED SEGMENTED NAVIGATION TABS FOR MOBILE: Separated from the brand header to maximize width -->
-    <div class="md:hidden bg-slate-900/40 backdrop-blur-md border-b border-slate-900/80 sticky top-[61px] z-30 p-1.5 flex gap-1">
-        <button id="tab-btn-library" onclick="switchMobileTab('library')" class="flex-1 py-2.5 rounded-xl flex items-center justify-center gap-2 text-xs font-semibold tracking-wide transition-all text-sky-400 bg-sky-500/10 border border-sky-500/20">
-            <span class="material-icons text-base">library_music</span>
-            <span>Library</span>
+    <!-- MOBILE TABS NAVIGATION BAR (Only visible on small viewports to alternate panels) -->
+    <div class="md:hidden bg-slate-900/90 border-b border-slate-800 sticky top-[53px] z-30 flex justify-around text-xs p-1">
+        <button id="tab-btn-library" onclick="switchMobileTab('library')" class="flex-1 py-2 flex items-center justify-center gap-1.5 font-medium rounded-lg text-sky-400 bg-slate-950/50">
+            <span class="material-icons text-sm">library_music</span>Library
         </button>
-        <button id="tab-btn-favorites" onclick="switchMobileTab('favorites')" class="flex-1 py-2.5 rounded-xl flex items-center justify-center gap-2 text-xs font-semibold tracking-wide transition-all text-slate-400 hover:text-slate-200">
-            <span class="material-icons text-base">favorite</span>
-
-            <span>Favorites</span>
+        <button id="tab-btn-favorites" onclick="switchMobileTab('favorites')" class="flex-1 py-2 flex items-center justify-center gap-1.5 font-medium rounded-lg text-slate-400">
+            <span class="material-icons text-sm">favorite</span>Favorites
         </button>
-        <button id="tab-btn-about" onclick="switchMobileTab('about')" class="flex-1 py-2.5 rounded-xl flex items-center justify-center gap-2 text-xs font-semibold tracking-wide transition-all text-slate-400 hover:text-slate-200">
-            <span class="material-icons text-base">info</span>
-            <span>About</span>
+        <button id="tab-btn-about" onclick="switchMobileTab('about')" class="flex-1 py-2 flex items-center justify-center gap-1.5 font-medium rounded-lg text-slate-400">
+            <span class="material-icons text-sm">info</span>About
         </button>
     </div>
 
-    <!-- RESPONSIVE CONTENT COLUMN DISPLAY CONTEXT -->
-    <main class="flex-1 max-w-7xl w-full mx-auto p-4 flex flex-col md:flex-row gap-4 pb-44 md:pb-28">
+    <!-- RESPONSIVE COLUMN GRID SPACE CONTAINER -->
+    <main class="flex-1 max-w-7xl w-full mx-auto p-4 flex flex-col md:flex-row gap-4 pb-40 md:pb-28">
         
         <!-- COLUMN 1: TRACK LIST / LIBRARY VIEW -->
-        <section id="panel-library" class="flex-1 bg-slate-900/20 border border-slate-900/60 rounded-2xl p-4 flex flex-col group transition-all duration-300">
-            <div class="flex items-center justify-between mb-4 border-b border-slate-900 pb-2">
-                <h3 class="font-bold text-xs tracking-widest uppercase text-slate-400 flex items-center gap-2">
+        <section id="panel-library" class="flex-1 bg-slate-900/30 border border-slate-900 rounded-2xl p-4 flex flex-col group transition-all duration-300">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="font-semibold text-sm tracking-wider uppercase text-slate-400 flex items-center gap-2">
                     <span class="material-icons text-sky-400 text-lg">library_music</span> Music Library
                 </h3>
-                <span id="track-count" class="text-xs font-mono text-slate-500 bg-slate-950 px-2 py-0.5 rounded-md border border-slate-900">14 Tracks</span>
+                <span id="track-count" class="text-xs font-mono text-slate-500">14 Tracks</span>
             </div>
-
             
             <!-- Dynamic Scrollable Tracklist Box Wrapper -->
-            <div id="tracklist-container" class="space-y-2 max-h-[52vh] md:max-h-[65vh] overflow-y-auto pr-1">
+            <div id="tracklist-container" class="space-y-1.5 max-h-[58vh] md:max-h-[65vh] overflow-y-auto pr-1">
                 <!-- Rows loaded inside runtime execution loop -->
             </div>
         </section>
 
         <!-- COLUMN 2: FAVORITES DRAWER OR DISPLAY SPACE -->
-        <section id="panel-favorites" class="hidden md:flex w-full md:w-80 bg-slate-900/20 border border-slate-900/60 rounded-2xl p-4 flex-col transition-all duration-300">
-            <div class="flex items-center justify-between mb-4 border-b border-slate-900 pb-2">
-                <h3 class="font-bold text-xs tracking-widest uppercase text-slate-400 flex items-center gap-2">
-                    <span class="material-icons text-rose-400 text-lg">favorite</span> Favorites Space
-                </h3>
-            </div>
-            <div id="favorites-container" class="space-y-2 max-h-[52vh] md:max-h-[65vh] overflow-y-auto">
-                <div id="no-favorites-placeholder" class="text-xs text-slate-500 text-center py-12 font-mono leading-relaxed">
-                    No starred songs yet.<br><span class="text-slate-600">Tap the heart icon on any song.</span>
+        <section id="panel-favorites" class="hidden md:flex w-full md:w-80 bg-slate-900/30 border border-slate-900 rounded-2xl p-4 flex-col transition-all duration-300">
+            <h3 class="font-semibold text-sm tracking-wider uppercase text-slate-400 flex items-center gap-2 mb-4">
+                <span class="material-icons text-rose-400 text-lg">favorite</span> Favorites Space
+            </h3>
+            <div id="favorites-container" class="space-y-1.5 max-h-[58vh] md:max-h-[65vh] overflow-y-auto">
+                <div id="no-favorites-placeholder" class="text-xs text-slate-500 text-center py-8 font-mono">
+                    No starred songs yet.<br>Tap the heart icon on any song.
                 </div>
             </div>
-
         </section>
 
         <!-- COLUMN 3: CREDITS & ABOUT TERMINAL PANEL CONTAINER -->
-        <section id="panel-about" class="hidden md:flex w-full md:w-72 bg-slate-900/20 border border-slate-900/60 rounded-2xl p-4 flex-col justify-between transition-all duration-300">
+        <section id="panel-about" class="hidden md:flex w-full md:w-72 bg-slate-900/30 border border-slate-900 rounded-2xl p-4 flex-col justify-between transition-all duration-300">
             <div class="space-y-4">
                 <div class="flex items-center gap-1.5 text-xs text-slate-500 font-mono uppercase tracking-wider">
                     <span class="material-icons text-slate-600 text-xs">terminal</span> Terminal
@@ -136,10 +123,9 @@
                     Passionate about creating serene, functional digital spaces. The Azure Drift project was born from a desire to combine minimalist web interfaces with custom personal audio playlists.
                 </p>
                 <div class="p-3 bg-slate-950/60 border border-slate-900 rounded-xl">
-                    <p class="text-xs italic text-slate-400 leading-relaxed">
+                    <p class="text-xs italic text-slate-400 relative">
                         "Design is not just what it looks like and feels like. Design is how it works."
                     </p>
-
                 </div>
             </div>
             
@@ -159,37 +145,33 @@
 
     <!-- 3. NATIVE DESKTOP & MOBILE FIXED BASE AUDIO CONTROLLER PLAYER LAYER -->
     <footer class="fixed bottom-0 left-0 right-0 bg-slate-950/95 backdrop-blur-lg border-t border-slate-900 z-40 px-4 py-4 safe-bottom">
-
         <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 items-center gap-4">
             
             <!-- Metadata Segment Bar Area -->
-            <div class="flex items-center justify-between md:justify-start gap-3 w-full min-w-0">
-                <div class="flex items-center gap-3 min-w-0">
-                    <div class="w-11 h-11 bg-slate-900 border border-slate-800 rounded-xl flex items-center justify-center text-slate-400 shrink-0">
-                        <span id="player-album-art" class="material-icons text-xl">album</span>
-                    </div>
-                    <div class="min-w-0">
-                        <h4 id="current-title" class="text-sm font-semibold truncate text-slate-200 w-44 sm:w-auto">No Song Selected</h4>
-                        <p id="current-subtitle" class="text-xs text-slate-500 truncate">Select a track to play</p>
-                    </div>
+            <div class="flex items-center gap-3 w-full min-w-0">
+                <div class="w-11 h-11 bg-slate-900 border border-slate-800 rounded-xl flex items-center justify-center text-slate-400 shrink-0">
+                    <span id="player-album-art" class="material-icons text-xl">album</span>
                 </div>
-                <button id="player-fav-toggle" onclick="toggleCurrentSongFavorite()" class="text-slate-600 hover:text-rose-400 p-2 md:hidden">
+                <div class="min-w-0 flex-1">
+                    <h4 id="current-title" class="text-sm font-semibold truncate text-slate-200">No Song Selected</h4>
+                    <p id="current-subtitle" class="text-xs text-slate-500 truncate">Select a track to play</p>
+                </div>
+                <button id="player-fav-toggle" onclick="toggleCurrentSongFavorite()" class="text-slate-600 hover:text-rose-400 p-1 md:hidden">
                     <span id="player-fav-icon" class="material-icons text-xl">favorite_border</span>
                 </button>
             </div>
 
             <!-- Central Tracking Mechanics & Core Grid Button Play Row -->
-
-            <div class="flex flex-col items-center gap-2 w-full">
+            <div class="flex flex-col items-center gap-1.5 w-full">
                 <!-- Command Controls Interface Array Row -->
-                <div class="flex items-center gap-6">
+                <div class="flex items-center gap-5 sm:gap-6">
                     <button onclick="toggleShuffle()" id="btn-shuffle" class="text-slate-500 hover:text-sky-400 transition-colors p-1" title="Shuffle">
                         <span class="material-icons text-lg">shuffle</span>
                     </button>
                     <button onclick="playPrev()" class="text-slate-400 hover:text-white transition-colors p-1" title="Previous">
                         <span class="material-icons text-xl">skip_previous</span>
                     </button>
-                    <button onclick="togglePlay()" id="btn-main-play" class="w-11 h-11 bg-sky-500 text-slate-950 rounded-full flex items-center justify-center hover:scale-105 active:scale-95 transition-all shadow-lg shadow-sky-500/20" title="Play/Pause">
+                    <button onclick="togglePlay()" id="btn-main-play" class="w-10 h-10 bg-sky-500 text-slate-950 rounded-full flex items-center justify-center hover:scale-105 active:scale-95 transition-all shadow-md shadow-sky-500/10" title="Play/Pause">
                         <span id="icon-main-play" class="material-icons text-2xl">play_arrow</span>
                     </button>
                     <button onclick="playNext()" class="text-slate-400 hover:text-white transition-colors p-1" title="Next">
@@ -199,10 +181,9 @@
                         <span class="material-icons text-lg">repeat</span>
                     </button>
                 </div>
-
                 
                 <!-- Fluid Multi-device Responsive Slider Progress Input Tracking Component -->
-                <div class="w-full flex items-center gap-3 text-[11px] font-mono text-slate-500">
+                <div class="w-full flex items-center gap-2.5 text-[11px] font-mono text-slate-500">
                     <span id="time-current">0:00</span>
                     <input type="range" id="progress-slider" oninput="seekAudio(this.value)" value="0" min="0" max="100" class="w-full h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-sky-400 transition-all hover:h-1.5">
                     <span id="time-total">0:00</span>
@@ -219,7 +200,6 @@
 
                 <!-- Sleep Timer Component Trigger Group Wrap -->
                 <div class="relative">
-
                     <button onclick="toggleSleepDropdown()" id="btn-sleep-menu" class="text-xs bg-slate-900 hover:bg-slate-800 border border-slate-800 px-3 py-1.5 rounded-xl text-slate-300 flex items-center gap-1.5 transition-colors">
                         <span class="material-icons text-xs text-sky-400">alarm</span> 
                         <span id="lbl-sleep-state">Sleep: Off</span>
@@ -238,9 +218,6 @@
 
         </div>
     </footer>
-
-
-    <!-- RUNTIME LOGIC / TRACK SCHEMATICS JAVASCRIPT EXECUTABLE WINDOW OBJECT -->
     <script>
         // Project File System Structural Static Array Allocation matches uploaded layout picture items exactly
         const songsRegistry = [
@@ -260,7 +237,6 @@
             { id: 14, title: 'Unstoppable', filename: 'unstoppable.mp3', duration: '3:37' }
         ];
 
-
         // State Machine Variables Array Initialization Allocation
         let favoritesRegistry = JSON.parse(localStorage.getItem('azure_favorites')) || [];
         let currentSongIndex = -1;
@@ -268,19 +244,20 @@
         let isShuffle = false;
         let isRepeat = false;
         let sleepTimerId = null;
-        let sleepTimeRemaining = 0;
+        let sleepTimeRemaining = 0; // seconds
 
+        // Pseudo Simulated Native Audio Context Engine Object Reference instantiation
         let progressInterval = null;
         let elapsedCounter = 0;
         let currentTotalSeconds = 0;
 
+        // Initialize Core View elements layout state
         window.addEventListener('DOMContentLoaded', () => {
             renderTracklist();
             renderFavorites();
         });
 
         function enterWorkspace() {
-
             const landing = document.getElementById('landing-screen');
             landing.classList.add('opacity-0');
             setTimeout(() => {
@@ -288,7 +265,7 @@
             }, 500);
         }
 
-        // Fixed Mobile View Switch Tab Mechanism 
+        // Mobile Alternate Interface Segment Panel View Mechanism Switches
         function switchMobileTab(targetTab) {
             const libraryPanel = document.getElementById('panel-library');
             const favoritesPanel = document.getElementById('panel-favorites');
@@ -298,35 +275,32 @@
             const btnFavorites = document.getElementById('tab-btn-favorites');
             const btnAbout = document.getElementById('tab-btn-about');
 
-            // Hide everything first
+            // Hide/Show Panels matching selected state rules properties
             libraryPanel.classList.add('hidden');
-
             favoritesPanel.classList.add('hidden');
-            favoritesPanel.classList.remove('flex', 'w-full');
             aboutPanel.classList.add('hidden');
-            aboutPanel.classList.remove('flex', 'w-full');
 
-            // Reset standard button styling state properties
+            // Reset navigation active selection layout attributes classes classes
             [btnLibrary, btnFavorites, btnAbout].forEach(btn => {
-                btn.className = "flex-1 py-2.5 rounded-xl flex items-center justify-center gap-2 text-xs font-semibold tracking-wide transition-all text-slate-400 hover:text-slate-200";
+                btn.classList.remove('text-sky-400', 'bg-slate-950/50');
+                btn.classList.add('text-slate-400');
             });
 
-            // Target view assignment toggles
             if (targetTab === 'library') {
                 libraryPanel.classList.remove('hidden');
-                btnLibrary.className = "flex-1 py-2.5 rounded-xl flex items-center justify-center gap-2 text-xs font-semibold tracking-wide transition-all text-sky-400 bg-sky-500/10 border border-sky-500/20";
+                btnLibrary.classList.add('text-sky-400', 'bg-slate-950/50');
             } else if (targetTab === 'favorites') {
                 favoritesPanel.classList.remove('hidden');
-                favoritesPanel.classList.add('flex', 'w-full');
-                btnFavorites.className = "flex-1 py-2.5 rounded-xl flex items-center justify-center gap-2 text-xs font-semibold tracking-wide transition-all text-sky-400 bg-sky-500/10 border border-sky-500/20";
+                favoritesPanel.classList.set('flex', 'w-full');
+                btnFavorites.classList.add('text-sky-400', 'bg-slate-950/50');
             } else if (targetTab === 'about') {
-
                 aboutPanel.classList.remove('hidden');
-                aboutPanel.classList.add('flex', 'w-full');
-                btnAbout.className = "flex-1 py-2.5 rounded-xl flex items-center justify-center gap-2 text-xs font-semibold tracking-wide transition-all text-sky-400 bg-sky-500/10 border border-sky-500/20";
+                aboutPanel.classList.set('flex', 'w-full');
+                btnAbout.classList.add('text-sky-400', 'bg-slate-950/50');
             }
         }
 
+        // Main List Track Grid Component Generation Layout
         function renderTracklist() {
             const container = document.getElementById('tracklist-container');
             container.innerHTML = '';
@@ -336,11 +310,10 @@
                 const isCurrent = idx === currentSongIndex;
 
                 const trackRow = document.createElement('div');
-                trackRow.className = `flex items-center justify-between p-3.5 rounded-xl border transition-all cursor-pointer ${
+                trackRow.className = `flex items-center justify-between p-3 rounded-xl border transition-all cursor-pointer ${
                     isCurrent 
                     ? 'bg-sky-500/10 border-sky-500/30 text-sky-400' 
                     : 'bg-slate-900/40 border-slate-900/60 hover:bg-slate-900/80 hover:border-slate-800 text-slate-300'
-
                 }`;
                 trackRow.setAttribute('onclick', `selectTrack(${idx}); event.stopPropagation();`);
 
@@ -348,28 +321,31 @@
                     <div class="flex items-center gap-3 min-w-0 flex-1">
                         <span class="material-icons text-slate-500 text-sm shrink-0">${isCurrent && isPlaying ? 'volume_up' : 'music_note'}</span>
                         <div class="min-w-0 flex-1">
-                            <p class="text-xs font-semibold truncate ${isCurrent ? 'text-sky-400' : 'text-slate-200'}">${song.title}</p>
+                            <p class="text-xs font-medium truncate ${isCurrent ? 'text-sky-400 font-bold' : 'text-slate-200'}">${song.title}</p>
                             <p class="text-[10px] text-slate-500 font-mono mt-0.5 truncate">${song.filename}</p>
                         </div>
                     </div>
                     <div class="flex items-center gap-3 ml-2 shrink-0">
                         <span class="text-[11px] font-mono text-slate-500 hidden sm:inline">${song.duration}</span>
-                        <button onclick="toggleFavoriteState(${song.id}); event.stopPropagation();" class="p-1 text-slate-500 hover:text-rose-400 transition-colors">
+                        <button onclick="toggleFavoriteState(${song.id}); event.stopPropagation();" class="p-1 text-slate-600 hover:text-rose-400 transition-colors">
                             <span class="material-icons text-base">${isFav ? 'favorite' : 'favorite_border'}</span>
                         </button>
                     </div>
                 `;
                 container.appendChild(trackRow);
-
             });
             document.getElementById('track-count').innerText = `${songsRegistry.length} Tracks`;
         }
 
+        // Separate Panel Star Favorites Content Block Generation List Card
         function renderFavorites() {
             const container = document.getElementById('favorites-container');
             const placeholder = document.getElementById('no-favorites-placeholder');
+
+            // Select matching tracks nodes references elements lists array
             const favSongs = songsRegistry.filter(s => favoritesRegistry.includes(s.id));
 
+            // Clear everything except placeholder array reference node pointer element logic
             container.innerHTML = '';
             container.appendChild(placeholder);
 
@@ -380,15 +356,14 @@
             placeholder.classList.add('hidden');
 
             favSongs.forEach(song => {
-
                 const origIndex = songsRegistry.findIndex(s => s.id === song.id);
                 const favRow = document.createElement('div');
-                favRow.className = "flex items-center justify-between p-3 bg-slate-900/40 border border-slate-900/60 rounded-xl hover:border-slate-800 transition-all cursor-pointer text-xs";
+                favRow.className = "flex items-center justify-between p-2.5 bg-slate-950/40 border border-slate-900 rounded-xl hover:border-slate-800 transition-all cursor-pointer text-xs";
                 favRow.setAttribute('onclick', `selectTrack(${origIndex})`);
 
                 favRow.innerHTML = `
                     <div class="min-w-0 flex-1 pr-2">
-                        <p class="font-semibold text-slate-300 truncate">${song.title}</p>
+                        <p class="font-medium text-slate-300 truncate">${song.title}</p>
                         <p class="text-[10px] text-slate-500 font-mono truncate">${song.duration}</p>
                     </div>
                     <button onclick="toggleFavoriteState(${song.id}); event.stopPropagation();" class="text-rose-400 hover:text-slate-600 p-1 transition-colors shrink-0">
@@ -399,8 +374,8 @@
             });
         }
 
+        // Star Heart Click Action States
         function toggleFavoriteState(id) {
-
             if (favoritesRegistry.includes(id)) {
                 favoritesRegistry = favoritesRegistry.filter(favId => favId !== id);
             } else {
@@ -420,7 +395,6 @@
         }
 
         function updatePlayerFavIcon() {
-
             const favIcon = document.getElementById('player-fav-icon');
             const favBtn = document.getElementById('player-fav-toggle');
             if (currentSongIndex === -1) {
@@ -439,28 +413,29 @@
             }
         }
 
+        // Core Song Target Selection Logic Flow Controller
         function selectTrack(idx) {
-
             if (idx < 0 || idx >= songsRegistry.length) return;
             currentSongIndex = idx;
             
             const song = songsRegistry[currentSongIndex];
             document.getElementById('current-title').innerText = song.title;
-            document.getElementById('current-subtitle').innerText = `Playing local media stream`;
+            document.getElementById('current-subtitle').innerText = `Playing from local media asset row`;
             document.getElementById('player-album-art').innerText = 'album';
             document.getElementById('player-album-art').classList.add('text-sky-400', 'animate-spin');
             
+            // Parse duration string mapping format parameters execution parsing rules
             const parts = song.duration.split(':');
             currentTotalSeconds = parseInt(parts[0], 10) * 60 + parseInt(parts[1], 10);
             document.getElementById('time-total').innerText = song.duration;
 
+            // Reset Simulation Tracker counter timeline numbers array layout variables state property
             elapsedCounter = 0;
             document.getElementById('progress-slider').value = 0;
             document.getElementById('time-current').innerText = '0:00';
 
             isPlaying = true;
             document.getElementById('icon-main-play').innerText = 'pause';
-
             
             clearInterval(progressInterval);
             startPlaybackSimulation();
@@ -471,7 +446,7 @@
 
         function togglePlay() {
             if (currentSongIndex === -1) {
-                selectTrack(0);
+                selectTrack(0); // fallback selection setup
                 return;
             }
             isPlaying = !isPlaying;
@@ -480,7 +455,6 @@
 
             if (isPlaying) {
                 mainPlayIcon.innerText = 'pause';
-
                 art.classList.add('animate-spin');
                 startPlaybackSimulation();
             } else {
@@ -491,6 +465,7 @@
             renderTracklist();
         }
 
+        // Mock Playback Audio Slider Tick Timing Thread Simulation Execution Block
         function startPlaybackSimulation() {
             progressInterval = setInterval(() => {
                 if (!isPlaying) return;
@@ -500,13 +475,13 @@
                     clearInterval(progressInterval);
                     if (isRepeat) {
                         selectTrack(currentSongIndex);
-
                     } else {
                         playNext();
                     }
                     return;
                 }
 
+                // Update DOM controls timelines interface state view tracking values elements properties
                 document.getElementById('time-current').innerText = formatDuration(elapsedCounter);
                 const pct = (elapsedCounter / currentTotalSeconds) * 100;
                 document.getElementById('progress-slider').value = pct;
@@ -520,7 +495,6 @@
         }
 
         function playNext() {
-
             if (songsRegistry.length === 0) return;
             if (isShuffle) {
                 const rand = Math.floor(Math.random() * songsRegistry.length);
@@ -540,7 +514,6 @@
         }
 
         function toggleShuffle() {
-
             isShuffle = !isShuffle;
             const btn = document.getElementById('btn-shuffle');
             if (isShuffle) {
@@ -560,7 +533,6 @@
             }
         }
 
-
         function changeVolume(val) {
             const icon = document.getElementById('volume-icon');
             if (parseInt(val, 10) === 0) {
@@ -575,12 +547,13 @@
             }
         }
 
+        // Sleep Timer Utility Function Dropdown Triggers Layout Modules
         function toggleSleepDropdown() {
             const dropdown = document.getElementById('sleep-dropdown');
             dropdown.classList.toggle('hidden');
         }
 
-
+        // Auto Close Dropdown windows clicking outside boundaries frame properties configuration
         window.addEventListener('click', (e) => {
             const menuBtn = document.getElementById('btn-sleep-menu');
             const dropdown = document.getElementById('sleep-dropdown');
@@ -600,7 +573,6 @@
             }
 
             sleepTimeRemaining = minutes * 60;
-
             label.innerText = `Sleep: ${minutes}m`;
 
             sleepTimerId = setInterval(() => {
@@ -608,7 +580,7 @@
                 if (sleepTimeRemaining <= 0) {
                     clearInterval(sleepTimerId);
                     isPlaying = true;
-                    togglePlay();
+                    togglePlay(); // Pauses playback track entirely
                     label.innerText = "Sleep: Off";
                 } else {
                     const minsLeft = Math.ceil(sleepTimeRemaining / 60);
@@ -617,15 +589,13 @@
             }, 1000);
         }
 
+        // Timer Utility Mapping Format
         function formatDuration(secondsIn) {
             if (isNaN(secondsIn) || secondsIn < 0) return "0:00";
             const computedMins = Math.floor(secondsIn / 60);
-
             const computedSecs = Math.floor(secondsIn % 60);
             return `${computedMins}:${computedSecs < 10 ? '0' : ''}${computedSecs}`;
         }
     </script>
 </body>
 </html>
-
-
