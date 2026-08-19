@@ -33,7 +33,7 @@
 <body id="app-body" class="bg-slate-950 text-slate-100 font-sans min-h-screen flex flex-col md:flex-row overflow-x-hidden selection:bg-sky-500 selection:text-white mood-bg-transition">
 
     <!-- Audio Node Element -->
-    <audio id="main-audio-player"></audio>
+    <audio id="main-audio-player" crossorigin="anonymous"></audio>
 
     <!-- Global Introduction Gate Overlay View -->
     <div id="intro-gate" class="fixed inset-0 bg-slate-950 z-50 flex flex-col items-center justify-center p-6 text-center select-none">
@@ -54,7 +54,7 @@
                     Enter Workspace
                 </button>
             </div>
-            <p class="text-[10px] text-slate-600 font-mono">Created by AK Akash &bull; v1.1.0</p>
+            <p class="text-[10px] text-slate-600 font-mono">Created by AK Akash &bull; v1.2.0</p>
         </div>
     </div>
 
@@ -153,100 +153,86 @@
                         <p class="text-xs text-sky-400 tracking-wider font-medium">Lead Developer & Designer</p>
                     </div>
                 </div>
-
-                <p class="text-slate-300 leading-relaxed text-sm">
-                    Passionate about creating serene, functional digital spaces. The Azure Drift project was born from a desire to combine minimalist web interfaces with custom personal audio playlists.
-                </p>
-
-
-                <blockquote class="border-l-2 border-sky-500 pl-4 py-1 italic text-slate-400 text-sm">
-                    "Design is not just what it looks like and feels like. Design is how it works."
-                </blockquote>
-
-                <div class="pt-4 border-t border-slate-800 flex flex-wrap gap-4 items-center justify-between text-xs text-slate-400">
-                    <div class="flex gap-4">
-                        <a href=" https://akakash2597-bit.github.io/My-Portfolio/" target="_blank" rel="noopener noreferrer" class="flex items-center gap-1 text-sky-400 hover:text-sky-300 hover:underline transition">
-                            <span class="material-icons text-base">language</span> Portfolio Available
-                        </a>
-                        <a href="mailto:akakash2597@gmail.com" class="flex items-center gap-1 text-indigo-400 hover:text-indigo-300 hover:underline transition">
-                            <span class="material-icons text-base">mail</span> Contact Ready
-                        </a>
-                    </div>
-                    <span class="bg-slate-800 px-3 py-1 rounded-full text-slate-300 font-mono">v1.1.0</span>
+                <div class="border-t border-slate-800 pt-6 space-y-3">
+                    <h4 class="font-semibold text-white text-sm">About Azure</h4>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Azure is a minimal music player designed to offer a distraction-free audio experience. Featuring 15 curated ambient tracks, dynamic mood-based theming, and seamless playback control, Azure is your personal companion for focus sessions, deep work, and relaxation.
+                    </p>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Built with modern web technologies and loaded directly from GitHub for fast access, Azure ensures your favorite music is always just a click away.
+                    </p>
+                </div>
+                <div class="border-t border-slate-800 pt-6 space-y-3">
+                    <h4 class="font-semibold text-white text-sm">Features</h4>
+                    <ul class="text-xs text-slate-400 space-y-2">
+                        <li>✓ 15 Ambient Tracks</li>
+                        <li>✓ Mood-Based Themes</li>
+                        <li>✓ Favorites & Search</li>
+                        <li>✓ Sleep Timer</li>
+                        <li>✓ GitHub Direct Streaming</li>
+                    </ul>
                 </div>
             </div>
         </section>
 
-        <!-- Bottom Controller Bar Layout Block Container -->
-
-        <footer class="bg-slate-900 border-t border-slate-800 px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-4 z-10 shrink-0">
-            <!-- Left Side Song metadata indicator state info container -->
-            <div class="flex items-center gap-3 w-full sm:w-1/4 min-w-0">
-                <div id="footer-art" class="w-11 h-11 rounded-lg bg-gradient-to-br from-slate-800 to-slate-700 flex items-center justify-center shrink-0 transition-all duration-500">
-                    <span id="footer-art-icon" class="material-icons text-slate-400">music_note</span>
-                </div>
-                <div class="overflow-hidden">
-                    <h4 id="footer-title" class="text-sm font-semibold text-slate-100 truncate">No Song Playing</h4>
-                    <p id="footer-artist" class="text-xs text-slate-400 truncate">Select a track</p>
-                </div>
-            </div>
-
-            <!-- Middle Audio Interactive Slider Tracking controls -->
-            <div class="flex flex-col items-center gap-1.5 w-full sm:w-2/4">
-                <!-- Action Playback Button Elements Row Panel layout -->
-                <div class="flex items-center gap-4">
-                    <!-- Shuffle Controls Button -->
-                    <button onclick="toggleShuffle()" id="shuffle-btn" class="text-slate-500 hover:text-slate-300 transition duration-150 transform active:scale-90" title="Shuffle Playlist">
-                        <span class="material-icons text-xl">shuffle</span>
-
-                    </button>
-                    
-                    <button onclick="playPrevious()" class="text-slate-400 hover:text-white transition duration-150 transform active:scale-90">
-                        <span class="material-icons text-2xl">skip_previous</span>
-                    </button>
-                    <button onclick="togglePlayback()" id="master-play-btn" class="w-10 h-10 rounded-full bg-sky-500 text-slate-950 flex items-center justify-center hover:bg-sky-400 transition duration-150 transform active:scale-95 shadow-md shadow-sky-500/20">
-                        <span class="material-icons text-2xl font-bold" id="master-play-icon">play_arrow</span>
-                    </button>
-                    <button onclick="playNext()" class="text-slate-400 hover:text-white transition duration-150 transform active:scale-90">
-                        <span class="material-icons text-2xl">skip_next</span>
-                    </button>
-
-                    <!-- Repeat Controls Button -->
-                    <button onclick="toggleRepeat()" id="repeat-btn" class="text-slate-500 hover:text-slate-300 transition duration-150 transform active:scale-90" title="Repeat Track">
-                        <span class="material-icons text-xl">repeat</span>
-                    </button>
+        <!-- Footer Player Element Bar -->
+        <footer class="bg-slate-900 border-t border-slate-800 p-4 md:p-6">
+            <div class="flex items-center gap-4 mb-4">
+                <div id="footer-art" class="w-11 h-11 rounded-lg bg-gradient-to-tr from-slate-800 to-slate-700 flex items-center justify-center text-slate-400 shrink-0">
+                    <span id="footer-art-icon" class="material-icons text-xl">album</span>
                 </div>
 
-                <!-- Custom Scrubber Slider Logic elements row panel -->
+                <div class="flex-1 min-w-0">
+                    <h4 id="footer-title" class="text-sm font-semibold truncate text-slate-200">No Song Selected</h4>
+                    <p id="footer-artist" class="text-xs text-slate-400 truncate">Select a track from the library</p>
+                </div>
 
-                <div class="w-full flex items-center gap-3 text-[11px] text-slate-400 font-mono">
-                    <span id="time-current">0:00</span>
-                    <input type="range" id="seek-scrubber" min="0" max="100" value="0" oninput="seekToPosition()"
-                           class="flex-1 h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-sky-400 focus:outline-none">
-                    <span id="time-duration">0:00</span>
+                <div class="flex gap-3 shrink-0">
+                    <button id="shuffle-btn" onclick="toggleShuffle()" class="text-slate-500 hover:text-slate-300 transition duration-150 transform active:scale-90">
+                        <span class="material-icons text-lg">shuffle</span>
+                    </button>
+                    <button id="repeat-btn" onclick="toggleRepeat()" class="text-slate-500 hover:text-slate-300 transition duration-150 transform active:scale-90">
+                        <span class="material-icons text-lg">repeat</span>
+                    </button>
                 </div>
             </div>
 
-            <!-- Right Volume and Sleep Timer Controls row container space layout -->
-            <div class="flex items-center justify-end gap-4 w-full sm:w-1/4 text-slate-400">
-                <!-- Sleep Timer Selection Action Panel -->
-                <div class="relative inline-block text-left">
-                    <button onclick="toggleTimerDropdown()" id="timer-menu-btn" class="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-slate-950/40 hover:bg-slate-800 border border-slate-800 text-slate-400 hover:text-slate-200 transition text-xs font-medium" title="Configure Sleep Timer">
-                        <span class="material-icons text-sm" id="timer-status-icon">alarm</span>
+            <!-- Progress Slider -->
+            <div class="flex items-center gap-2 mb-4">
+                <span class="text-xs text-slate-400 w-8" id="time-current">0:00</span>
+                <input type="range" id="seek-scrubber" min="0" max="100" value="0" oninput="seekToPosition()"
+                       class="flex-1 h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-sky-400">
+                <span class="text-xs text-slate-400 w-8 text-right" id="time-duration">0:00</span>
+            </div>
+
+            <!-- Main Playback Controls -->
+            <div class="flex items-center justify-between gap-4">
+                <div class="flex gap-3 flex-1">
+                    <button onclick="togglePlayback()" id="master-play-btn" class="px-6 py-2 bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold rounded-lg transition duration-150 active:scale-95 flex items-center gap-2">
+                        <span class="material-icons text-lg" id="master-play-icon">play_arrow</span>
+                        <span class="text-sm">Play</span>
+                    </button>
+                </div>
+
+                <!-- Timer Component -->
+                <div class="relative">
+                    <button id="timer-menu-btn" onclick="toggleTimerDropdown()" class="flex gap-2 items-center px-3 py-2 bg-slate-800 hover:bg-slate-700 rounded-lg text-sm text-slate-400 transition duration-150">
+                        <span class="material-icons text-sm" id="timer-status-icon">schedule</span>
                         <span id="timer-display-label">Off</span>
                     </button>
-                    <div id="timer-dropdown" class="hidden absolute bottom-full right-0 mb-2 w-32 bg-slate-900 border border-slate-800 rounded-xl shadow-2xl p-1 z-30 font-sans text-xs">
-                        <button onclick="setSleepTimer(0)" class="w-full text-left px-3 py-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-slate-200">Turn Off</button>
-                        <button onclick="setSleepTimer(5)" class="w-full text-left px-3 py-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-slate-200">5 Minutes</button>
 
-                        <button onclick="setSleepTimer(15)" class="w-full text-left px-3 py-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-slate-200">15 Minutes</button>
-                        <button onclick="setSleepTimer(30)" class="w-full text-left px-3 py-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-slate-200">30 Minutes</button>
-                        <button onclick="setSleepTimer(60)" class="w-full text-left px-3 py-2 rounded-lg text-slate-400 hover:bg-slate-800 hover:text-slate-200">60 Minutes</button>
+                    <div id="timer-dropdown" class="hidden absolute right-0 bottom-12 bg-slate-800 border border-slate-700 rounded-lg shadow-lg z-40">
+                        <button onclick="setSleepTimer(0)" class="w-full px-4 py-2 text-left text-sm text-slate-300 hover:bg-slate-700 hover:text-white transition first:rounded-t-lg">Off</button>
+                        <button onclick="setSleepTimer(5)" class="w-full px-4 py-2 text-left text-sm text-slate-300 hover:bg-slate-700 hover:text-white transition">5 min</button>
+                        <button onclick="setSleepTimer(15)" class="w-full px-4 py-2 text-left text-sm text-slate-300 hover:bg-slate-700 hover:text-white transition">15 min</button>
+                        <button onclick="setSleepTimer(30)" class="w-full px-4 py-2 text-left text-sm text-slate-300 hover:bg-slate-700 hover:text-white transition">30 min</button>
+                        <button onclick="setSleepTimer(60)" class="w-full px-4 py-2 text-left text-sm text-slate-300 hover:bg-slate-700 hover:text-white transition last:rounded-b-lg">60 min</button>
                     </div>
                 </div>
 
+                <!-- Volume Control -->
                 <div class="flex items-center gap-2">
-                    <button onclick="toggleMute()" class="hover:text-white transition" id="mute-btn">
+                    <button onclick="toggleMute()" class="text-slate-400 hover:text-sky-400 transition duration-150">
                         <span class="material-icons text-xl" id="mute-icon">volume_up</span>
                     </button>
                     <input type="range" id="volume-slider" min="0" max="100" value="80" oninput="changeVolume()"
@@ -259,23 +245,30 @@
     <!-- App JavaScript Logic Engines -->
     <script>
 
-        // Mapped tracks pointing to your local storage directory locations
+        // ========== IMPORTANT: UPDATE THESE GITHUB URLS TO YOUR REPOSITORY ==========
+        // Replace the GitHub username and repo name with your own
+        // Format: https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/music-folder/filename.mp3
+        // ============================================================================
+
+        const GITHUB_BASE_URL = "https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/music/";
+        
+        // Mapped tracks pointing to GitHub raw content URLs
         const songs = [
-            { id: 0, title: "Dandelions", artist: "Ruth B.", src: "music/dandelions.mp3", saved: false, mood: "linear-gradient(to right, #0f172a, #2e1065)" },
-            { id: 1, title: "Faded", artist: "Alan Walker", src: "music/faded.mp3", saved: false, mood: "linear-gradient(to right, #070a13, #1e1b4b)" },
-            { id: 2, title: "Heat Waves", artist: "Glass Animals", src: "music/heat-waves.mp3", saved: false, mood: "linear-gradient(to right, #1c0d02, #0f172a)" },
-            { id: 3, title: "Hymn For The Weekend", artist: "Coldplay & Beyoncé", src: "music/hymn-for-the-weekend.mp3", saved: false, mood: "linear-gradient(to right, #022c22, #0f172a)" },
-            { id: 4, title: "I Wanna Be Yours", artist: "Arctic Monkeys", src: "music/i-wanna-be-yours.mp3", saved: false, mood: "linear-gradient(to right, #311005, #090d16)" },
-            { id: 5, title: "Infinity", artist: "Jaymes Young", src: "music/infinity.mp3", saved: false, mood: "linear-gradient(to right, #0c1a30, #16062b)" },
-            { id: 6, title: "Let Me Down Slowly", artist: "Alec Benjamin", src: "music/let-me-down-slowly.mp3", saved: false, mood: "linear-gradient(to right, #172554, #030712)" },
-            { id: 7, title: "Love Me Like You Do", artist: "Ellie Goulding", src: "music/love-me-like-you-do.mp3", saved: false, mood: "linear-gradient(to right, #4c0519, #0f172a)" },
-            { id: 8, title: "Love Nwantiti", artist: "CKay", src: "music/love-nwantiti.mp3", saved: false, mood: "linear-gradient(to right, #2d063b, #0f172a)" },
-            { id: 9, title: "Memories", artist: "Maroon 5", src: "music/memories.mp3", saved: false, mood: "linear-gradient(to right, #062f4f, #0f172a)" },
-            { id: 10, title: "Mood", artist: "24kGoldn feat. iann dior", src: "music/mood.mp3", saved: false, mood: "linear-gradient(to right, #1e1b4b, #311042)" },
-            { id: 11, title: "Perfect", artist: "Ed Sheeran", src: "music/perfect.mp3", saved: false, mood: "linear-gradient(to right, #0f172a, #14532d)" },
-            { id: 12, title: "Shape Of You", artist: "Ed Sheeran", src: "music/shape-of-you.mp3", saved: false, mood: "linear-gradient(to right, #115e59, #0f172a)" },
-            { id: 13, title: "Trapped In My Mind", artist: "Adam Oh", src: "music/trapped-in-my-mind.mp3", saved: false, mood: "linear-gradient(to right, #1e293b, #0f172a)" },
-            { id: 14, title: "Unstoppable", artist: "Sia", src: "music/unstoppable.mp3", saved: false, mood: "linear-gradient(to right, #0f172a, #701a75)" }
+            { id: 0, title: "Dandelions", artist: "Ruth B.", src: GITHUB_BASE_URL + "dandelions.mp3", saved: false, mood: "linear-gradient(to right, #0f172a, #2e1065)" },
+            { id: 1, title: "Faded", artist: "Alan Walker", src: GITHUB_BASE_URL + "faded.mp3", saved: false, mood: "linear-gradient(to right, #070a13, #1e1b4b)" },
+            { id: 2, title: "Heat Waves", artist: "Glass Animals", src: GITHUB_BASE_URL + "heat-waves.mp3", saved: false, mood: "linear-gradient(to right, #1c0d02, #0f172a)" },
+            { id: 3, title: "Hymn For The Weekend", artist: "Coldplay & Beyoncé", src: GITHUB_BASE_URL + "hymn-for-the-weekend.mp3", saved: false, mood: "linear-gradient(to right, #022c22, #0f172a)" },
+            { id: 4, title: "I Wanna Be Yours", artist: "Arctic Monkeys", src: GITHUB_BASE_URL + "i-wanna-be-yours.mp3", saved: false, mood: "linear-gradient(to right, #311005, #090d16)" },
+            { id: 5, title: "Infinity", artist: "Jaymes Young", src: GITHUB_BASE_URL + "infinity.mp3", saved: false, mood: "linear-gradient(to right, #0c1a30, #16062b)" },
+            { id: 6, title: "Let Me Down Slowly", artist: "Alec Benjamin", src: GITHUB_BASE_URL + "let-me-down-slowly.mp3", saved: false, mood: "linear-gradient(to right, #172554, #030712)" },
+            { id: 7, title: "Love Me Like You Do", artist: "Ellie Goulding", src: GITHUB_BASE_URL + "love-me-like-you-do.mp3", saved: false, mood: "linear-gradient(to right, #4c0519, #0f172a)" },
+            { id: 8, title: "Love Nwantiti", artist: "CKay", src: GITHUB_BASE_URL + "love-nwantiti.mp3", saved: false, mood: "linear-gradient(to right, #2d063b, #0f172a)" },
+            { id: 9, title: "Memories", artist: "Maroon 5", src: GITHUB_BASE_URL + "memories.mp3", saved: false, mood: "linear-gradient(to right, #062f4f, #0f172a)" },
+            { id: 10, title: "Mood", artist: "24kGoldn feat. iann dior", src: GITHUB_BASE_URL + "mood.mp3", saved: false, mood: "linear-gradient(to right, #1e1b4b, #311042)" },
+            { id: 11, title: "Perfect", artist: "Ed Sheeran", src: GITHUB_BASE_URL + "perfect.mp3", saved: false, mood: "linear-gradient(to right, #0f172a, #14532d)" },
+            { id: 12, title: "Shape Of You", artist: "Ed Sheeran", src: GITHUB_BASE_URL + "shape-of-you.mp3", saved: false, mood: "linear-gradient(to right, #115e59, #0f172a)" },
+            { id: 13, title: "Trapped In My Mind", artist: "Adam Oh", src: GITHUB_BASE_URL + "trapped-in-my-mind.mp3", saved: false, mood: "linear-gradient(to right, #1e293b, #0f172a)" },
+            { id: 14, title: "Unstoppable", artist: "Sia", src: GITHUB_BASE_URL + "unstoppable.mp3", saved: false, mood: "linear-gradient(to right, #0f172a, #701a75)" }
         ];
 
 
@@ -473,7 +466,8 @@
             miniArtIcon.style.animationDuration = "6s";
 
             audioPlayer.play().catch(err => {
-                console.log("Audio play deferred or file path not loaded locally yet:", err);
+                console.error("Audio playback error - Check if GitHub URL is correct:", err);
+                console.warn("Current song URL:", song.src);
             });
 
             updatePlaybackUIState();
@@ -519,52 +513,26 @@
             }
         }
 
-
-        // Feature 1 & 2: Playback Track End Handlers with Shuffle/Repeat support
+        // Track Advancement Auto-Playback Engine
         function handleTrackPlaybackCompletion() {
             if (isRepeat) {
                 audioPlayer.currentTime = 0;
-                audioPlayer.play().catch(() => {});
-            } else {
-                playNext();
-            }
-        }
-
-        function playNext() {
-            if (songs.length === 0) return;
-            
-            if (isShuffle) {
-                let randomIndex;
-                do {
-                    randomIndex = Math.floor(Math.random() * songs.length);
-                } while (randomIndex === currentIndex && songs.length > 1);
-                selectAndPlaySong(randomIndex);
-
-            } else {
-                let nextIndex = currentIndex + 1;
-                if (nextIndex >= songs.length) nextIndex = 0;
-                selectAndPlaySong(nextIndex);
-            }
-        }
-
-        function playPrevious() {
-            if (songs.length === 0) return;
-            
-            if (isShuffle) {
-                let randomIndex;
-                do {
-                    randomIndex = Math.floor(Math.random() * songs.length);
-                } while (randomIndex === currentIndex && songs.length > 1);
+                audioPlayer.play();
+            } else if (isShuffle) {
+                const randomIndex = Math.floor(Math.random() * songs.length);
                 selectAndPlaySong(randomIndex);
             } else {
-                let prevIndex = currentIndex - 1;
-                if (prevIndex < 0) prevIndex = songs.length - 1;
-
-                selectAndPlaySong(prevIndex);
+                if (currentIndex < songs.length - 1) {
+                    selectAndPlaySong(currentIndex + 1);
+                } else {
+                    isPlaying = false;
+                    currentIndex = -1;
+                    updatePlaybackUIState();
+                    renderSongs(songs);
+                }
             }
         }
 
-        // Toggle Feature Handlers for Shuffle & Repeat Buttons
         function toggleShuffle() {
             isShuffle = !isShuffle;
             const btn = document.getElementById("shuffle-btn");
