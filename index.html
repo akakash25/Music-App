@@ -28,6 +28,80 @@
         .mood-bg-transition {
             transition: background 1.2s ease-in-out, border-color 0.6s ease;
         }
+            /* ==========================================================
+       PASTE THIS ENTIRE CHUNK DIRECTLY ABOVE YOUR </style> TAG
+       ========================================================== */
+    .track-input-form {
+      display: flex;
+      gap: 0.75rem;
+      background-color: var(--panel-dark, #161a22);
+      padding: 1rem;
+      border-radius: 10px;
+      border: 1px solid #232936;
+      margin-top: 1rem;
+    }
+
+    .form-input {
+      flex: 1;
+      background-color: #0d0f12;
+      border: 1px solid #232936;
+      border-radius: 6px;
+      padding: 0.6rem 1rem;
+      color: var(--text-main, #f3f4f6);
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .form-input:focus { border-color: var(--accent-blue, #3b82f6); }
+
+    .btn-add-track {
+      background-color: var(--accent-blue, #3b82f6);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 0.6rem 1.2rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
+    .btn-add-track:hover { background-color: #2563eb; }
+
+    .playlist-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .track-row-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #11151d;
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      border: 1px solid #1e2533;
+      transition: border-color 0.2s;
+    }
+
+    .playlist-placeholder-msg {
+      font-size: 0.9rem;
+      color: var(--text-muted, #9ca3af);
+      text-align: center;
+      padding: 1.5rem;
+      background: #11151d;
+      border-radius: 8px;
+      border: 1px dashed #232936;
+    }
+
+    /* 📱 Adding the brand new mobile viewport rule right here */
+    @media screen and (max-width: 768px) {
+       .track-input-form { flex-direction: column; gap: 0.5rem; }
+       .btn-add-track { width: 100%; }
+    }
+
     </style>
 </head>
 <body id="app-body" class="bg-slate-950 text-slate-100 font-sans min-h-screen flex flex-col md:flex-row overflow-x-hidden selection:bg-sky-500 selection:text-white mood-bg-transition">
@@ -126,6 +200,31 @@
             <div id="songs-grid-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 <!-- Javascript will map out cards here automatically -->
             </div>
+                    <!-- Track Audio Upload Panel -->
+        <div class="add-track-container" style="margin-top: 2rem; margin-bottom: 2rem;">
+          <h3 style="font-size: 1.2rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+            <span class="icon" style="color: var(--accent-blue, #3b82f6);">cloud_upload</span> Upload Local Ambient Tracks
+          </h3>
+          
+          <div class="track-input-form">
+            <input type="file" id="audioFileInput" accept="audio/*" class="form-input" style="padding: 0.4rem;">
+            <input type="text" id="customArtistInput" placeholder="Artist Name (Optional)..." class="form-input">
+            <button class="btn-add-track" onclick="addNewAudioTrack()">Load Track</button>
+          </div>
+        </div>
+
+        <!-- Dynamic Track List Display Area -->
+        <div class="custom-playlist-section" style="margin-bottom: 3rem;">
+          <h3 style="font-size: 1.1rem; margin-bottom: 0.75rem; color: var(--text-muted, #9ca3af);">Your Ambient Deck</h3>
+          <div id="dynamicPlaylist" class="playlist-grid">
+            <div class="playlist-placeholder-msg" id="emptyPlaylistMsg">
+              No local tracks loaded yet. Select an audio file above to populate your workspace.
+            </div>
+          </div>
+        </div>
+
+        <!-- Invisible Native Audio Element engine -->
+        <audio id="globalAudioEngine"></audio>
         </section>
 
         <!-- Tab 2: Favorites Filtered View -->
@@ -168,7 +267,7 @@
                         <a href=" https://akakash2597-bit.github.io/My-Portfolio/" target="_blank" rel="noopener noreferrer" class="flex items-center gap-1 text-sky-400 hover:text-sky-300 hover:underline transition">
                             <span class="material-icons text-base">language</span> Portfolio Available
                         </a>
-                        <a href="mailto:akakash2597@gmail.com" class="flex items-center gap-1 text-indigo-400 hover:text-indigo-300 hover:underline transition">
+                        <a href="akakash2597@gmail.com" class="flex items-center gap-1 text-indigo-400 hover:text-indigo-300 hover:underline transition">
                             <span class="material-icons text-base">mail</span> Contact Ready
                         </a>
                     </div>
@@ -258,6 +357,101 @@
 
     <!-- App JavaScript Logic Engines -->
     <script>
+    let currentPlayingRow = null;
+    const audioEngine = document.getElementById('globalAudioEngine');
+
+    function addNewAudioTrack() {
+      const fileInput = document.getElementById('audioFileInput');
+      const artistInput = document.getElementById('customArtistInput');
+      const playlistContainer = document.getElementById('dynamicPlaylist');
+      const placeholderMsg = document.getElementById('emptyPlaylistMsg');
+
+      if (fileInput.files.length === 0) {
+        alert("Please select an audio file from your device first!");
+        return;
+      }
+
+      const file = fileInput.files[0];
+      const cleanTitle = file.name.replace(/\.[^/.]+$/, ""); 
+      const cleanArtist = artistInput.value.trim() || "Local Stream";
+      const audioBlobUrl = URL.createObjectURL(file);
+
+      if (placeholderMsg) { placeholderMsg.remove(); }
+
+      const trackRow = document.createElement('div');
+      trackRow.className = 'track-row-item';
+      trackRow.dataset.audioSrc = audioBlobUrl;
+      trackRow.dataset.title = cleanTitle;
+      trackRow.dataset.artist = cleanArtist;
+      
+      trackRow.innerHTML = `
+        <div class="track-item-meta" style="cursor: pointer; flex: 1; display: flex; align-items: center; gap: 1rem;" onclick="playSelectedTrack(this.parentElement)">
+          <span class="icon play-state-icon" style="color: var(--text-muted, #9ca3af); font-size: 20px;">play_circle_filled</span>
+          <div>
+            <div class="row-song-title" style="font-weight: 600; font-size: 0.95rem;">${cleanTitle}</div>
+            <div style="font-size: 0.8rem; color: var(--text-muted, #9ca3af);">${cleanArtist}</div>
+          </div>
+        </div>
+        <button class="btn-control" style="background: none; border: none; cursor: pointer; color: #ef4444;" onclick="removeTrackItem(this.parentElement, '${audioBlobUrl}')">
+          <span class="icon" style="font-size: 20px;">delete</span>
+        </button>
+      `;
+
+      playlistContainer.appendChild(trackRow);
+      fileInput.value = "";
+      artistInput.value = "";
+    }
+
+    function playSelectedTrack(trackRowElement) {
+      const src = trackRowElement.dataset.audioSrc;
+      const title = trackRowElement.dataset.title;
+      const artist = trackRowElement.dataset.artist;
+
+      const playerDeckName = document.querySelector('.track-details .track-name') || document.querySelector('h4');
+      const playerDeckArtist = document.querySelector('.track-details .track-status') || document.querySelector('.track-details p');
+      const playerPlayBtnIcon = document.querySelector('.btn-control.play-pause .icon') || document.querySelector('.play-pause');
+
+      if (currentPlayingRow === trackRowElement) {
+        if (audioEngine.paused) {
+          audioEngine.play();
+          if(playerPlayBtnIcon) playerPlayBtnIcon.textContent = 'pause';
+          trackRowElement.querySelector('.play-state-icon').textContent = 'pause_circle_filled';
+        } else {
+          audioEngine.pause();
+          if(playerPlayBtnIcon) playerPlayBtnIcon.textContent = 'play_arrow';
+          trackRowElement.querySelector('.play-state-icon').textContent = 'play_circle_filled';
+        }
+        return;
+      }
+
+      if (currentPlayingRow) {
+        currentPlayingRow.querySelector('.play-state-icon').textContent = 'play_circle_filled';
+        currentPlayingRow.style.borderColor = '#1e2533';
+      }
+
+      currentPlayingRow = trackRowElement;
+      trackRowElement.style.borderColor = 'var(--accent-blue, #3b82f6)';
+      trackRowElement.querySelector('.play-state-icon').textContent = 'pause_circle_filled';
+
+      audioEngine.src = src;
+      audioEngine.play();
+
+      if(playerDeckName) playerDeckName.textContent = title;
+      if(playerDeckArtist) playerDeckArtist.textContent = artist;
+      if(playerPlayBtnIcon) playerPlayBtnIcon.textContent = 'pause';
+    }
+
+    function removeTrackItem(element, blobUrl) {
+      if (currentPlayingRow === element) {
+        audioEngine.pause();
+        audioEngine.src = "";
+        const playerDeckName = document.querySelector('.track-details .track-name') || document.querySelector('h4');
+        if(playerDeckName) playerDeckName.textContent = "No Song Playing";
+        currentPlayingRow = null;
+      }
+      URL.revokeObjectURL(blobUrl);
+      element.remove();
+    }
 
         // Mapped tracks pointing to your local storage directory locations
        const songs = [
